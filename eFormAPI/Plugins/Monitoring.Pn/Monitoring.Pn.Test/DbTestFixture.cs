@@ -3,18 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.EntityFrameworkCore;
+using Microting.EformMonitoringBase.Infrastructure.Data;
+using Microting.EformMonitoringBase.Infrastructure.Data.Factories;
 
 namespace Monitoring.Pn.Test
 {
     [TestFixture]
     public abstract class DbTestFixture
     {
-        protected MonitoringPnDbContext DbContext;
+        protected EformMonitoringPnDbContext DbContext;
         private string _connectionString;
 
         private void GetContext(string connectionStr)
         {
-            MonitoringPnContextFactory contextFactory = new MonitoringPnContextFactory();
+            EformMonitoringPnDbContextFactory contextFactory = new EformMonitoringPnDbContextFactory();
             DbContext = contextFactory.CreateDbContext(new[] { connectionStr });
 
             DbContext.Database.Migrate();
@@ -96,7 +99,7 @@ namespace Monitoring.Pn.Test
         private void ClearFile()
         {
             path = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
-            path = System.IO.Path.GetDirectoryName(path).Replace(@"file:\", "");
+            path = Path.GetDirectoryName(path).Replace(@"file:\", "");
 
             string picturePath = path + @"\output\dataFolder\picture\Deleted";
 

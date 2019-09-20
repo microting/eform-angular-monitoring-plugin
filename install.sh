@@ -17,13 +17,13 @@ echo "################## END GITVERSION ##################"
 su ubuntu -c \
 "dotnet publish eFormAPI/Plugins/Monitoring.Pn/Monitoring.Pn.sln -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 
-if [ -d "/var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/items-planning-pn"]; then
+if [ -d "/var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/monitoring-pn"]; then
 	su ubuntu -c \
-	"rm -fR /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/items-planning-pn"
+	"rm -fR /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/monitoring-pn"
 fi
 
 su ubuntu -c \
-"cp -av /var/www/microting/eform-angular-monitoring-plugin/eform-client/src/app/plugins/modules/items-planning-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/items-planning-pn"
+"cp -av /var/www/microting/eform-angular-monitoring-plugin/eform-client/src/app/plugins/modules/monitoring-pn /var/www/microting/eform-angular-frontend/eform-client/src/app/plugins/modules/monitoring-pn"
 su ubuntu -c \
 "mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/Plugins/"
 

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Monitoring.Pn.Abstractions;
 using Monitoring.Pn.Infrastructure.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microting.MonitoringBase.Infrastructure.Data;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.EformMonitoringBase.Infrastructure.Data;
 
 namespace Monitoring.Pn.Services
 {
@@ -18,7 +19,7 @@ namespace Monitoring.Pn.Services
     {
         private readonly ILogger<MonitoringPnSettingsService> _logger;
         private readonly IMonitoringLocalizationService _trashInspectionLocalizationService;
-        private readonly MonitoringPnDbContext _dbContext;
+        private readonly EformMonitoringPnDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
         private readonly IPluginDbOptions<MonitoringBaseSettings> _options;
         private readonly string _connectionString;
@@ -26,7 +27,7 @@ namespace Monitoring.Pn.Services
         
         public MonitoringPnSettingsService(ILogger<MonitoringPnSettingsService> logger,
             IMonitoringLocalizationService trashInspectionLocalizationService,
-            MonitoringPnDbContext dbContext,
+            EformMonitoringPnDbContext dbContext,
             IPluginDbOptions<MonitoringBaseSettings> options,
             IEFormCoreService coreHelper,
             IHttpContextAccessor httpContextAccessor)

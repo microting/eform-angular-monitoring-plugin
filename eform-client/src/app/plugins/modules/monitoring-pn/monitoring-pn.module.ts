@@ -8,24 +8,22 @@ import { SharedPnModule } from '../shared/shared-pn.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformSharedModule } from '../../../common/modules/eform-shared/eform-shared.module';
 import {MonitoringPnLayoutComponent} from './layouts';
-
-import {MonitoringPnCalendarService, MonitoringPnSettingsService} from './services';
-
-import {
-  MonitoringCalendarComponent,
-  MonitoringDeleteComponent,
-  MonitoringEditComponent,
-  MonitoringSettingsComponent,
-  MonitoringViewComponent
-} from './components';
 import {MonitoringPnRoutingModule} from './monitoring-pn.routing.module';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {OwlDateTimeModule} from 'ng-pick-datetime';
 import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
 import localeDa from '@angular/common/locales/da';
-import {MonitoringPrefillFieldComponent} from './components/monitorings/monitoring-prefill-field/monitoring-prefill-field.component';
 import {CasesModule} from '../../../modules';
+import {MonitoringPnNotificationRulesService, MonitoringPnSettingsService} from './services';
+import {
+  NotificationRulesCreateComponent
+} from './components/notification-rules/notification-rules-create/notification-rules-create.component';
+import {
+  NotificationRulesDeleteComponent,
+  NotificationRulesEditComponent,
+  NotificationRulesPageComponent
+} from './components/notification-rules';
 
 registerLocaleData(localeDa);
 
@@ -50,14 +48,12 @@ registerLocaleData(localeDa);
   ],
   declarations: [
     MonitoringPnLayoutComponent,
-    MonitoringSettingsComponent,
-    MonitoringCalendarComponent,
-    MonitoringEditComponent,
-    MonitoringViewComponent,
-    MonitoringDeleteComponent,
-    MonitoringPrefillFieldComponent
+    NotificationRulesPageComponent,
+    NotificationRulesCreateComponent,
+    NotificationRulesEditComponent,
+    NotificationRulesDeleteComponent
   ],
-  providers: [MonitoringPnSettingsService, MonitoringPnCalendarService]
+  providers: [MonitoringPnSettingsService, MonitoringPnNotificationRulesService]
 })
 
 export class MonitoringPnModule { }

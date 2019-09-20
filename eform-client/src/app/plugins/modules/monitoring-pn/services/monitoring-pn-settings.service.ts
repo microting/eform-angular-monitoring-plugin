@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import {OperationDataResult, OperationResult} from '../../../../common/models';
-import {MonitoringBaseSettingsModel} from '../models/monitoring-base-settings.model';
+import {MonitoringBaseSettingsModel} from '../models';
 
 export let MonitoringSettingsMethods = {
   MonitoringSettings: 'api/monitoring-pn/settings'

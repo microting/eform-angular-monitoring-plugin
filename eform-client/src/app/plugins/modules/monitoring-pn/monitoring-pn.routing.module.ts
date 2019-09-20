@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MonitoringPnLayoutComponent} from './layouts';
 import {AdminGuard} from '../../../common/guards';
-import {MonitoringCalendarComponent, MonitoringSettingsComponent} from './components';
+import {MonitoringSettingsComponent, NotificationRulesPageComponent} from './components';
 
 export const routes: Routes = [
   {
@@ -15,9 +15,9 @@ export const routes: Routes = [
         component: MonitoringSettingsComponent
       },
       {
-        path: 'calendar',
+        path: 'notification-rules',
         canActivate: [AdminGuard],
-        component: MonitoringCalendarComponent
+        component: NotificationRulesPageComponent
       }
     ]
   }

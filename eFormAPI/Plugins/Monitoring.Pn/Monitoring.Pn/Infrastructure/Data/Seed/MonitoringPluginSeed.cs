@@ -25,13 +25,15 @@ SOFTWARE.
 using Monitoring.Pn.Infrastructure.Data.Seed.Data;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using System;
+using System.Linq;
 using Microting.eForm.Infrastructure.Constants;
+using Microting.EformMonitoringBase.Infrastructure.Data;
 
 namespace Monitoring.Pn.Infrastructure.Data.Seed
 {
     public class MonitoringPluginSeed
     {
-        public static void SeedData(MonitoringPnDbContext dbContext)
+        public static void SeedData(EformMonitoringPnDbContext dbContext)
         {
             var seedData = new MonitoringConfigurationSeedData();
             var configurationList = seedData.Data;

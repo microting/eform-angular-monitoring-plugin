@@ -1,0 +1,35 @@
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {MonitoringPnNotificationRulesService} from '../../../services';
+import {MonitoringNotificationRuleModel} from '../../../models';
+
+@Component({
+  selector: 'app-monitoring-pn-notification-rules-delete',
+  templateUrl: './notification-rules-delete.component.html',
+  styleUrls: ['./notification-rules-delete.component.scss']
+})
+export class NotificationRulesDeleteComponent implements OnInit {
+  @ViewChild('frame') frame;
+  @Output() ruleDeleted: EventEmitter<void> = new EventEmitter<void>();
+  spinnerStatus = false;
+  selectedRuleModel: MonitoringNotificationRuleModel = new MonitoringNotificationRuleModel();
+
+  constructor(private monitoringPnRulesService: MonitoringPnNotificationRulesService) { }
+
+  ngOnInit() {
+  }
+
+  show(ruleModel: MonitoringNotificationRuleModel) {
+    this.selectedRuleModel = ruleModel;
+    this.frame.show();
+  }
+
+  deleteRule() {
+    this.spinnerStatus = true;
+    this.monitoringPnRulesService.deleteRule(this.selectedRuleModel.id).subscribe((data) => {
+      if (data && data.success) {
+        this.ruleDeleted.emit();
+        this.frame.hide();
+      } this.spinnerStatus = false;
+    });
+  }
+}

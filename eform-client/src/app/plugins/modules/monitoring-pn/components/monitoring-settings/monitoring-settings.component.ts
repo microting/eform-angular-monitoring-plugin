@@ -22,7 +22,6 @@ export class MonitoringSettingsComponent implements OnInit {
 
 
   getSettings() {
-    // debugger;
     this.spinnerStatus = true;
     this.monitoringPnSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {

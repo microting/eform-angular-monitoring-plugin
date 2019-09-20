@@ -36,6 +36,8 @@ using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
+using Microting.EformMonitoringBase.Infrastructure.Data;
+using Microting.EformMonitoringBase.Infrastructure.Data.Factories;
 using Monitoring.Pn.Abstractions;
 using Monitoring.Pn.Services;
 
@@ -73,16 +75,16 @@ namespace Monitoring.Pn
         {
             if (connectionString.ToLower().Contains("convert zero datetime"))
             {
-                services.AddDbContext<MonitoringPnDbContext>(o => o.UseMySql(connectionString,
+                services.AddDbContext<EformMonitoringPnDbContext>(o => o.UseMySql(connectionString,
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
             else
             {
-                services.AddDbContext<MonitoringPnDbContext>(o => o.UseSqlServer(connectionString,
+                services.AddDbContext<EformMonitoringPnDbContext>(o => o.UseSqlServer(connectionString,
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
 
-            MonitoringPnContextFactory contextFactory = new MonitoringPnContextFactory();
+            var contextFactory = new EformMonitoringPnDbContextFactory();
             var context = contextFactory.CreateDbContext(new[] {connectionString});
             context.Database.Migrate();
 
@@ -124,7 +126,7 @@ namespace Monitoring.Pn
 
         public void SeedDatabase(string connectionString)
         {
-            var contextFactory = new MonitoringPnContextFactory();
+            var contextFactory = new EformMonitoringPnDbContextFactory();
             using (var context = contextFactory.CreateDbContext(new []{connectionString}))
             {
                 MonitoringPluginSeed.SeedData(context);
@@ -134,7 +136,7 @@ namespace Monitoring.Pn
         public void AddPluginConfig(IConfigurationBuilder builder, string connectionString)
         {
             var seedData = new MonitoringConfigurationSeedData();
-            var contextFactory = new MonitoringPnContextFactory();
+            var contextFactory = new EformMonitoringPnDbContextFactory();
             builder.AddPluginConfiguration(
                 connectionString, 
                 seedData, 
