@@ -1,0 +1,16 @@
+[
+  {
+    "Key": "Monitoring",
+    "LocalizedValue": {
+      "da": "Overvågning",
+      "en-US": "Monitoring"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Indstillinger",
+      "en-US": "Settings"
+    }
+  }
+]
