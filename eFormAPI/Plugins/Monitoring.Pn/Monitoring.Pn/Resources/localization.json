@@ -55,5 +55,18 @@
       "en-US": "Error while obtaining notification rules info"
     }
   },
-
+  {
+    "Key": "ErrorWhileUpdatingNotificationRule",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af underretningsregel",
+      "en-US": "Error while updating notification rule"
+    }
+  },
+  {
+    "Key": "NotificationRuleHasBeenUpdated",
+    "LocalizedValue": {
+      "da": "Underretningsregel er blevet opdateret",
+      "en-US": "Notification rule has been updated"
+    }
+  }
 ]

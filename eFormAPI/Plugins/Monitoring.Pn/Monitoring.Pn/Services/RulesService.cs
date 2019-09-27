@@ -6,6 +6,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Abstractions;
+    using Helpers;
     using Infrastructure.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
@@ -88,9 +89,53 @@
                 }
                 catch (Exception e)
                 {
-                    transaction.Commit();
+                    transaction.Rollback();
                     _logger.LogError(e.Message);
                     return new OperationResult(false, _localizationService.GetString("ErrorWhileRemovingNotificationRule"));
+                }
+            }
+        }
+
+        public async Task<OperationResult> UpdateRule(NotificationRuleModel ruleModel)
+        {
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var rule = await _dbContext.Rules
+                        .Include(x=>x.Recipients)
+                        .FirstOrDefaultAsync(x => x.WorkflowState != Constants.WorkflowStates.Removed
+                                                  && x.Id == ruleModel.Id);
+
+                    if (rule == null)
+                    {
+                        return new OperationResult(false,
+                            _localizationService.GetString("NotificationRuleNotFound"));
+                    }
+
+                    rule.AttachReport = ruleModel.AttachReport;
+                    rule.Data = ruleModel.Data.ToString();
+                    rule.RuleType = ruleModel.RuleType;
+                    rule.Subject = ruleModel.Subject;
+                    rule.TemplateId = ruleModel.TemplateId;
+                    rule.Text = ruleModel.Text;
+                    rule.DataItemId = ruleModel.DataItemId;
+
+                    await rule.Update(_dbContext);
+
+                    // TODO update recipients
+
+                    return new OperationResult(
+                        true, 
+                        _localizationService.GetString("NotificationRuleHasBeenUpdated"));
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    _logger.LogError(e.Message);
+                    return new OperationResult(
+                        false,
+                        _localizationService.GetString("ErrorWhileUpdatingNotificationRule"));
                 }
             }
         }
@@ -223,7 +268,7 @@
                 var result = new NotificationRuleListsModel();
                 foreach (var rule in rules)
                 {
-                    var ruleModel = new NotificationRuleModel()
+                    var ruleModel = new NotificationRuleModel
                     {
                         Id = rule.Id,
                         AttachReport = rule.AttachReport,
@@ -232,25 +277,8 @@
                         Subject = rule.Subject,
                         TemplateId = rule.TemplateId,
                         Text = rule.Text,
+                        Data = RulesBlockHelper.GetRuleTriggerString(rule),
                     };
-
-                    switch (rule.RuleType)
-                    {
-                        case RuleType.SingleList:
-                            // TODO
-                            break;
-                        case RuleType.MultiSelect:
-                            ruleModel.Data = JsonConvert.DeserializeObject<MultiSelectBlock>(rule.Data);
-                            break;
-                        case RuleType.CheckBox:
-                            ruleModel.Data = JsonConvert.DeserializeObject<CheckBoxBlock>(rule.Data);
-                            break;
-                        case RuleType.Number:
-                            ruleModel.Data = JsonConvert.DeserializeObject<NumberBlock>(rule.Data);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
 
                     result.Lists.Add(ruleModel);
                 }
@@ -265,7 +293,7 @@
                 _logger.LogError(e.Message);
                 return new OperationDataResult<NotificationRuleListsModel>(
                     false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingNotificationRulesInfo"));
             }
         }
 
