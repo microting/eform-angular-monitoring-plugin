@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Monitoring.Pn.Abstractions;
-using Monitoring.Pn.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -8,6 +7,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace Monitoring.Pn.Controllers
 {
+    using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
+
     public class MonitoringSettingsController : Controller
     {
         private readonly IMonitoringPnSettingsService _monitoringPnSettingsService;

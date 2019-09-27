@@ -22,27 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Monitoring.Pn.Infrastructure.Data.Seed;
-using Monitoring.Pn.Infrastructure.Data.Seed.Data;
-using Monitoring.Pn.Infrastructure.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microting.eFormApi.BasePn;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Settings;
-using Microting.EformMonitoringBase.Infrastructure.Data;
-using Microting.EformMonitoringBase.Infrastructure.Data.Factories;
-using Monitoring.Pn.Abstractions;
-using Monitoring.Pn.Services;
-
 namespace Monitoring.Pn
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Abstractions;
+    using Infrastructure.Data.Seed;
+    using Infrastructure.Data.Seed.Data;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microting.eFormApi.BasePn;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Infrastructure.Settings;
+    using Microting.EformMonitoringBase.Infrastructure.Data;
+    using Microting.EformMonitoringBase.Infrastructure.Data.Factories;
+    using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
+    using Services;
+
     public class EformMonitoringPlugin : IEformPlugin
     {
         public string Name => "Microting Monitoring Plugin";
@@ -63,6 +63,7 @@ namespace Monitoring.Pn
         {
             services.AddSingleton<IMonitoringLocalizationService, MonitoringLocalizationService>();
             services.AddTransient<IMonitoringPnSettingsService, MonitoringPnSettingsService>();
+            services.AddScoped<IRulesService, RulesService>();
         }
 
         public void ConfigureOptionsServices(IServiceCollection services, IConfiguration configuration)

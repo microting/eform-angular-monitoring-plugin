@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Monitoring.Pn.Abstractions;
-using Monitoring.Pn.Infrastructure.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,6 +14,8 @@ using Microting.EformMonitoringBase.Infrastructure.Data;
 
 namespace Monitoring.Pn.Services
 {
+    using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
+
     public class MonitoringPnSettingsService :IMonitoringPnSettingsService
     {
         private readonly ILogger<MonitoringPnSettingsService> _logger;
