@@ -10,9 +10,9 @@ import {MonitoringNotificationRuleModel} from '../../../models';
 })
 export class NotificationRulesEditComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Output() ruleUpdated: EventEmitter<void> = new EventEmitter<void>();
+  @Output() ruleSaved: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
-  selectedRuleModel: MonitoringNotificationRuleModel = new MonitoringNotificationRuleModel();
+  ruleModel: MonitoringNotificationRuleModel = new MonitoringNotificationRuleModel();
   typeahead = new EventEmitter<string>();
 
   constructor(
@@ -23,8 +23,22 @@ export class NotificationRulesEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  show(ruleModel: MonitoringNotificationRuleModel) {
-    this.getSelectedRule(ruleModel.id);
+  show(id?: number) {
+    if (id) {
+      this.getSelectedRule(id);
+    } else {
+      this.ruleModel = {
+        id: null,
+        attachReport: false,
+        data: {},
+        dataItemId: null,
+        recipients: [],
+        ruleType: null,
+        subject: '',
+        templateId: null,
+        text: ''
+      };
+    }
     this.frame.show();
   }
 
@@ -32,22 +46,33 @@ export class NotificationRulesEditComponent implements OnInit {
     this.spinnerStatus = true;
     this.monitoringRulesService.getRule(id).subscribe((data) => {
       if (data && data.success) {
-        this.selectedRuleModel = data.model;
+        this.ruleModel = data.model;
 
       } this.spinnerStatus = false;
     });
   }
 
-  updateRule() {
+  saveRule() {
     this.spinnerStatus = true;
-    const model = this.selectedRuleModel;
 
-    this.monitoringRulesService.updateRule(model).subscribe((data) => {
-      if (data && data.success) {
-        this.ruleUpdated.emit();
-        this.selectedRuleModel = new MonitoringNotificationRuleModel();
-        this.frame.hide();
-      } this.spinnerStatus = false;
-    });
+    if (this.ruleModel.id) {
+      this.monitoringRulesService.updateRule(this.ruleModel).subscribe((data) => {
+        if (data && data.success) {
+          this.ruleSaved.emit();
+          this.ruleModel = new MonitoringNotificationRuleModel();
+          this.frame.hide();
+        }
+        this.spinnerStatus = false;
+      });
+    } else {
+      this.monitoringRulesService.createRule(this.ruleModel).subscribe((data) => {
+        if (data && data.success) {
+          this.ruleSaved.emit();
+          this.ruleModel = new MonitoringNotificationRuleModel();
+          this.frame.hide();
+        }
+        this.spinnerStatus = false;
+      });
+    }
   }
 }

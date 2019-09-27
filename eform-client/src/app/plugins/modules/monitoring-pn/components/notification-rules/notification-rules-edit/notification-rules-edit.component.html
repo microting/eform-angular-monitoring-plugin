@@ -2,14 +2,14 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{ 'Edit Rule' | translate }}</h3>
+        <h3>{{ (ruleModel.id ? 'Edit Rule' : 'Create Rule') | translate }}</h3>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
         </div>
       </div>
       <div class="modal-footer">
-        <button id="ruleEditSaveBtn" class="btn btn-success" (click)="updateRule()">
+        <button id="ruleEditSaveBtn" class="btn btn-success" (click)="saveRule()">
           {{ 'Save' | translate }}
         </button>
         <button id="ruleEditCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">

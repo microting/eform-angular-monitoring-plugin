@@ -4,7 +4,7 @@
       id="ruleCreateBtn"
       class="btn btn-success"
       mdbTooltip="{{ 'Create Notification Rule' | translate }}"
-      (click)="showCreateRuleModal()">{{ 'New Notification Rule' | translate }}
+      (click)="showEditRuleModal()">{{ 'New Notification Rule' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -18,30 +18,24 @@
           <div class="d-flex align-items-center justify-content-center">
             {{'ID' | translate}}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'"></i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'Id' && !rulesRequestModel.isSortDsc"></i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'Id' && rulesRequestModel.isSortDsc"></i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'Id' && !rulesRequestModel.isSortDsc"></i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'Id' && rulesRequestModel.isSortDsc"></i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="triggerTableHeader" (click)="sortTable('Trigger')">
           <div class="d-flex align-items-center justify-content-center">
             {{'Trigger' | translate}}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Trigger'"></i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'Trigger' && !rulesRequestModel.isSortDsc"></i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'Trigger' && rulesRequestModel.isSortDsc"></i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'Trigger' && !rulesRequestModel.isSortDsc"></i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'Trigger' && rulesRequestModel.isSortDsc"></i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="eventTableHeader" (click)="sortTable('Event')">
           <div class="d-flex align-items-center justify-content-center">
             {{'Event' | translate}}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Event'"></i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'Event' && !rulesRequestModel.isSortDsc"></i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'Event' && rulesRequestModel.isSortDsc"></i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'Event' && !rulesRequestModel.isSortDsc"></i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'Event' && rulesRequestModel.isSortDsc"></i>
           </div>
         </th>
 
@@ -55,18 +49,16 @@
         <td id="ruleId">
           {{rule.id}}
         </td>
-        <td id="ruleName">
+        <td id="ruleTrigger">
           {{rule.trigger}}
         </td>
-        <td id="ruleDescription">
-          {{rule.event}}
-        </td>
+        <td id="ruleDescription">E-Mail</td>
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button id="updateRuleBtn"
               class="btn btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Edit Notification Rule' | translate }}"
-                    (click)="showEditRuleModal(rule)">
+                    (click)="showEditRuleModal(rule.id)">
               <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
             <button id="deleteRuleBtn"
@@ -101,11 +93,8 @@
 
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
-<app-monitoring-pn-notification-rules-create #createRuleModal
-  (ruleCreated)="getRulesList()"
-></app-monitoring-pn-notification-rules-create>
 <app-monitoring-pn-notification-rules-edit #editRuleModal
-  (ruleUpdated)="getRulesList()"
+  (ruleSaved)="getRulesList()"
 ></app-monitoring-pn-notification-rules-edit>
 <app-monitoring-pn-notification-rules-delete #deleteRuleModal
   (ruleDeleted)="getRulesList()"

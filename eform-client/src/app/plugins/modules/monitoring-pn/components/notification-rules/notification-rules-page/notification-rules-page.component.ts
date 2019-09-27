@@ -3,7 +3,12 @@ import {PageSettingsModel} from 'src/app/common/models/settings';
 
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
 import {MonitoringPnNotificationRulesService} from '../../../services';
-import {MonitoringNotificationRuleModel, MonitoringPnNotificationRulesListModel, MonitoringRequestModel} from '../../../models';
+import {
+  MonitoringNotificationRuleSimpleModel,
+  MonitoringNotificationRulesListModel,
+  MonitoringNotificationsRequestModel
+} from '../../../models';
+import {NotificationRulesDeleteComponent, NotificationRulesEditComponent} from '..';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-page',
@@ -11,12 +16,11 @@ import {MonitoringNotificationRuleModel, MonitoringPnNotificationRulesListModel,
   styleUrls: ['./notification-rules-page.component.scss']
 })
 export class NotificationRulesPageComponent implements OnInit {
-  @ViewChild('createRuleModal') createRuleModal;
-  @ViewChild('editRuleModal') editRuleModal;
-  @ViewChild('deleteRuleModal') deleteRuleModal;
+  @ViewChild('editRuleModal') editRuleModal: NotificationRulesEditComponent;
+  @ViewChild('deleteRuleModal') deleteRuleModal: NotificationRulesDeleteComponent;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  rulesModel: MonitoringPnNotificationRulesListModel = new MonitoringPnNotificationRulesListModel();
-  rulesRequestModel: MonitoringRequestModel = new MonitoringRequestModel();
+  rulesModel: MonitoringNotificationRulesListModel = new MonitoringNotificationRulesListModel();
+  rulesRequestModel: MonitoringNotificationsRequestModel = new MonitoringNotificationsRequestModel();
   spinnerStatus = false;
 
   constructor(
@@ -57,16 +61,12 @@ export class NotificationRulesPageComponent implements OnInit {
     });
   }
 
-  showEditRuleModal(rule: MonitoringNotificationRuleModel) {
-    this.editRuleModal.show(rule);
+  showEditRuleModal(id?: number) {
+    this.editRuleModal.show(id);
   }
 
-  showDeleteRuleModal(rule: MonitoringNotificationRuleModel) {
-    this.deleteRuleModal.show(rule);
-  }
-
-  showCreateRuleModal() {
-    this.createRuleModal.show();
+  showDeleteRuleModal(model: MonitoringNotificationRuleSimpleModel) {
+    this.deleteRuleModal.show(model);
   }
 
   sortTable(sort: string) {

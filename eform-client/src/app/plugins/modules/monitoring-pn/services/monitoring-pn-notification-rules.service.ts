@@ -9,8 +9,8 @@ import {BaseService} from 'src/app/common/services/base.service';
 
 import {
   MonitoringNotificationRuleModel,
-  MonitoringPnNotificationRulesListModel,
-  MonitoringRequestModel
+  MonitoringNotificationRulesListModel,
+  MonitoringNotificationsRequestModel
 } from '../models';
 
 export let MonitoringPnNotificationRulesMethods = {
@@ -25,7 +25,7 @@ export class MonitoringPnNotificationRulesService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getRulesList(model: MonitoringRequestModel): Observable<OperationDataResult<MonitoringPnNotificationRulesListModel>> {
+  getRulesList(model: MonitoringNotificationsRequestModel): Observable<OperationDataResult<MonitoringNotificationRulesListModel>> {
     return this.get(MonitoringPnNotificationRulesMethods.Base, model);
   }
 
