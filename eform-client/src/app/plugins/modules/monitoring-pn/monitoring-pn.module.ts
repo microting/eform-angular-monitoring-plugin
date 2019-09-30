@@ -17,13 +17,11 @@ import localeDa from '@angular/common/locales/da';
 import {CasesModule} from '../../../modules';
 import {MonitoringPnNotificationRulesService, MonitoringPnSettingsService} from './services';
 import {
-  NotificationRulesCreateComponent
-} from './components/notification-rules/notification-rules-create/notification-rules-create.component';
-import {
   NotificationRulesDeleteComponent,
   NotificationRulesEditComponent,
   NotificationRulesPageComponent
 } from './components/notification-rules';
+import {MonitoringSettingsComponent} from './components/monitoring-settings';
 
 registerLocaleData(localeDa);
 
@@ -47,9 +45,9 @@ registerLocaleData(localeDa);
     CasesModule
   ],
   declarations: [
+    MonitoringSettingsComponent,
     MonitoringPnLayoutComponent,
     NotificationRulesPageComponent,
-    NotificationRulesCreateComponent,
     NotificationRulesEditComponent,
     NotificationRulesDeleteComponent
   ],

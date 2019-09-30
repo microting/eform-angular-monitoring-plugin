@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {LocaleService} from '../../../../common/services/auth';
 import {TranslateService} from '@ngx-translate/core';
 import {SharedPnService} from '../../shared/services';
+import {MonitoringPnLocalSettings} from '../const/enums/monitoring-pn-local-settings.const';
 declare var require: any;
 
 @Component({
@@ -15,6 +16,7 @@ export class MonitoringPnLayoutComponent implements  AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
+    this.sharedPnService.initLocalPageSettings('monitoringPnLocalSettings', MonitoringPnLocalSettings);
   }
 
   ngAfterViewInit() {

@@ -6,13 +6,155 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <ng-select [items]="templates"
+                           bindLabel="label"
+                           [placeholder]="('Selected template' | translate)"
+                           bindValue="id"
+                           [typeahead]="templateTypeahead"
+                           [(ngModel)]="ruleModel.templateId"
+                           (change)="onTemplateChange()"
+                           id="templateSelector">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="selectedTemplate.id">
+            <div class="row">
+              <div class="col">
+                <div class="md-form">
+                  <ng-select [items]="fields"
+                             bindLabel="label"
+                             [placeholder]="('Selected data field' | translate)"
+                             bindValue="id"
+                             [(ngModel)]="ruleModel.dataItemId"
+                             (change)="onFieldChange()"
+                             id="dataFieldSelector">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="selectedField.id">
+              <div class="col">
+                <div class="md-form">
+                  <p>{{selectedField.label}}</p>
+                  <p>{{selectedField.description}}</p>
+                  <p>IF</p>
+                  <ng-container [ngSwitch]="selectedField.fieldType">
+                    <ng-container *ngSwitchCase="supportedFieldTypes.CheckBox">
+                      <div class="mat-checkbox">
+                        <input id="selected" name="selected" type="checkbox"
+                               [(ngModel)]="asCheckboxBlock(ruleModel.data).selected">
+                        <label for="selected"></label>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="supportedFieldTypes.Number">
+                    </ng-container>
+                    <ng-container *ngSwitchCase="supportedFieldTypes.SingleSelect">
+                      <ng-container *ngTemplateOutlet="selectItems"></ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="supportedFieldTypes.MultiSelect">
+                      <ng-container *ngTemplateOutlet="selectItems"></ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="supportedFieldTypes.EntitySelect">
+                      <ng-container *ngTemplateOutlet="selectItems"></ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="supportedFieldTypes.EntitySearch">
+                      <ng-container *ngTemplateOutlet="selectItems"></ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #selectItems>
+                    <div class="mat-checkbox"
+                         *ngFor="let item of asSelectBlock(ruleModel.data).keyValuePairList">
+                      <input id="select_{{item.key}}" name="select_{{item.key}}" type="checkbox"
+                             [(ngModel)]="item.selected">
+                      <label for="select_{{item.key}}">{{item.value}}</label>
+                    </div>
+                  </ng-template>
+                  <p>THEN</p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <h5>Email</h5>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [(ngModel)]="ruleModel.subject"
+                       type="text" id="emailSubject"
+                       name="emailSubject" class="form-control" required>
+                <label for="emailSubject">{{'Email subject' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                  <textarea mdbInputDirective
+                            [mdbValidate]="false"
+                            [(ngModel)]="ruleModel.text"
+                            type="text" id="emailText"
+                            name="emailText" class="md-textarea form-control"></textarea>
+                <label for="emailText"></label>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col">
+              <div class="mat-checkbox">
+                <input id="attachReport" name="attachReport" [(ngModel)]="ruleModel.attachReport" type="checkbox">
+                <label for="attachReport">{{'Attach report' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <h5>Recipients</h5>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [(ngModel)]="recipientEmail"
+                       type="text" id="recipientEmail"
+                       name="recipientEmail" class="form-control" required>
+                <label for="recipientEmail">{{'Recipient email' | translate}}</label>
+              </div>
+            </div>
+            <div class="col-auto py-3">
+              <button class="btn btn-success" id="addRecipientBtn" (click)="addNewRecipient()">
+                <fa-icon icon="plus"></fa-icon>
+                {{ 'Add' | translate }}
+              </button>
+            </div>
+          </div>
+          <div class="row p-1 mt-2 table-responsive no-gutters">
+            <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
+              <tbody id="recipientsTableBody">
+              <tr *ngFor="let recipient of recipients; let i = index">
+                <td>{{recipient.email}}</td>
+                <td>
+                  <div class="d-flex flex-row justify-content-end">
+                    <button id="deleteItemBtn" (click)="removeRecipient(i)"
+                            class="btn btn-danger btn-icon mb-2 "
+                            mdbTooltip="{{ 'Remove recipient' | translate }}">
+                      <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
         <button id="ruleEditSaveBtn" class="btn btn-success" (click)="saveRule()">
           {{ 'Save' | translate }}
         </button>
-        <button id="ruleEditCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">
+        <button id="ruleEditCancelBtn" class="btn btn-accent text-black-50" (click)="onClose()">
           {{'Cancel' | translate}}
         </button>
       </div>

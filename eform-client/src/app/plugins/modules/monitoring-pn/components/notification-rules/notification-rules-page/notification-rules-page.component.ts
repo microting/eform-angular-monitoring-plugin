@@ -4,9 +4,9 @@ import {PageSettingsModel} from 'src/app/common/models/settings';
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
 import {MonitoringPnNotificationRulesService} from '../../../services';
 import {
-  MonitoringNotificationRuleSimpleModel,
-  MonitoringNotificationRulesListModel,
-  MonitoringNotificationsRequestModel
+  NotificationRuleSimpleModel,
+  NotificationRulesListModel,
+  NotificationsRequestModel
 } from '../../../models';
 import {NotificationRulesDeleteComponent, NotificationRulesEditComponent} from '..';
 
@@ -19,8 +19,8 @@ export class NotificationRulesPageComponent implements OnInit {
   @ViewChild('editRuleModal') editRuleModal: NotificationRulesEditComponent;
   @ViewChild('deleteRuleModal') deleteRuleModal: NotificationRulesDeleteComponent;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  rulesModel: MonitoringNotificationRulesListModel = new MonitoringNotificationRulesListModel();
-  rulesRequestModel: MonitoringNotificationsRequestModel = new MonitoringNotificationsRequestModel();
+  rulesModel: NotificationRulesListModel = new NotificationRulesListModel();
+  rulesRequestModel: NotificationsRequestModel = new NotificationsRequestModel();
   spinnerStatus = false;
 
   constructor(
@@ -33,18 +33,17 @@ export class NotificationRulesPageComponent implements OnInit {
   }
 
   getLocalPageSettings() {
-    this.localPageSettings = this.sharedPnService.getLocalPageSettings
-    ('microtingPnSettings', 'ItemLists').settings;
-    this.getAllInitialData();
-  }
-
-  updateLocalPageSettings() {
-    this.sharedPnService.updateLocalPageSettings
-    ('microtingPnSettings', this.localPageSettings, 'ItemLists');
+    this.localPageSettings =
+      this.sharedPnService.getLocalPageSettings('monitoringPnLocalSettings', 'NotificationRules').settings;
     this.getRulesList();
   }
 
-  getAllInitialData() {
+  updateLocalPageSettings() {
+    this.sharedPnService.updateLocalPageSettings(
+      'monitoringPnLocalSettings',
+      this.localPageSettings,
+      'NotificationRules'
+    );
     this.getRulesList();
   }
 
@@ -65,7 +64,7 @@ export class NotificationRulesPageComponent implements OnInit {
     this.editRuleModal.show(id);
   }
 
-  showDeleteRuleModal(model: MonitoringNotificationRuleSimpleModel) {
+  showDeleteRuleModal(model: NotificationRuleSimpleModel) {
     this.deleteRuleModal.show(model);
   }
 
