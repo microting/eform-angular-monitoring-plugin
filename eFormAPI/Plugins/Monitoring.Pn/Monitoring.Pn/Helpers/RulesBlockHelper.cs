@@ -13,11 +13,8 @@
             var result = "";
             switch (notificationRule.RuleType)
             {
-                case RuleType.SingleList:
-
-                    break;
-                case RuleType.MultiSelect:
-                    var multiSelectBlock = JsonConvert.DeserializeObject<MultiSelectBlock>(notificationRule.Data);
+                case RuleType.Select:
+                    var multiSelectBlock = JsonConvert.DeserializeObject<SelectBlock>(notificationRule.Data);
                     foreach (var item in multiSelectBlock.KeyValuePairList)
                     {
                         result += $"<p>{item.Key} ";
@@ -48,35 +45,21 @@
                     break;
                 case RuleType.Number:
                     var numberBlock = JsonConvert.DeserializeObject<NumberBlock>(notificationRule.Data);
-                    result = $"{numberBlock.Label} {NumberOperatorTypeToString(numberBlock.Type)} {numberBlock.Value}";
+
+                    if (numberBlock.GreaterThanValue != null)
+                        result += $"{numberBlock.Label} > {numberBlock.GreaterThanValue}";
+
+                    if (numberBlock.LessThanValue != null)
+                        result += $"{numberBlock.Label} < {numberBlock.LessThanValue}";
+
+                    if (numberBlock.EqualValue != null)
+                        result += $"{numberBlock.Label} = {numberBlock.EqualValue}";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             return result;
-        }
-
-
-        public static string NumberOperatorTypeToString(OperatorType type)
-        {
-            switch (type)
-            {
-                case OperatorType.EqualTo:
-                    return "=";
-                case OperatorType.NotEqualTo:
-                    return "!=";
-                case OperatorType.GreaterThan:
-                    return ">";
-                case OperatorType.LessThan:
-                    return "<";
-                case OperatorType.GreaterOrEqualThan:
-                    return ">=";
-                case OperatorType.LessOrEqualThan:
-                    return "<=";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
         }
     }
 }

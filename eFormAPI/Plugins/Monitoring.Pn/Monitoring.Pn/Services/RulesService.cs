@@ -211,11 +211,8 @@
 
                 switch (rule.RuleType)
                 {
-                    case RuleType.SingleList:
-                        // TODO
-                        break;
-                    case RuleType.MultiSelect:
-                        ruleModel.Data = JsonConvert.DeserializeObject<MultiSelectBlock>(rule.Data);
+                    case RuleType.Select:
+                        ruleModel.Data = JsonConvert.DeserializeObject<SelectBlock>(rule.Data);
                         break;
                     case RuleType.CheckBox:
                         ruleModel.Data = JsonConvert.DeserializeObject<CheckBoxBlock>(rule.Data);
