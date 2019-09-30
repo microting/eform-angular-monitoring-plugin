@@ -11,7 +11,9 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using Microting.eForm.Dto;
     using Microting.eForm.Infrastructure.Constants;
+    using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.EformMonitoringBase.Infrastructure.Data;
     using Microting.EformMonitoringBase.Infrastructure.Data.Entities;
@@ -19,23 +21,6 @@
     using Microting.EformMonitoringBase.Infrastructure.Models;
     using Microting.EformMonitoringBase.Infrastructure.Models.Blocks;
     using Newtonsoft.Json;
-
-
-    public class NotificationRuleCreateModel
-    {
-        public int TemplateId { get; set; }
-        public RuleType RuleType { get; set; }
-        public object Data { get; set; }
-        public int DataItemId { get; set; }
-        public string Subject { get; set; }
-        public string Text { get; set; }
-        public bool AttachReport { get; set; }
-        public List<string> Recipients { get; set; }
-            = new List<string>();
-    }
-
-
-
 
     public class RulesService : IRulesService
     {
@@ -294,6 +279,52 @@
                 return new OperationDataResult<NotificationRuleListsModel>(
                     false,
                     _localizationService.GetString("ErrorWhileObtainingNotificationRulesInfo"));
+            }
+        }
+
+
+        private void SetDefaultValue(IEnumerable<Element> elementLst, int itemId, string value)
+        {
+            foreach (var element in elementLst)
+            {
+                if (element is DataElement dataElement)
+                {
+                    foreach (var item in dataElement.DataItemList.Where(item => itemId == item.Id))
+                    {
+                        switch (item)
+                        {
+                            case NumberStepper numberStepper:
+                                numberStepper.DefaultValue = int.Parse(value);
+                                break;
+                            case Number number:
+                                number.DefaultValue = int.Parse(value);
+                                break;
+                            case Comment comment:
+                                comment.Value = value;
+                                break;
+                            case Text text:
+                                text.Value = value;
+                                break;
+                            case None none:
+                                var cDataValue = new CDataValue();
+                                cDataValue.InderValue = value;
+                                none.Description = cDataValue;
+                                break;
+                            case EntitySearch entitySearch:
+                                entitySearch.DefaultValue = int.Parse(value);
+                                break;
+                            case EntitySelect entitySelect:
+                                entitySelect.DefaultValue = int.Parse(value);
+                                break;
+
+                        }
+                    }
+                }
+                else
+                {
+                    var groupElement = (GroupElement)element;
+                    SetDefaultValue(groupElement.ElementList, itemId, value);
+                }
             }
         }
 
