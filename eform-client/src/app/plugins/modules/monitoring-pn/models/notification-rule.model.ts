@@ -4,7 +4,7 @@ import {BaseDataItem} from './blocks';
 
 export class NotificationRuleModel {
   id?: number;
-  templateId: number;
+  checkListId: number;
   subject: string;
   text: string;
   attachReport: boolean;

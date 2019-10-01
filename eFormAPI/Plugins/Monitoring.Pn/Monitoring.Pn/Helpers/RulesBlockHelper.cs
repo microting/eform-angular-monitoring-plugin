@@ -47,13 +47,13 @@
                     var numberBlock = JsonConvert.DeserializeObject<NumberBlock>(notificationRule.Data);
 
                     if (numberBlock.GreaterThanValue != null)
-                        result += $"{numberBlock.Label} > {numberBlock.GreaterThanValue}";
+                        result += $"<p>{numberBlock.Label} > {numberBlock.GreaterThanValue}</p>";
 
                     if (numberBlock.LessThanValue != null)
-                        result += $"{numberBlock.Label} < {numberBlock.LessThanValue}";
+                        result += $"<p>{numberBlock.Label} < {numberBlock.LessThanValue}</p>";
 
                     if (numberBlock.EqualValue != null)
-                        result += $"{numberBlock.Label} = {numberBlock.EqualValue}";
+                        result += $"<p>{numberBlock.Label} = {numberBlock.EqualValue}</p>";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

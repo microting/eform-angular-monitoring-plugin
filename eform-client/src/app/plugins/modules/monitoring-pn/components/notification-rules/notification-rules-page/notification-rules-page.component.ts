@@ -33,8 +33,9 @@ export class NotificationRulesPageComponent implements OnInit {
   }
 
   getLocalPageSettings() {
-    this.localPageSettings =
-      this.sharedPnService.getLocalPageSettings('monitoringPnLocalSettings', 'NotificationRules').settings;
+    this.localPageSettings = this.sharedPnService
+      .getLocalPageSettings('monitoringPnLocalSettings', 'NotificationRules')
+      .settings;
     this.getRulesList();
   }
 
@@ -56,7 +57,8 @@ export class NotificationRulesPageComponent implements OnInit {
     this.monitoringPnRulesService.getRulesList(this.rulesRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.rulesModel = data.model;
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
     });
   }
 

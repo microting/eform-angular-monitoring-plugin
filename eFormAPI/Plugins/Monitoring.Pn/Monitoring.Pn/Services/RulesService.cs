@@ -1,4 +1,6 @@
-﻿namespace Monitoring.Pn.Services
+﻿using System.Diagnostics;
+
+namespace Monitoring.Pn.Services
 {
     using System;
     using System.Collections.Generic;
@@ -85,6 +87,7 @@
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
+                Debugger.Break();
                 try
                 {
                     var rule = await _dbContext.Rules
@@ -102,7 +105,7 @@
                     rule.Data = ruleModel.Data.ToString();
                     rule.RuleType = ruleModel.RuleType;
                     rule.Subject = ruleModel.Subject;
-                    rule.TemplateId = ruleModel.TemplateId;
+                    rule.CheckListId = ruleModel.CheckListId;
                     rule.Text = ruleModel.Text;
                     rule.DataItemId = ruleModel.DataItemId;
 
@@ -125,34 +128,35 @@
             }
         }
 
-        public async Task<OperationResult> CreateNewRule(NotificationRuleCreateModel requestModel)
+        public async Task<OperationResult> CreateNewRule(NotificationRuleModel ruleModel)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
                 try
                 {
+                    Debugger.Break();
                     var notificationRule = new NotificationRule()
                     {
-                        Subject = requestModel.Subject,
-                        Text = requestModel.Text,
-                        AttachReport = requestModel.AttachReport,
-                        DataItemId = requestModel.DataItemId,
-                        Data = requestModel.Data.ToString(),
-                        TemplateId = requestModel.TemplateId,
-                        RuleType = requestModel.RuleType,
+                        Subject = ruleModel.Subject,
+                        Text = ruleModel.Text,
+                        AttachReport = ruleModel.AttachReport,
+                        DataItemId = ruleModel.DataItemId,
+                        Data = ruleModel.Data.ToString(),
+                        CheckListId = ruleModel.CheckListId,
+                        RuleType = ruleModel.RuleType,
                         CreatedByUserId = UserId,
                         UpdatedByUserId = UserId,
                     };
 
                     await notificationRule.Save(_dbContext);
 
-                    foreach (var recipientModel in requestModel.Recipients)
+                    foreach (var recipientModel in ruleModel.Recipients)
                     {
                         var recipient = new Recipient()
                         {
                             CreatedByUserId = UserId,
                             UpdatedByUserId = UserId,
-                            Email = recipientModel,
+                            Email = recipientModel.Email,
                             NotificationRuleId = notificationRule.Id,
                         };
                         await recipient.Save(_dbContext);
@@ -205,7 +209,7 @@
                     AttachReport = rule.AttachReport,
                     RuleType = rule.RuleType,
                     Subject = rule.Subject,
-                    TemplateId = rule.TemplateId,
+                    CheckListId = rule.CheckListId,
                     Text = rule.Text,
                 };
 
@@ -236,7 +240,7 @@
         }
 
 
-        public async Task<OperationDataResult<NotificationRuleListsModel>> GetRules(NotificationListRequestModel requestModel)
+        public async Task<OperationDataResult<NotificationRulesListModel>> GetRules(NotificationListRequestModel requestModel)
         {
             try
             {
@@ -247,33 +251,28 @@
                     .Take(requestModel.PageSize)
                     .ToListAsync();
 
-                var result = new NotificationRuleListsModel();
+                var result = new NotificationRulesListModel();
                 foreach (var rule in rules)
                 {
-                    var ruleModel = new NotificationRuleModel
+                    var ruleModel = new NotificationRuleSimpleModel
                     {
                         Id = rule.Id,
-                        AttachReport = rule.AttachReport,
-                        DataItemId = rule.DataItemId,
-                        RuleType = rule.RuleType,
-                        Subject = rule.Subject,
-                        TemplateId = rule.TemplateId,
-                        Text = rule.Text,
-                        Data = RulesBlockHelper.GetRuleTriggerString(rule),
+                        Trigger = RulesBlockHelper.GetRuleTriggerString(rule),
+                        Event = "Email"
                     };
 
-                    result.Lists.Add(ruleModel);
+                    result.Rules.Add(ruleModel);
                 }
 
                 result.Total = await _dbContext.Rules.CountAsync(x =>
                     x.WorkflowState != Constants.WorkflowStates.Removed);
 
-                return new OperationDataResult<NotificationRuleListsModel>(true, result);
+                return new OperationDataResult<NotificationRulesListModel>(true, result);
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<NotificationRuleListsModel>(
+                return new OperationDataResult<NotificationRulesListModel>(
                     false,
                     _localizationService.GetString("ErrorWhileObtainingNotificationRulesInfo"));
             }

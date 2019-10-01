@@ -20,14 +20,14 @@
             _rulesService = rulesService;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("api/monitoring-pn/rules")]
-        public async Task<OperationResult> CreateNewRule([FromBody] NotificationRuleCreateModel model)
+        public async Task<OperationResult> CreateNewRule([FromBody] NotificationRuleModel model)
         {
             return await _rulesService.CreateNewRule(model);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("api/monitoring-pn/rules")]
         public async Task<OperationResult> UpdateRule([FromBody] NotificationRuleModel model)
         {

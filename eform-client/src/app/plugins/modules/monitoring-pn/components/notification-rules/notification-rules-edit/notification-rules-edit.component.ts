@@ -1,13 +1,13 @@
 import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {EFormService} from '../../../../../../common/services/eform';
 import {MonitoringPnNotificationRulesService} from '../../../services';
-import {NotificationRuleModel, RecipientModel} from '../../../models';
+import {NotificationRuleModel} from '../../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {FieldDto} from '../../../../../../common/models/dto/field.dto';
 import {TemplateRequestModel} from '../../../../../../common/models/eforms';
 import {TemplateDto} from '../../../../../../common/models/dto';
-import {SupportedFieldTypes} from '../../../const';
-import {BaseDataItem, CheckBoxBlock, SelectBlock, NumberBlock} from '../../../models/blocks';
+import {NotificationRuleType, SupportedFieldTypes} from '../../../const';
+import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../models/blocks';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-edit',
@@ -20,7 +20,6 @@ export class NotificationRulesEditComponent implements OnInit {
 
   templateTypeahead = new EventEmitter<string>();
   recipientEmail: string;
-  recipients: RecipientModel[] = [];
   spinnerStatus = false;
 
   // Models
@@ -31,8 +30,8 @@ export class NotificationRulesEditComponent implements OnInit {
   fields: FieldDto[] = [];
   selectedField: FieldDto = new FieldDto();
 
-  get supportedFieldTypes() {
-    return SupportedFieldTypes;
+  get ruleType() {
+    return NotificationRuleType;
   }
 
   constructor(
@@ -63,7 +62,7 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   onTemplateChange() {
-    this.updateSelectedTemplate();
+    this.updateSelectedEform();
   }
 
   onFieldChange() {
@@ -71,11 +70,12 @@ export class NotificationRulesEditComponent implements OnInit {
 
     const baseDataItem = {
       label: this.selectedField.label,
-      description: this.selectedField.description
+      description: (this.selectedField.description as any).inderValue
     } as BaseDataItem;
 
     switch (this.selectedField.fieldType) {
       case SupportedFieldTypes.CheckBox:
+        this.ruleModel.ruleType = NotificationRuleType.CheckBox;
         this.ruleModel.data = {
           ...baseDataItem,
           defaultValue: false,
@@ -83,12 +83,14 @@ export class NotificationRulesEditComponent implements OnInit {
         } as CheckBoxBlock;
         break;
       case SupportedFieldTypes.Number:
+        this.ruleModel.ruleType = NotificationRuleType.Number;
         this.ruleModel.data = baseDataItem as NumberBlock;
         break;
       case SupportedFieldTypes.SingleSelect:
       case SupportedFieldTypes.MultiSelect:
       case SupportedFieldTypes.EntitySearch:
       case SupportedFieldTypes.EntitySelect:
+        this.ruleModel.ruleType = NotificationRuleType.Select;
         this.ruleModel.data = {
           ...baseDataItem,
           keyValuePairList: this.selectedField.keyValuePairList
@@ -98,6 +100,10 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   show(id?: number) {
+    this.ruleModel = new NotificationRuleModel();
+    this.selectedTemplate = new TemplateDto();
+    this.selectedField = new FieldDto();
+
     if (id) {
       this.getSelectedRule(id);
     } else {
@@ -109,7 +115,7 @@ export class NotificationRulesEditComponent implements OnInit {
         recipients: [],
         ruleType: null,
         subject: '',
-        templateId: null,
+        checkListId: null,
         text: ''
       };
     }
@@ -121,7 +127,7 @@ export class NotificationRulesEditComponent implements OnInit {
     this.monitoringRulesService.getRule(id).subscribe((data) => {
       if (data && data.success) {
         this.ruleModel = data.model;
-        this.updateSelectedTemplate();
+        this.updateSelectedEform();
       }
       this.spinnerStatus = false;
     });
@@ -134,7 +140,6 @@ export class NotificationRulesEditComponent implements OnInit {
       this.monitoringRulesService.updateRule(this.ruleModel).subscribe((data) => {
         if (data && data.success) {
           this.ruleSaved.emit();
-          this.ruleModel = new NotificationRuleModel();
           this.frame.hide();
         }
         this.spinnerStatus = false;
@@ -143,7 +148,6 @@ export class NotificationRulesEditComponent implements OnInit {
       this.monitoringRulesService.createRule(this.ruleModel).subscribe((data) => {
         if (data && data.success) {
           this.ruleSaved.emit();
-          this.ruleModel = new NotificationRuleModel();
           this.frame.hide();
         }
         this.spinnerStatus = false;
@@ -151,12 +155,12 @@ export class NotificationRulesEditComponent implements OnInit {
     }
   }
 
-  updateSelectedTemplate() {
-    if (!this.ruleModel.templateId) {
+  updateSelectedEform() {
+    if (!this.ruleModel.checkListId) {
       return;
     }
 
-    this.eFormService.getSingle(this.ruleModel.templateId).subscribe(operation => {
+    this.eFormService.getSingle(this.ruleModel.checkListId).subscribe(operation => {
       if (operation && operation.success) {
         this.selectedTemplate = operation.model;
         this.templates = [this.selectedTemplate];
@@ -164,20 +168,20 @@ export class NotificationRulesEditComponent implements OnInit {
       }
     });
 
-    this.eFormService.getFields(this.ruleModel.templateId).subscribe(operation => {
+    this.eFormService.getFields(this.ruleModel.checkListId).subscribe(operation => {
       if (operation && operation.success) {
-        this.fields = operation.model;
+        this.fields = operation.model.filter(f => Object.values(SupportedFieldTypes).includes(f.fieldType));
       }
     });
   }
 
   addNewRecipient() {
-    this.recipients.push({email: this.recipientEmail});
+    this.ruleModel.recipients.push({email: this.recipientEmail});
     this.recipientEmail = '';
   }
 
   removeRecipient(i: number) {
-    this.recipients.splice(i, 1);
+    this.ruleModel.recipients.splice(i, 1);
   }
 
   asCheckboxBlock(item: BaseDataItem) {
