@@ -1,6 +1,7 @@
 ﻿namespace Monitoring.Pn.Helpers
 {
     using System;
+    using System.Linq;
     using Microting.EformMonitoringBase.Infrastructure.Data.Entities;
     using Microting.EformMonitoringBase.Infrastructure.Enums;
     using Microting.EformMonitoringBase.Infrastructure.Models.Blocks;
@@ -15,33 +16,14 @@
             {
                 case RuleType.Select:
                     var multiSelectBlock = JsonConvert.DeserializeObject<SelectBlock>(notificationRule.Data);
-                    foreach (var item in multiSelectBlock.KeyValuePairList)
-                    {
-                        result += $"<p>{item.Key} ";
-
-                        if (item.Selected)
-                        {
-                            result += "Checked";
-                        }
-                        else
-                        {
-                            result += "Not Checked";
-                        }
-
-                        result += "</p>";
-                    }
+                    result = multiSelectBlock.KeyValuePairList
+                        .Where(i => i.Selected)
+                        .Aggregate(result, (current, item) => current + $"<p>{multiSelectBlock.Label} = {item.Value}</p>");
                     break;
                 case RuleType.CheckBox:
                     var checkBoxBlock = JsonConvert.DeserializeObject<CheckBoxBlock>(notificationRule.Data);
-                    result = $"{checkBoxBlock.Label} = ";
-                    if (checkBoxBlock.Selected)
-                    {
-                        result += "Checked";
-                    }
-                    else
-                    {
-                        result += "Not Checked";
-                    }
+                    var checkboxState = checkBoxBlock.Selected ? "Checked" : "Not Checked";
+                    result = $"<p>{checkBoxBlock.Label} = {checkboxState}</p>";
                     break;
                 case RuleType.Number:
                     var numberBlock = JsonConvert.DeserializeObject<NumberBlock>(notificationRule.Data);

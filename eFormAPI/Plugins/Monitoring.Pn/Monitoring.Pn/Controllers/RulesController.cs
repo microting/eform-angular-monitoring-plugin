@@ -8,7 +8,6 @@
     using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.EformMonitoringBase.Infrastructure.Models;
-    using Services;
 
     [Authorize(Roles = EformRole.Admin)]
     public class RulesController : Controller

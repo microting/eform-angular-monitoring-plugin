@@ -160,19 +160,22 @@ export class NotificationRulesEditComponent implements OnInit {
       return;
     }
 
-    this.eFormService.getSingle(this.ruleModel.checkListId).subscribe(operation => {
-      if (operation && operation.success) {
-        this.selectedTemplate = operation.model;
+    this.spinnerStatus = true;
+    this.eFormService.getSingle(this.ruleModel.checkListId).subscribe(formOp => {
+      if (formOp && formOp.success) {
+        this.selectedTemplate = formOp.model;
         this.templates = [this.selectedTemplate];
-        this.cd.markForCheck();
+
+        this.eFormService.getFields(this.ruleModel.checkListId).subscribe(fieldsOp => {
+          if (fieldsOp && fieldsOp.success) {
+            this.fields = fieldsOp.model.filter(f => Object.values(SupportedFieldTypes).includes(f.fieldType));
+            //this.selectedField = this.fields.find(f => f.id === this.ruleModel.dataItemId);
+          }
+          this.spinnerStatus = false;
+        });
       }
     });
 
-    this.eFormService.getFields(this.ruleModel.checkListId).subscribe(operation => {
-      if (operation && operation.success) {
-        this.fields = operation.model.filter(f => Object.values(SupportedFieldTypes).includes(f.fieldType));
-      }
-    });
   }
 
   addNewRecipient() {

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Monitoring.Pn.Services
+﻿namespace Monitoring.Pn.Services
 {
     using System;
     using System.Collections.Generic;
@@ -87,7 +85,6 @@ namespace Monitoring.Pn.Services
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                Debugger.Break();
                 try
                 {
                     var rule = await _dbContext.Rules
@@ -111,8 +108,20 @@ namespace Monitoring.Pn.Services
 
                     await rule.Update(_dbContext);
 
-                    // TODO update recipients
+                    foreach (var recipientModel in ruleModel.Recipients.Where(r => r.Id == null))
+                    {
+                        var recipient = new Recipient
+                        {
+                            Email = recipientModel.Email,
+                            NotificationRuleId = rule.Id,
+                            CreatedByUserId = UserId,
+                            UpdatedByUserId = UserId
+                        };
 
+                        await recipient.Save(_dbContext);
+                    }
+
+                    transaction.Commit();
                     return new OperationResult(
                         true, 
                         _localizationService.GetString("NotificationRuleHasBeenUpdated"));
@@ -134,7 +143,6 @@ namespace Monitoring.Pn.Services
             {
                 try
                 {
-                    Debugger.Break();
                     var notificationRule = new NotificationRule()
                     {
                         Subject = ruleModel.Subject,
@@ -205,12 +213,14 @@ namespace Monitoring.Pn.Services
 
                 var ruleModel = new NotificationRuleModel()
                 {
-                    Recipients = recipients,
-                    AttachReport = rule.AttachReport,
-                    RuleType = rule.RuleType,
-                    Subject = rule.Subject,
+                    Id = rule.Id,
                     CheckListId = rule.CheckListId,
+                    DataItemId = rule.DataItemId,
+                    RuleType = rule.RuleType,
+                    AttachReport = rule.AttachReport,
+                    Subject = rule.Subject,
                     Text = rule.Text,
+                    Recipients = recipients
                 };
 
                 switch (rule.RuleType)

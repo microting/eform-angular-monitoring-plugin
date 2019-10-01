@@ -48,7 +48,9 @@
         <tbody id="tableBody">
         <tr *ngFor="let rule of rulesModel.rules">
           <td id="ruleId">{{rule.id}}</td>
-          <td id="ruleTrigger">{{rule.trigger}}</td>
+          <td id="ruleTrigger">
+            <div class="mt-3" [innerHTML]="rule.trigger"></div>
+          </td>
           <td id="ruleDescription">{{rule.event}}</td>
           <td>
             <div class="d-flex flex-row justify-content-center">
