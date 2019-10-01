@@ -169,7 +169,6 @@ export class NotificationRulesEditComponent implements OnInit {
         this.eFormService.getFields(this.ruleModel.checkListId).subscribe(fieldsOp => {
           if (fieldsOp && fieldsOp.success) {
             this.fields = fieldsOp.model.filter(f => Object.values(SupportedFieldTypes).includes(f.fieldType));
-            //this.selectedField = this.fields.find(f => f.id === this.ruleModel.dataItemId);
           }
           this.spinnerStatus = false;
         });

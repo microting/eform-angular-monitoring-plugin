@@ -1,8 +1,6 @@
-import {Router} from '@angular/router';
-
 import {Component, OnInit} from '@angular/core';
-import {MonitoringBaseSettingsModel} from '../../models/monitoring-base-settings.model';
 import {MonitoringPnSettingsService} from '../../services';
+import {MonitoringBaseSettingsModel} from '../../models';
 
 @Component({
   selector: 'app-monitoring-settings',
@@ -13,7 +11,7 @@ export class MonitoringSettingsComponent implements OnInit {
   spinnerStatus = false;
   settingsModel: MonitoringBaseSettingsModel = new MonitoringBaseSettingsModel();
 
-  constructor(private monitoringPnSettingsService: MonitoringPnSettingsService, private router: Router) {
+  constructor(private monitoringPnSettingsService: MonitoringPnSettingsService) {
   }
 
   ngOnInit() {
@@ -26,17 +24,16 @@ export class MonitoringSettingsComponent implements OnInit {
     this.monitoringPnSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {
         this.settingsModel = data.model;
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
     });
   }
 
   updateSettings() {
     this.spinnerStatus = true;
     this.monitoringPnSettingsService.updateSettings(this.settingsModel)
-      .subscribe((data) => {
-        if (data && data.success) {
-
-        } this.spinnerStatus = false;
+      .subscribe(() => {
+        this.spinnerStatus = false;
       });
   }
 }
