@@ -19,16 +19,11 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.6" />
     <PackageReference Include="Microting.eForm" Version="3.0.285" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.168" />
+    <PackageReference Include="Microting.EformMonitoringBase" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\localization.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microting.EformMonitoringBase">
-      <HintPath>..\..\..\..\..\eform-monitoring-base\Microting.EformMonitoringBase\bin\Debug\netcoreapp2.2\Microting.EformMonitoringBase.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
