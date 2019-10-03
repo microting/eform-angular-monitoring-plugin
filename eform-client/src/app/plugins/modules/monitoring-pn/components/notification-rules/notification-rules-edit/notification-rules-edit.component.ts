@@ -129,7 +129,6 @@ export class NotificationRulesEditComponent implements OnInit {
         this.ruleModel = data.model;
         this.updateSelectedEform();
       }
-      this.spinnerStatus = false;
     });
   }
 

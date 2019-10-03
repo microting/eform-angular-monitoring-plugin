@@ -108,6 +108,15 @@
 
                     await rule.Update(_dbContext);
 
+                    var recipientsDelete = await _dbContext.Recipients
+                        .Where(r => r.NotificationRuleId == rule.Id && ruleModel.Recipients.All(rm => rm.Id != r.Id))
+                        .ToListAsync();
+
+                    foreach (var rd in recipientsDelete)
+                    {
+                        await rd.Delete(_dbContext);
+                    }
+                    
                     foreach (var recipientModel in ruleModel.Recipients.Where(r => r.Id == null))
                     {
                         var recipient = new Recipient
