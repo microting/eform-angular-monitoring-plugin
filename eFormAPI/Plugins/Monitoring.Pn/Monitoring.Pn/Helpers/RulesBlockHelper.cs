@@ -12,21 +12,25 @@
         public static string GetRuleTriggerString(NotificationRule notificationRule)
         {
             var result = "";
+            var jsonSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Include
+            };
             switch (notificationRule.RuleType)
             {
                 case RuleType.Select:
-                    var multiSelectBlock = JsonConvert.DeserializeObject<SelectBlock>(notificationRule.Data);
+                    var multiSelectBlock = JsonConvert.DeserializeObject<SelectBlock>(notificationRule.Data, jsonSettings);
                     result = multiSelectBlock.KeyValuePairList
                         .Where(i => i.Selected)
                         .Aggregate(result, (current, item) => current + $"<p>{multiSelectBlock.Label} = {item.Value}</p>");
                     break;
                 case RuleType.CheckBox:
-                    var checkBoxBlock = JsonConvert.DeserializeObject<CheckBoxBlock>(notificationRule.Data);
+                    var checkBoxBlock = JsonConvert.DeserializeObject<CheckBoxBlock>(notificationRule.Data, jsonSettings);
                     var checkboxState = checkBoxBlock.Selected ? "Checked" : "Not Checked";
                     result = $"<p>{checkBoxBlock.Label} = {checkboxState}</p>";
                     break;
                 case RuleType.Number:
-                    var numberBlock = JsonConvert.DeserializeObject<NumberBlock>(notificationRule.Data);
+                    var numberBlock = JsonConvert.DeserializeObject<NumberBlock>(notificationRule.Data, jsonSettings);
 
                     if (numberBlock.GreaterThanValue != null)
                         result += $"<p>{numberBlock.Label} > {numberBlock.GreaterThanValue}</p>";

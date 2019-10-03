@@ -22,6 +22,21 @@ namespace Monitoring.Pn.Infrastructure.Data.Seed.Data
                 Name = "MonitoringBaseSettings:SdkConnectionString",
                 Value = "..."
             },
+            new PluginConfigurationValue()
+            {
+                Name = "MonitoringBaseSettings:SendGridApiKey",
+                Value = ""
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "MonitoringBaseSettings:FromEmailAddress",
+                Value = ""
+            },
+            new PluginConfigurationValue()
+            {
+                Name = "MonitoringBaseSettings:FromEmailName",
+                Value = ""
+            },
         };
     }
 }

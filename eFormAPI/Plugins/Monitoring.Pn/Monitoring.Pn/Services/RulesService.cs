@@ -232,16 +232,21 @@
                     Recipients = recipients
                 };
 
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Include
+                };
+
                 switch (rule.RuleType)
                 {
                     case RuleType.Select:
-                        ruleModel.Data = JsonConvert.DeserializeObject<SelectBlock>(rule.Data);
+                        ruleModel.Data = JsonConvert.DeserializeObject<SelectBlock>(rule.Data, jsonSettings);
                         break;
                     case RuleType.CheckBox:
-                        ruleModel.Data = JsonConvert.DeserializeObject<CheckBoxBlock>(rule.Data);
+                        ruleModel.Data = JsonConvert.DeserializeObject<CheckBoxBlock>(rule.Data, jsonSettings);
                         break;
                     case RuleType.Number:
-                        ruleModel.Data = JsonConvert.DeserializeObject<NumberBlock>(rule.Data);
+                        ruleModel.Data = JsonConvert.DeserializeObject<NumberBlock>(rule.Data, jsonSettings);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
