@@ -7,38 +7,32 @@ using Monitoring.Pn.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.EformMonitoringBase.Infrastructure.Data;
+using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
 
 namespace Monitoring.Pn.Services
 {
-    using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
-
     public class MonitoringPnSettingsService :IMonitoringPnSettingsService
     {
         private readonly ILogger<MonitoringPnSettingsService> _logger;
-        private readonly IMonitoringLocalizationService _trashInspectionLocalizationService;
+        private readonly IMonitoringLocalizationService _monitoringLocalizationService;
         private readonly EformMonitoringPnDbContext _dbContext;
-        private readonly IEFormCoreService _coreHelper;
         private readonly IPluginDbOptions<MonitoringBaseSettings> _options;
-        private readonly string _connectionString;
         private readonly IHttpContextAccessor _httpContextAccessor;
         
         public MonitoringPnSettingsService(ILogger<MonitoringPnSettingsService> logger,
-            IMonitoringLocalizationService trashInspectionLocalizationService,
+            IMonitoringLocalizationService monitoringLocalizationService,
             EformMonitoringPnDbContext dbContext,
             IPluginDbOptions<MonitoringBaseSettings> options,
-            IEFormCoreService coreHelper,
             IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _dbContext = dbContext;
-            _coreHelper = coreHelper;
             _options = options;
             _httpContextAccessor = httpContextAccessor;
-            _trashInspectionLocalizationService = trashInspectionLocalizationService;
+            _monitoringLocalizationService = monitoringLocalizationService;
         }
         
         public async Task<OperationDataResult<MonitoringBaseSettings>> GetSettings()
@@ -47,7 +41,7 @@ namespace Monitoring.Pn.Services
             {
                 var option = _options.Value;
 
-                if (option.SdkConnectionString == "...")
+                if (option?.SdkConnectionString == "...")
                 {
                     var connectionString = _dbContext.Database.GetDbConnection().ConnectionString;
 
@@ -65,7 +59,7 @@ namespace Monitoring.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<MonitoringBaseSettings>(false,
-                    _trashInspectionLocalizationService.GetString("ErrorWhileObtainingMonitoringSettings"));
+                    _monitoringLocalizationService.GetString("ErrorWhileObtainingMonitoringSettings"));
             }
         }
 
@@ -73,21 +67,25 @@ namespace Monitoring.Pn.Services
         {
             try
             {
+                Debugger.Break();
                 await _options.UpdateDb(settings =>
                 {
                     settings.LogLevel = monitoringBaseSettings.LogLevel;
                     settings.LogLimit = monitoringBaseSettings.LogLimit;
                     settings.SdkConnectionString = monitoringBaseSettings.SdkConnectionString;
+                    settings.SendGridApiKey = monitoringBaseSettings.SendGridApiKey;
+                    settings.FromEmailAddress = monitoringBaseSettings.FromEmailAddress;
+                    settings.FromEmailName = monitoringBaseSettings.FromEmailName;
                 }, _dbContext, UserId);
 
                 return new OperationResult(true,
-                    _trashInspectionLocalizationService.GetString("SettingsHaveBeenUpdatedSuccessfully"));
+                    _monitoringLocalizationService.GetString("SettingsHaveBeenUpdatedSuccessfully"));
             }
             catch(Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationResult(false, _trashInspectionLocalizationService.GetString("ErrorWhileUpdatingSettings"));
+                return new OperationResult(false, _monitoringLocalizationService.GetString("ErrorWhileUpdatingSettings"));
             }
         }
         
