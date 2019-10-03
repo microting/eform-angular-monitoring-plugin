@@ -67,7 +67,6 @@ namespace Monitoring.Pn.Services
         {
             try
             {
-                Debugger.Break();
                 await _options.UpdateDb(settings =>
                 {
                     settings.LogLevel = monitoringBaseSettings.LogLevel;

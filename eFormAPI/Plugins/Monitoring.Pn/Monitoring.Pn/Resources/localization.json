@@ -68,5 +68,26 @@
       "da": "Underretningsregel er blevet opdateret",
       "en-US": "Notification rule has been updated"
     }
+  },
+  {
+    "Key": "ErrorWhileObtainingMonitoringSettings",
+    "LocalizedValue": {
+      "da": "Fejl under opnåelse af overvågningsindstillinger",
+      "en-US": "Error while obtaining monitoring settings"
+    }
+  },
+  {
+    "Key": "SettingsHaveBeenUpdatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Indstillinger er blevet opdateret med succes",
+      "en-US": "Settings have been updated successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingSettings",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af indstillinger",
+      "en-US": "Error while updating settings"
+    }
   }
 ]
