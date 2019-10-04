@@ -40,7 +40,7 @@
               <div class="row" *ngIf="ruleModel.data">
                 <div class="col">
                   <p>{{ruleModel.data.label}}</p>
-                  <p>{{ruleModel.data.description}}</p>
+                  <p [innerHTML]="ruleModel.data.description"></p>
                   <p>IF</p>
                   <div class="mb-4">
                     <ng-container [ngSwitch]="ruleModel.ruleType">
@@ -61,7 +61,7 @@
                               <input mdbInputDirective
                                      [mdbValidate]="false"
                                      [(ngModel)]="asNumberBlock(ruleModel.data).greaterThanValue"
-                                     type="text" id="greaterThanValue"
+                                     type="number" id="greaterThanValue"
                                      name="greaterThanValue" class="form-control">
                               <label for="greaterThanValue"></label>
                             </div>
@@ -72,7 +72,7 @@
                               <input mdbInputDirective
                                      [mdbValidate]="false"
                                      [(ngModel)]="asNumberBlock(ruleModel.data).lessThanValue"
-                                     type="text" id="lessThanValue"
+                                     type="number" id="lessThanValue"
                                      name="lessThanValue" class="form-control">
                               <label for="lessThanValue"></label>
                             </div>
@@ -83,7 +83,7 @@
                               <input mdbInputDirective
                                      [mdbValidate]="false"
                                      [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
-                                     type="text" id="equalValue"
+                                     type="number" id="equalValue"
                                      name="equalValue" class="form-control">
                               <label for="equalValue"></label>
                             </div>

@@ -5,9 +5,10 @@ import {NotificationRuleModel} from '../../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {FieldDto} from '../../../../../../common/models/dto/field.dto';
 import {TemplateRequestModel} from '../../../../../../common/models/eforms';
-import {TemplateDto} from '../../../../../../common/models/dto';
+import {KeyValuePairDto, TemplateDto} from '../../../../../../common/models/dto';
 import {NotificationRuleType, SupportedFieldTypes} from '../../../const';
 import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../models/blocks';
+import {EntitySelectService} from '../../../../../../common/services/advanced';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-edit',
@@ -37,6 +38,7 @@ export class NotificationRulesEditComponent implements OnInit {
   constructor(
     private monitoringRulesService: MonitoringPnNotificationRulesService,
     private eFormService: EFormService,
+    private entitySelectService: EntitySelectService,
     private cd: ChangeDetectorRef
   ) {
     this.templateTypeahead
@@ -88,13 +90,29 @@ export class NotificationRulesEditComponent implements OnInit {
         break;
       case SupportedFieldTypes.SingleSelect:
       case SupportedFieldTypes.MultiSelect:
-      case SupportedFieldTypes.EntitySearch:
-      case SupportedFieldTypes.EntitySelect:
         this.ruleModel.ruleType = NotificationRuleType.Select;
         this.ruleModel.data = {
           ...baseDataItem,
           keyValuePairList: this.selectedField.keyValuePairList
         } as SelectBlock;
+        break;
+      case SupportedFieldTypes.EntitySearch:
+      case SupportedFieldTypes.EntitySelect:
+        this.ruleModel.ruleType = NotificationRuleType.Entity;
+        this.ruleModel.data = {
+          ...baseDataItem,
+          keyValuePairList: []
+        } as SelectBlock;
+        this.entitySelectService.getEntitySelectableGroupDictionary(this.selectedField.entityGroupId).subscribe(operation => {
+          (this.ruleModel.data as SelectBlock).keyValuePairList = operation.model.map<KeyValuePairDto>(
+            x => ({
+              key: x.id,
+              value: x.text,
+              selected: false,
+              displayOrder: ''
+            })
+          );
+        });
         break;
     }
   }
@@ -134,7 +152,6 @@ export class NotificationRulesEditComponent implements OnInit {
 
   saveRule() {
     this.spinnerStatus = true;
-
     if (this.ruleModel.id) {
       this.monitoringRulesService.updateRule(this.ruleModel).subscribe((data) => {
         if (data && data.success) {

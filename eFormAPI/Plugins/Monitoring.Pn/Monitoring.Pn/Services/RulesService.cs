@@ -1,7 +1,6 @@
 ﻿namespace Monitoring.Pn.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -11,9 +10,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
-    using Microting.eForm.Dto;
     using Microting.eForm.Infrastructure.Constants;
-    using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.EformMonitoringBase.Infrastructure.Data;
     using Microting.EformMonitoringBase.Infrastructure.Data.Entities;
@@ -299,52 +296,6 @@
                 return new OperationDataResult<NotificationRulesListModel>(
                     false,
                     _localizationService.GetString("ErrorWhileObtainingNotificationRulesInfo"));
-            }
-        }
-
-
-        private void SetDefaultValue(IEnumerable<Element> elementLst, int itemId, string value)
-        {
-            foreach (var element in elementLst)
-            {
-                if (element is DataElement dataElement)
-                {
-                    foreach (var item in dataElement.DataItemList.Where(item => itemId == item.Id))
-                    {
-                        switch (item)
-                        {
-                            case NumberStepper numberStepper:
-                                numberStepper.DefaultValue = int.Parse(value);
-                                break;
-                            case Number number:
-                                number.DefaultValue = int.Parse(value);
-                                break;
-                            case Comment comment:
-                                comment.Value = value;
-                                break;
-                            case Text text:
-                                text.Value = value;
-                                break;
-                            case None none:
-                                var cDataValue = new CDataValue();
-                                cDataValue.InderValue = value;
-                                none.Description = cDataValue;
-                                break;
-                            case EntitySearch entitySearch:
-                                entitySearch.DefaultValue = int.Parse(value);
-                                break;
-                            case EntitySelect entitySelect:
-                                entitySelect.DefaultValue = int.Parse(value);
-                                break;
-
-                        }
-                    }
-                }
-                else
-                {
-                    var groupElement = (GroupElement)element;
-                    SetDefaultValue(groupElement.ElementList, itemId, value);
-                }
             }
         }
 
