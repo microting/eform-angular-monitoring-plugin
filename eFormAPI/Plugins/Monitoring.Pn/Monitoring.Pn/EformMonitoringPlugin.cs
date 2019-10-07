@@ -108,7 +108,7 @@ namespace Monitoring.Pn
                 {
                     new MenuItemModel()
                     {
-                        Name = localizationService.GetString("Notification rules"),
+                        Name = localizationService.GetString("NotificationRules"),
                         E2EId = "monitoring-pn-calendar",
                         Link = "/plugins/monitoring-pn/notification-rules",
                         Position = 0,

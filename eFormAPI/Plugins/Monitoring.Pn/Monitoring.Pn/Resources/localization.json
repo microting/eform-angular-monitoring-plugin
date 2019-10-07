@@ -7,6 +7,13 @@
     }
   },
   {
+    "Key": "NotificationRules",
+    "LocalizedValue": {
+      "da": "Underretningsregler",
+      "en-US": "Notification rules"
+    }
+  },
+  {
     "Key": "Settings",
     "LocalizedValue": {
       "da": "Indstillinger",
