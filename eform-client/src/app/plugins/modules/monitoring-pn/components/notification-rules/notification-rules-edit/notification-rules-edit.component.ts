@@ -98,7 +98,7 @@ export class NotificationRulesEditComponent implements OnInit {
         break;
       case SupportedFieldTypes.EntitySearch:
       case SupportedFieldTypes.EntitySelect:
-        this.ruleModel.ruleType = NotificationRuleType.Entity;
+        this.ruleModel.ruleType = NotificationRuleType.Select;
         this.ruleModel.data = {
           ...baseDataItem,
           keyValuePairList: []
