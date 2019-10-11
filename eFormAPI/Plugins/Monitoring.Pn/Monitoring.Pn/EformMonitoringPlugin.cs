@@ -27,6 +27,7 @@ namespace Monitoring.Pn
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Abstractions;
     using Infrastructure.Data.Seed;
     using Infrastructure.Data.Seed.Data;
@@ -36,6 +37,7 @@ namespace Monitoring.Pn
     using Microsoft.Extensions.DependencyInjection;
     using Microting.eFormApi.BasePn;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Microting.eFormApi.BasePn.Infrastructure.Settings;
     using Microting.EformMonitoringBase.Infrastructure.Data;
@@ -48,6 +50,11 @@ namespace Monitoring.Pn
         public string Name => "Microting Monitoring Plugin";
         public string PluginId => "eform-angular-monitoring-plugin";
         public string PluginPath => PluginAssembly().Location;
+        public string PluginBaseUrl => "monitoring-pn";
+
+        private EformMonitoringPnDbContext _context;
+
+        private PluginPermissionsHelper _permissionsHelper;
 
         public Assembly PluginAssembly()
         {
@@ -86,8 +93,11 @@ namespace Monitoring.Pn
             }
 
             var contextFactory = new EformMonitoringPnDbContextFactory();
-            var context = contextFactory.CreateDbContext(new[] {connectionString});
-            context.Database.Migrate();
+            _context = contextFactory.CreateDbContext(new[] {connectionString});
+            _context.Database.Migrate();
+
+            _permissionsHelper = new PluginPermissionsHelper(_context);
+
 
             // Seed database
             SeedDatabase(connectionString);
@@ -112,13 +122,6 @@ namespace Monitoring.Pn
                         E2EId = "monitoring-pn-calendar",
                         Link = "/plugins/monitoring-pn/notification-rules",
                         Position = 0,
-                    },
-                    new MenuItemModel()
-                    {
-                        Name = localizationService.GetString("Settings"),
-                        E2EId = "monitoring-pn-settings",
-                        Link = "/plugins/monitoring-pn/settings",
-                        Position = 1,
                     }
                 }
             });
@@ -142,6 +145,21 @@ namespace Monitoring.Pn
                 connectionString, 
                 seedData, 
                 contextFactory);
+        }
+
+        public async Task<ICollection<PluginPermissionModel>> GetPluginPermissions()
+        {
+            return await _permissionsHelper.GetPluginPermissions();
+        }
+
+        public async Task<ICollection<PluginGroupPermissionModel>> GetPluginGroupPermissions(int? groupId = null)
+        {
+            return await _permissionsHelper.GetPluginGroupPermissions(groupId);
+        }
+
+        public async void SetPluginGroupPermissions(ICollection<PluginGroupPermissionModel> permissions)
+        {
+            await _permissionsHelper.SetPluginGroupPermissions(permissions);
         }
     }
 }

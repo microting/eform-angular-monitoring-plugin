@@ -2,7 +2,7 @@
   {
     "Key": "Monitoring",
     "LocalizedValue": {
-      "da": "Overvågning",
+      "da": "OvervÃ¥gning",
       "en-US": "Monitoring"
     }
   },
@@ -79,7 +79,7 @@
   {
     "Key": "ErrorWhileObtainingMonitoringSettings",
     "LocalizedValue": {
-      "da": "Fejl under opnåelse af overvågningsindstillinger",
+      "da": "Fejl under opnÃ¥else af overvÃ¥gningsindstillinger",
       "en-US": "Error while obtaining monitoring settings"
     }
   },
