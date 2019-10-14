@@ -27,7 +27,6 @@ namespace Monitoring.Pn
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using System.Threading.Tasks;
     using Abstractions;
     using Infrastructure.Data.Seed;
     using Infrastructure.Data.Seed.Data;
@@ -51,10 +50,6 @@ namespace Monitoring.Pn
         public string PluginId => "eform-angular-monitoring-plugin";
         public string PluginPath => PluginAssembly().Location;
         public string PluginBaseUrl => "monitoring-pn";
-
-        private EformMonitoringPnDbContext _context;
-
-        private PluginPermissionsHelper _permissionsHelper;
 
         public Assembly PluginAssembly()
         {
@@ -93,10 +88,9 @@ namespace Monitoring.Pn
             }
 
             var contextFactory = new EformMonitoringPnDbContextFactory();
-            _context = contextFactory.CreateDbContext(new[] {connectionString});
-            _context.Database.Migrate();
+            var context = contextFactory.CreateDbContext(new[] {connectionString});
 
-            _permissionsHelper = new PluginPermissionsHelper(_context);
+            context.Database.Migrate();
 
 
             // Seed database
@@ -147,19 +141,12 @@ namespace Monitoring.Pn
                 contextFactory);
         }
 
-        public async Task<ICollection<PluginPermissionModel>> GetPluginPermissions()
+        public PluginPermissionsHelper GetPermissionsHelper(string connectionString)
         {
-            return await _permissionsHelper.GetPluginPermissions();
-        }
+            var contextFactory = new EformMonitoringPnDbContextFactory();
+            var context = contextFactory.CreateDbContext(new[] { connectionString });
 
-        public async Task<ICollection<PluginGroupPermissionModel>> GetPluginGroupPermissions(int? groupId = null)
-        {
-            return await _permissionsHelper.GetPluginGroupPermissions(groupId);
-        }
-
-        public async void SetPluginGroupPermissions(ICollection<PluginGroupPermissionModel> permissions)
-        {
-            await _permissionsHelper.SetPluginGroupPermissions(permissions);
+            return new PluginPermissionsHelper(context);
         }
     }
 }
