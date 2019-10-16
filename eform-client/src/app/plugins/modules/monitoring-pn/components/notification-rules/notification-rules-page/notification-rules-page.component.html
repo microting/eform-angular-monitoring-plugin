@@ -1,6 +1,6 @@
 <subheader-pn [title]="'Notification Rules' | translate">
   <div class="p-3">
-    <button
+    <button *ngIf="pluginClaimsHelper.check(monitoringPnClaims.createNotificationRules)"
       id="ruleCreateBtn"
       class="btn btn-success"
       mdbTooltip="{{ 'Create Notification Rule' | translate }}"
@@ -40,7 +40,8 @@
             </div>
           </th>
 
-          <th scope="col">
+          <th scope="col" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)
+              || pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)">
             {{ 'Actions' | translate }}
           </th>
         </tr>
@@ -52,15 +53,16 @@
             <div class="mt-3" [innerHTML]="rule.trigger"></div>
           </td>
           <td id="ruleDescription">{{rule.event}}</td>
-          <td>
+          <td *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)
+              || pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)">
             <div class="d-flex flex-row justify-content-center">
-              <button id="updateRuleBtn"
+              <button id="updateRuleBtn" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)"
                       class="btn btn-accent text-black-50 btn-icon mb-2"
                       mdbTooltip="{{ 'Edit Notification Rule' | translate }}"
                       (click)="showEditRuleModal(rule.id)">
                 <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
-              <button id="deleteRuleBtn"
+              <button id="deleteRuleBtn" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)"
                       class="btn btn-danger btn-icon mb-2 "
                       mdbTooltip="{{ 'Delete Notification Rule' | translate }}"
                       (click)="showDeleteRuleModal(rule)">
