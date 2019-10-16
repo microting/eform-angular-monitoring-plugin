@@ -22,7 +22,7 @@ On front-end part plugins will be included into `eform-client/src/app/plugins/mo
     ...
 },
 {
-    path: 'outer-inner-resource-pn',
+    path: 'monitoring-pn',
     canActivate: [AuthGuard],
     loadChildren: './modules/monitoring-pn/monitoring-pn.module#MonitoringPnModule'
 }
