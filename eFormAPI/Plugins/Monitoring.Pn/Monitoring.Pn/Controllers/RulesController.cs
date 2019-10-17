@@ -20,14 +20,14 @@
         }
 
         [HttpGet("api/monitoring-pn/rules")]
-        [Authorize(Policy = MonitoringClaims.ReadNotificationRules)]
+        [Authorize(Policy = MonitoringClaims.AccessMonitoringPlugin)]
         public async Task<OperationResult> GetRules(NotificationListRequestModel requestModel)
         {
             return await _rulesService.GetRules(requestModel);
         }
 
         [HttpGet("api/monitoring-pn/rules/{id}")]
-        [Authorize(Policy = MonitoringClaims.ReadNotificationRules)]
+        [Authorize(Policy = MonitoringClaims.AccessMonitoringPlugin)]
         public async Task<OperationResult> GetRuleById(int id)
         {
             return await _rulesService.GetRuleById(id);
