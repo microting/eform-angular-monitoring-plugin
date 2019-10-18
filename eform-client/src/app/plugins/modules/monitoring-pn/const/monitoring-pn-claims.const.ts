@@ -1,5 +1,5 @@
 export const MonitoringPnClaims = {
-  readNotificationRules: 'notification_rules_read',
+  accessMonitoringPlugin: 'monitoring_plugin_access',
   createNotificationRules: 'notification_rules_create',
   updateNotificationRules: 'notification_rules_update',
   deleteNotificationRules: 'notification_rules_delete'

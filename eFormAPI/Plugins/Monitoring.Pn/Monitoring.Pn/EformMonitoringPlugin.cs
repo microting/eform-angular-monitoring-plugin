@@ -108,7 +108,7 @@ namespace Monitoring.Pn
                 Name = localizationService.GetString("Monitoring"),
                 E2EId = "",
                 Link = "",
-                Guards = new List<string>() { MonitoringClaims.ReadNotificationRules },
+                Guards = new List<string>() { MonitoringClaims.AccessMonitoringPlugin },
                 MenuItems = new List<MenuItemModel>()
                 {
                     new MenuItemModel()
@@ -116,8 +116,7 @@ namespace Monitoring.Pn
                         Name = localizationService.GetString("NotificationRules"),
                         E2EId = "monitoring-pn-calendar",
                         Link = "/plugins/monitoring-pn/notification-rules",
-                        Position = 0,
-                        Guards = new List<string>() { MonitoringClaims.ReadNotificationRules },
+                        Position = 0
                     }
                 }
             });
