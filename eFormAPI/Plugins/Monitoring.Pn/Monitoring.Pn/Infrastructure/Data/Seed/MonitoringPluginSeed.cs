@@ -35,11 +35,10 @@ namespace Monitoring.Pn.Infrastructure.Data.Seed
     {
         public static void SeedData(EformMonitoringPnDbContext dbContext)
         {
-            var seedData = new MonitoringConfigurationSeedData();
-            var configurationList = seedData.Data;
-            foreach (var configurationItem in configurationList)
+            var configurationSeedData = new MonitoringConfigurationSeedData();
+            foreach (var configurationItem in configurationSeedData.Data)
             {
-                if (!dbContext.PluginConfigurationValues.Any(x=>x.Name == configurationItem.Name))
+                if (!dbContext.PluginConfigurationValues.Any(x => x.Name == configurationItem.Name))
                 {
                     var newConfigValue = new PluginConfigurationValue()
                     {
@@ -54,6 +53,23 @@ namespace Monitoring.Pn.Infrastructure.Data.Seed
                     dbContext.SaveChanges();
                 }
             }
+
+            // Seed plugin permissions
+            var newPermissions = MonitoringPermissionsSeedData.Data
+                .Where(p => dbContext.PluginPermissions.All(x => x.ClaimName != p.ClaimName))
+                .Select(p => new PluginPermission
+                    {
+                        PermissionName = p.PermissionName,
+                        ClaimName = p.ClaimName,
+                        CreatedAt = DateTime.UtcNow,
+                        Version = 1,
+                        WorkflowState = Constants.WorkflowStates.Created,
+                        CreatedByUserId = 1
+                    }
+                );
+            dbContext.PluginPermissions.AddRange(newPermissions);
+
+            dbContext.SaveChanges();
         }
     }
 }

@@ -1,23 +1,26 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MonitoringPnLayoutComponent} from './layouts';
-import {AdminGuard} from '../../../common/guards';
+import {AdminGuard, AuthGuard, PermissionGuard} from '../../../common/guards';
 import {MonitoringSettingsComponent, NotificationRulesPageComponent} from './components';
+import {MonitoringPnClaims} from './const/monitoring-pn-claims.const';
 
 export const routes: Routes = [
   {
     path: '',
     component: MonitoringPnLayoutComponent,
+    canActivate: [PermissionGuard],
+    data: {requiredPermission: MonitoringPnClaims.accessMonitoringPlugin},
     children: [
       {
         path: 'settings',
-        canActivate: [AdminGuard],
-        component: MonitoringSettingsComponent
+        component: MonitoringSettingsComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'notification-rules',
-        canActivate: [AdminGuard],
-        component: NotificationRulesPageComponent
+        component: NotificationRulesPageComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }
