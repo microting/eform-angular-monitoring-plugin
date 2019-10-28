@@ -33,6 +33,17 @@ describe('Application settings page - site header section', function () {
         browser.pause(40000);
         browser.refresh();
 
+        // Start - This block is here because of the new plugin permission loading, requires a re-login.
+        browser.waitForVisible('#plugin-id', 40000);
+        browser.pause(10000);
+        myEformsPage.Navbar.logout();
+        loginPage.login();
+        myEformsPage.Navbar.advancedDropdown();
+        myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+        browser.waitForExist('#plugin-name', 50000);
+        browser.pause(10000);
+        // End - This block is here because of the new plugin permission loading, requires a re-login.
+
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Monitoring Plugin');
