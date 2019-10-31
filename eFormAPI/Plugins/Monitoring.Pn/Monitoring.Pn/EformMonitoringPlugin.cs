@@ -141,12 +141,12 @@ namespace Monitoring.Pn
                 contextFactory);
         }
 
-        public PluginPermissionsHelper GetPermissionsHelper(string connectionString)
+        public PluginPermissionsManager GetPermissionsManager(string connectionString)
         {
             var contextFactory = new EformMonitoringPnDbContextFactory();
             var context = contextFactory.CreateDbContext(new[] { connectionString });
 
-            return new PluginPermissionsHelper(context);
+            return new PluginPermissionsManager(context);
         }
     }
 }
