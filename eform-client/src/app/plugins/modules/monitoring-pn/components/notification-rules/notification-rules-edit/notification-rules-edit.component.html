@@ -40,7 +40,7 @@
               <div class="row" *ngIf="ruleModel.data">
                 <div class="col">
                   <p>{{ruleModel.data.label}}</p>
-                  <p [innerHTML]="ruleModel.data.description"></p>
+                  <p>{{ruleModel.data.description}}</p>
                   <p>IF</p>
                   <div class="mb-4">
                     <ng-container [ngSwitch]="ruleModel.ruleType">
@@ -56,34 +56,34 @@
                       <ng-container *ngSwitchCase="ruleType.Number">
                         <div class="md-form">
                           <div class="row">
-                            <div class="col-auto py-2">{{ruleModel.data.label}} ></div>
+                            <div class="col-auto py-3">{{ruleModel.data.label}} ></div>
                             <div class="col-auto">
                               <input mdbInputDirective
                                      [mdbValidate]="false"
                                      [(ngModel)]="asNumberBlock(ruleModel.data).greaterThanValue"
-                                     type="number" id="greaterThanValue"
+                                     type="text" id="greaterThanValue"
                                      name="greaterThanValue" class="form-control">
                               <label for="greaterThanValue"></label>
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-auto py-2">{{ruleModel.data.label}} <</div>
+                            <div class="col-auto py-3">{{ruleModel.data.label}} <</div>
                             <div class="col-auto">
                               <input mdbInputDirective
                                      [mdbValidate]="false"
                                      [(ngModel)]="asNumberBlock(ruleModel.data).lessThanValue"
-                                     type="number" id="lessThanValue"
+                                     type="text" id="lessThanValue"
                                      name="lessThanValue" class="form-control">
                               <label for="lessThanValue"></label>
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-auto py-2">{{ruleModel.data.label}} =</div>
+                            <div class="col-auto py-3">{{ruleModel.data.label}} =</div>
                             <div class="col-auto">
                               <input mdbInputDirective
                                      [mdbValidate]="false"
                                      [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
-                                     type="number" id="equalValue"
+                                     type="text" id="equalValue"
                                      name="equalValue" class="form-control">
                               <label for="equalValue"></label>
                             </div>

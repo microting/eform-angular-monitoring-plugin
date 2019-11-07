@@ -9,6 +9,8 @@ import {
   NotificationsRequestModel
 } from '../../../models';
 import {NotificationRulesDeleteComponent, NotificationRulesEditComponent} from '..';
+import {PluginClaimsHelper} from '../../../../../../common/helpers';
+import {MonitoringPnClaims} from '../../../const/monitoring-pn-claims.const';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-page',
@@ -27,6 +29,14 @@ export class NotificationRulesPageComponent implements OnInit {
     private sharedPnService: SharedPnService,
     private monitoringPnRulesService: MonitoringPnNotificationRulesService
   ) { }
+
+  get pluginClaimsHelper() {
+    return PluginClaimsHelper;
+  }
+
+  get monitoringPnClaims() {
+    return MonitoringPnClaims;
+  }
 
   ngOnInit() {
     this.getLocalPageSettings();

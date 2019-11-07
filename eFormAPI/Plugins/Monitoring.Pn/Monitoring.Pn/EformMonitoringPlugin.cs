@@ -40,6 +40,7 @@ namespace Monitoring.Pn
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Microting.eFormApi.BasePn.Infrastructure.Settings;
     using Microting.EformMonitoringBase.Infrastructure.Data;
+    using Microting.EformMonitoringBase.Infrastructure.Data.Const;
     using Microting.EformMonitoringBase.Infrastructure.Data.Factories;
     using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
     using Services;
@@ -92,7 +93,6 @@ namespace Monitoring.Pn
 
             context.Database.Migrate();
 
-
             // Seed database
             SeedDatabase(connectionString);
         }
@@ -108,6 +108,7 @@ namespace Monitoring.Pn
                 Name = localizationService.GetString("Monitoring"),
                 E2EId = "",
                 Link = "",
+                Guards = new List<string>() { MonitoringClaims.AccessMonitoringPlugin },
                 MenuItems = new List<MenuItemModel>()
                 {
                     new MenuItemModel()
@@ -115,7 +116,7 @@ namespace Monitoring.Pn
                         Name = localizationService.GetString("NotificationRules"),
                         E2EId = "monitoring-pn-calendar",
                         Link = "/plugins/monitoring-pn/notification-rules",
-                        Position = 0,
+                        Position = 0
                     }
                 }
             });
