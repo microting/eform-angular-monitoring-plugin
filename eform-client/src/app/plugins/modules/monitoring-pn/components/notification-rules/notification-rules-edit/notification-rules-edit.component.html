@@ -37,144 +37,157 @@
                   </div>
                 </div>
               </div>
-              <div class="row" *ngIf="ruleModel.data">
-                <div class="col">
-                  <p>{{ruleModel.data.label}}</p>
-                  <p>{{ruleModel.data.description}}</p>
-                  <p>IF</p>
-                  <div class="mb-4">
-                    <ng-container [ngSwitch]="ruleModel.ruleType">
-                      <ng-container *ngSwitchCase="ruleType.CheckBox">
-                        <div class="mat-checkbox">
-                          <input mdbInputDirective
-                                 [mdbValidate]="false"
-                                 id="selected" name="selected" type="checkbox"
-                                 [(ngModel)]="asCheckboxBlock(ruleModel.data).selected">
-                          <label for="selected"></label>
-                        </div>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="ruleType.Number">
-                        <div class="md-form">
-                          <div class="row">
-                            <div class="col-auto py-3">{{ruleModel.data.label}} ></div>
-                            <div class="col-auto">
-                              <input mdbInputDirective
-                                     [mdbValidate]="false"
-                                     [(ngModel)]="asNumberBlock(ruleModel.data).greaterThanValue"
-                                     type="text" id="greaterThanValue"
-                                     name="greaterThanValue" class="form-control">
-                              <label for="greaterThanValue"></label>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-auto py-3">{{ruleModel.data.label}} <</div>
-                            <div class="col-auto">
-                              <input mdbInputDirective
-                                     [mdbValidate]="false"
-                                     [(ngModel)]="asNumberBlock(ruleModel.data).lessThanValue"
-                                     type="text" id="lessThanValue"
-                                     name="lessThanValue" class="form-control">
-                              <label for="lessThanValue"></label>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-auto py-3">{{ruleModel.data.label}} =</div>
-                            <div class="col-auto">
-                              <input mdbInputDirective
-                                     [mdbValidate]="false"
-                                     [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
-                                     type="text" id="equalValue"
-                                     name="equalValue" class="form-control">
-                              <label for="equalValue"></label>
-                            </div>
-                          </div>
-                        </div>
-                      </ng-container>
-                      <ng-container *ngSwitchCase="ruleType.Select">
-                        <div class="mb-2" *ngFor="let item of asSelectBlock(ruleModel.data).keyValuePairList">
+              <ng-container *ngIf="ruleModel.data">
+                <div class="row">
+                  <div class="col">
+                    <p>{{ruleModel.data.label}}</p>
+                    <p>{{ruleModel.data.description}}</p>
+                    <p>IF</p>
+                    <div class="mb-4">
+                      <ng-container [ngSwitch]="ruleModel.ruleType">
+                        <ng-container *ngSwitchCase="ruleType.CheckBox">
                           <div class="mat-checkbox">
-                            <input id="select_{{item.key}}" name="select_{{item.key}}" type="checkbox"
-                                   [(ngModel)]="item.selected">
-                            <label for="select_{{item.key}}">{{item.value }}</label>
+                            <input mdbInputDirective
+                                   [mdbValidate]="false"
+                                   id="selected" name="selected" type="checkbox"
+                                   [(ngModel)]="asCheckboxBlock(ruleModel.data).selected">
+                            <label for="selected"></label>
                           </div>
-                        </div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="ruleType.Number">
+                          <div class="md-form">
+                            <div class="row">
+                              <div class="col-auto py-3">{{ruleModel.data.label}} ></div>
+                              <div class="col-auto">
+                                <input mdbInputDirective
+                                       [mdbValidate]="false"
+                                       [(ngModel)]="asNumberBlock(ruleModel.data).greaterThanValue"
+                                       type="text" id="greaterThanValue"
+                                       name="greaterThanValue" class="form-control">
+                                <label for="greaterThanValue"></label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-auto py-3">{{ruleModel.data.label}} <</div>
+                              <div class="col-auto">
+                                <input mdbInputDirective
+                                       [mdbValidate]="false"
+                                       [(ngModel)]="asNumberBlock(ruleModel.data).lessThanValue"
+                                       type="text" id="lessThanValue"
+                                       name="lessThanValue" class="form-control">
+                                <label for="lessThanValue"></label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-auto py-3">{{ruleModel.data.label}} =</div>
+                              <div class="col-auto">
+                                <input mdbInputDirective
+                                       [mdbValidate]="false"
+                                       [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
+                                       type="text" id="equalValue"
+                                       name="equalValue" class="form-control">
+                                <label for="equalValue"></label>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="ruleType.Select">
+                          <div class="mb-2" *ngFor="let item of asSelectBlock(ruleModel.data).keyValuePairList">
+                            <div class="mat-checkbox">
+                              <input id="select_{{item.key}}" name="select_{{item.key}}" type="checkbox"
+                                     [(ngModel)]="item.selected">
+                              <label for="select_{{item.key}}">{{item.value }}</label>
+                            </div>
+                          </div>
+                        </ng-container>
                       </ng-container>
-                    </ng-container>
-                  </div>
-                  <p>THEN</p>
-                </div>
-              </div>
-            </ng-container>
-            <h5>{{ 'Email' | translate }}</h5>
-            <div class="row">
-              <div class="col">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
-                         [(ngModel)]="ruleModel.subject"
-                         type="text" id="emailSubject"
-                         name="emailSubject" class="form-control">
-                  <label for="emailSubject">{{ 'Email subject' | translate }}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="md-form">
-                    <textarea mdbInputDirective
-                              [mdbValidate]="false"
-                              [(ngModel)]="ruleModel.text"
-                              type="text" id="emailText"
-                              name="emailText" class="md-textarea form-control"></textarea>
-                  <label for="emailText">{{ 'Email text' | translate }}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row mb-5">
-              <div class="col">
-                <div class="mat-checkbox">
-                  <input id="attachReport" name="attachReport" [(ngModel)]="ruleModel.attachReport" type="checkbox">
-                  <label for="attachReport">{{ 'Attach report' | translate }}</label>
-                </div>
-              </div>
-            </div>
-            <h5>{{ 'Recipients' | translate }}</h5>
-            <div class="row">
-              <div class="col">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
-                         [(ngModel)]="recipientEmail"
-                         type="email" id="recipientEmail"
-                         name="recipientEmail" class="form-control">
-                  <label for="recipientEmail">{{ 'Recipient email' | translate }}</label>
-                </div>
-              </div>
-              <div class="col-auto py-3">
-                <button class="btn btn-success" id="addRecipientBtn" type="button" (click)="addNewRecipient()">
-                  <fa-icon icon="plus"></fa-icon>
-                  {{ 'Add' | translate }}
-                </button>
-              </div>
-            </div>
-            <div class="row p-1 mt-2 table-responsive no-gutters">
-              <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
-                <tbody id="recipientsTableBody">
-                <tr *ngFor="let recipient of ruleModel.recipients; let i = index">
-                  <td>{{recipient.email}}</td>
-                  <td>
-                    <div class="d-flex flex-row justify-content-end">
-                      <button id="deleteItemBtn" (click)="removeRecipient(i)"
-                              class="btn btn-danger btn-icon mb-2" type="button"
-                              mdbTooltip="{{ 'Remove recipient' | translate }}">
-                        <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
-                      </button>
                     </div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
+                    <p>THEN</p>
+                  </div>
+                </div>
+                <h5>{{ 'Email' | translate }}</h5>
+                <div class="row">
+                  <div class="col">
+                    <div class="md-form">
+                      <input mdbInputDirective
+                             [mdbValidate]="false"
+                             [(ngModel)]="ruleModel.subject"
+                             type="text" id="emailSubject"
+                             name="emailSubject" class="form-control">
+                      <label for="emailSubject">{{ 'Email subject' | translate }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="md-form">
+                      <span class="text-muted">{{ 'Email text' | translate }}</span>
+                      <div class="py-2">
+                        <ng-container *ngIf="ruleModel.data.label">
+                          <span>{{ruleModel.data.label}}</span><br>
+                        </ng-container>
+                        <ng-container *ngIf="ruleModel.data.description">
+                          <span>{{ruleModel.data.description}}</span><br>
+                        </ng-container>
+                        <span>Value: {{ruleModel.data.label}} value</span><br>
+                      </div>
+                      <a href="javascript:" style="color: dodgerblue; text-decoration: underline">Open case link</a><br>
+                      <textarea mdbInputDirective
+                                [mdbValidate]="false"
+                                [(ngModel)]="ruleModel.text"
+                                type="text" id="emailText"
+                                name="emailText" class="md-textarea form-control"></textarea>
+                      <label for="emailText"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col">
+                    <div class="mat-checkbox">
+                      <input id="attachReport" name="attachReport" [(ngModel)]="ruleModel.attachReport" type="checkbox">
+                      <label for="attachReport">{{ 'Attach report' | translate }}</label>
+                    </div>
+                  </div>
+                </div>
+                <h5>{{ 'Recipients' | translate }}</h5>
+                <div class="row">
+                  <div class="col">
+                    <div class="md-form">
+                      <input mdbInputDirective
+                             [mdbValidate]="false"
+                             [(ngModel)]="recipientEmail"
+                             type="email" id="recipientEmail"
+                             name="recipientEmail" class="form-control">
+                      <label for="recipientEmail">{{ 'Recipient email' | translate }}</label>
+                    </div>
+                  </div>
+                  <div class="col-auto py-3">
+                    <button class="btn btn-success" id="addRecipientBtn" type="button" (click)="addNewRecipient()">
+                      <fa-icon icon="plus"></fa-icon>
+                      {{ 'Add' | translate }}
+                    </button>
+                  </div>
+                </div>
+                <div class="row p-1 mt-2 table-responsive no-gutters">
+                  <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
+                    <tbody id="recipientsTableBody">
+                    <tr *ngFor="let recipient of ruleModel.recipients; let i = index">
+                      <td>{{recipient.email}}</td>
+                      <td>
+                        <div class="d-flex flex-row justify-content-end">
+                          <button id="deleteItemBtn" (click)="removeRecipient(i)"
+                                  class="btn btn-danger btn-icon mb-2" type="button"
+                                  mdbTooltip="{{ 'Remove recipient' | translate }}">
+                            <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
         <div class="modal-footer">
