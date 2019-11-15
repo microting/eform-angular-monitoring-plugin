@@ -23,6 +23,14 @@
               <i class="material-icons" *ngIf="localPageSettings.sort == 'Id' && rulesRequestModel.isSortDsc"></i>
             </div>
           </th>
+          <th scope="col" class="table-header-sortable" id="eFormNameTableHeader" (click)="sortTable('eFormName')">
+            <div class="d-flex align-items-center justify-content-center">
+              {{'eForm Name' | translate}}
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'eFormName'"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'eFormName' && !rulesRequestModel.isSortDsc"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'eFormName' && rulesRequestModel.isSortDsc"></i>
+            </div>
+          </th>
           <th scope="col" class="table-header-sortable" id="triggerTableHeader" (click)="sortTable('Trigger')">
             <div class="d-flex align-items-center justify-content-center">
               {{'Trigger' | translate}}
@@ -48,11 +56,12 @@
         </thead>
         <tbody id="tableBody">
         <tr *ngFor="let rule of rulesModel.rules">
-          <td id="ruleId">{{rule.id}}</td>
-          <td id="ruleTrigger">
+          <td>{{rule.id}}</td>
+          <td>{{rule.eFormName}}</td>
+          <td>
             <div class="mt-3" [innerHTML]="rule.trigger"></div>
           </td>
-          <td id="ruleDescription">{{rule.event}}</td>
+          <td>{{rule.event}}</td>
           <td *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)
               || pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)">
             <div class="d-flex flex-row justify-content-center">
