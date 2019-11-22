@@ -5,9 +5,10 @@ import {NotificationRuleModel} from '../../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {FieldDto} from '../../../../../../common/models/dto/field.dto';
 import {TemplateRequestModel} from '../../../../../../common/models/eforms';
-import {TemplateDto} from '../../../../../../common/models/dto';
+import {KeyValuePairDto, TemplateDto} from '../../../../../../common/models/dto';
 import {NotificationRuleType, SupportedFieldTypes} from '../../../const';
 import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../models/blocks';
+import {EntitySearchService, EntitySelectService} from '../../../../../../common/services/advanced';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-edit',
@@ -36,6 +37,8 @@ export class NotificationRulesEditComponent implements OnInit {
 
   constructor(
     private monitoringRulesService: MonitoringPnNotificationRulesService,
+    private entitySelectService: EntitySelectService,
+    private entitySearchService: EntitySearchService,
     private eFormService: EFormService,
     private cd: ChangeDetectorRef
   ) {
@@ -88,13 +91,33 @@ export class NotificationRulesEditComponent implements OnInit {
         break;
       case SupportedFieldTypes.SingleSelect:
       case SupportedFieldTypes.MultiSelect:
-      case SupportedFieldTypes.EntitySearch:
-      case SupportedFieldTypes.EntitySelect:
         this.ruleModel.ruleType = NotificationRuleType.Select;
         this.ruleModel.data = {
           ...baseDataItem,
           keyValuePairList: this.selectedField.keyValuePairList
         } as SelectBlock;
+        break;
+      case SupportedFieldTypes.EntitySearch:
+        this.ruleModel.ruleType = NotificationRuleType.Select;
+        this.entitySearchService.getEntitySearchableGroupDictionary(this.selectedField.entityGroupId, '')
+          .subscribe(r => {
+            this.ruleModel.data = {
+              ...baseDataItem,
+              keyValuePairList: r.model
+                .map(x => ({key: x.id, value: x.text, selected: false, displayOrder: x.id}))
+            } as SelectBlock;
+          });
+        break;
+      case SupportedFieldTypes.EntitySelect:
+        this.ruleModel.ruleType = NotificationRuleType.Select;
+        this.entitySelectService.getEntitySelectableGroupDictionary(this.selectedField.entityGroupId)
+          .subscribe(r => {
+            this.ruleModel.data = {
+              ...baseDataItem,
+              keyValuePairList: r.model
+                .map(x => ({key: x.id, value: x.text, selected: false, displayOrder: x.id}))
+            } as SelectBlock;
+          });
         break;
     }
   }
