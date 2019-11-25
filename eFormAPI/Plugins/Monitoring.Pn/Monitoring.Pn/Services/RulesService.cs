@@ -85,7 +85,7 @@
                 try
                 {
                     var rule = await _dbContext.Rules
-                        .Include(x=>x.Recipients)
+                        .Include(x => x.Recipients)
                         .FirstOrDefaultAsync(x => x.WorkflowState != Constants.WorkflowStates.Removed
                                                   && x.Id == ruleModel.Id);
 
