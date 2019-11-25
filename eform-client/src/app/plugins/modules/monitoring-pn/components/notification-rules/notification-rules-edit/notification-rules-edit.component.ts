@@ -4,10 +4,11 @@ import {MonitoringPnNotificationRulesService} from '../../../services';
 import {NotificationRuleModel} from '../../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {FieldDto} from '../../../../../../common/models/dto/field.dto';
-import {TemplateRequestModel} from '../../../../../../common/models/eforms';
+import {TemplateListModel, TemplateRequestModel} from '../../../../../../common/models/eforms';
 import {TemplateDto} from '../../../../../../common/models/dto';
 import {NotificationRuleType, SupportedFieldTypes} from '../../../const';
 import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../models/blocks';
+import {CommonDictionaryTextModel} from '../../../../../../common/models/common';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-edit',
@@ -17,6 +18,7 @@ import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../mo
 export class NotificationRulesEditComponent implements OnInit {
   @ViewChild('frame') frame;
   @Output() ruleSaved: EventEmitter<void> = new EventEmitter<void>();
+  items: Array<TemplateDto> = [];
 
   templateTypeahead = new EventEmitter<string>();
   recipientEmail: string;
@@ -54,6 +56,12 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
+      this.spinnerStatus = false;
+      if (operation && operation.success) {
+        this.items = operation.model.templates;
+      }
+    });
   }
 
   onClose() {
@@ -61,7 +69,12 @@ export class NotificationRulesEditComponent implements OnInit {
     this.frame.hide();
   }
 
-  onTemplateChange() {
+  onTemplateChange(e: any) {
+    this.ruleModel.checkListId = e.id;
+    this.fields = [];
+    this.selectedField = null;
+    this.ruleModel.dataItemId = null;
+    this.ruleModel.data = null;
     this.updateSelectedEform();
   }
 
@@ -168,6 +181,7 @@ export class NotificationRulesEditComponent implements OnInit {
 
         this.eFormService.getFields(this.ruleModel.checkListId).subscribe(fieldsOp => {
           if (fieldsOp && fieldsOp.success) {
+            this.selectedField = null;
             this.fields = fieldsOp.model.filter(f => Object.values(SupportedFieldTypes).includes(f.fieldType));
           }
           this.spinnerStatus = false;
