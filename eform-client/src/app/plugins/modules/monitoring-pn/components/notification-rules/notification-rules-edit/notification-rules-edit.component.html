@@ -10,15 +10,21 @@
             <div class="row">
               <div class="col">
                 <div class="md-form">
-                  <ng-select [items]="templates"
-                             bindLabel="label"
-                             [placeholder]="('Selected eForm' | translate)"
-                             bindValue="id"
-                             [typeahead]="templateTypeahead"
-                             [(ngModel)]="ruleModel.checkListId"
-                             (change)="onTemplateChange()"
-                             id="eFormSelector" required>
-                  </ng-select>
+<!--                  <ng-select [items]="items"-->
+<!--                             bindLabel="label"-->
+<!--                             [placeholder]="('Selected eForm' | translate)"-->
+<!--                             bindValue="id"-->
+<!--                             [typeahead]="templateTypeahead"-->
+<!--                             [(ngModel)]="ruleModel.checkListId"-->
+<!--                             (change)="onTemplateChange()"-->
+<!--                             id="eFormSelector" required>-->
+<!--                  </ng-select>-->
+                  <ng-select
+                    bindValue="id"
+                    bindLabel="label"
+                    [placeholder]="('Selected eForm' | translate)"
+                    (change)="onTemplateChange($event)"
+                    [items]="items"></ng-select>
                 </div>
               </div>
             </div>

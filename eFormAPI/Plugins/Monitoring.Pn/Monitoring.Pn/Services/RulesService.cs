@@ -1,4 +1,8 @@
-﻿namespace Monitoring.Pn.Services
+﻿using System.Collections.Generic;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Abstractions;
+
+namespace Monitoring.Pn.Services
 {
     using System;
     using System.Linq;
@@ -21,6 +25,7 @@
 
     public class RulesService : IRulesService
     {
+        private readonly IEFormCoreService _coreHelper;
         private readonly ILogger<RulesService> _logger;
         private readonly EformMonitoringPnDbContext _dbContext;
         private readonly IMonitoringLocalizationService _localizationService;
@@ -28,118 +33,68 @@
 
         public RulesService(
             EformMonitoringPnDbContext dbContext,
+            IEFormCoreService coreHelper,
             IMonitoringLocalizationService localizationService,
             IHttpContextAccessor httpContextAccessor,
             ILogger<RulesService> logger)
         {
             _dbContext = dbContext;
+            _coreHelper = coreHelper;
             _localizationService = localizationService;
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
         }
-
-        public async Task<OperationResult> DeleteRule(int id)
+        
+        public async Task<OperationDataResult<NotificationRulesListModel>> GetRules(NotificationListRequestModel requestModel)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            var core = await _coreHelper.GetCore();
+            List<Template_Dto> eForms = new List<Template_Dto>();
+            try
             {
-                try
+                var rules = await _dbContext.Rules
+                    .AsNoTracking()
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Skip(requestModel.Offset)
+                    .Take(requestModel.PageSize)
+                    .Include(x => x.Recipients)
+                    .ToListAsync();
+
+                var result = new NotificationRulesListModel();
+                foreach (var rule in rules)
                 {
-                    var notificationRule = await _dbContext.Rules
-                        .FirstOrDefaultAsync(x => x.Id == id);
-
-                    if (notificationRule == null)
+                    string eFormName = "";
+                    if (eForms.Any(x => x.Id == rule.CheckListId))
                     {
-                        return new OperationResult(
-                            false,
-                            _localizationService.GetString("NotificationRuleNotFound"));
+                        eFormName = eForms.First(x => x.Id == rule.CheckListId).Label;
                     }
-
-                    var recipients = await _dbContext.Recipients
-                        .Where(x => x.NotificationRuleId == notificationRule.Id)
-                        .ToListAsync();
-
-                    foreach (var recipient in recipients)
+                    else
                     {
-                        await recipient.Delete(_dbContext);
-                    }
-
-                    await notificationRule.Delete(_dbContext);
-                    transaction.Commit();
-                    return new OperationResult(
-                        true, 
-                        _localizationService.GetString("NotificationRuleDeletedSuccessfully"));
-                }
-                catch (Exception e)
-                {
-                    transaction.Rollback();
-                    _logger.LogError(e.Message);
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRemovingNotificationRule"));
-                }
-            }
-        }
-
-        public async Task<OperationResult> UpdateRule(NotificationRuleModel ruleModel)
-        {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-            {
-                try
-                {
-                    var rule = await _dbContext.Rules
-                        .Include(x => x.Recipients)
-                        .FirstOrDefaultAsync(x => x.WorkflowState != Constants.WorkflowStates.Removed
-                                                  && x.Id == ruleModel.Id);
-
-                    if (rule == null)
-                    {
-                        return new OperationResult(false,
-                            _localizationService.GetString("NotificationRuleNotFound"));
-                    }
-
-                    rule.AttachReport = ruleModel.AttachReport;
-                    rule.Data = ruleModel.Data.ToString();
-                    rule.RuleType = ruleModel.RuleType;
-                    rule.Subject = ruleModel.Subject;
-                    rule.CheckListId = ruleModel.CheckListId;
-                    rule.Text = ruleModel.Text;
-                    rule.DataItemId = ruleModel.DataItemId;
-
-                    await rule.Update(_dbContext);
-
-                    var recipientsDelete = await _dbContext.Recipients
-                        .Where(r => r.NotificationRuleId == rule.Id && ruleModel.Recipients.All(rm => rm.Id != r.Id))
-                        .ToListAsync();
-
-                    foreach (var rd in recipientsDelete)
-                    {
-                        await rd.Delete(_dbContext);
+                        eForms.Add(await core.TemplateItemRead(rule.CheckListId));
+                        eFormName = eForms.First(x => x.Id == rule.CheckListId).Label;
                     }
                     
-                    foreach (var recipientModel in ruleModel.Recipients.Where(r => r.Id == null))
+                    var ruleModel = new NotificationRuleSimpleModel
                     {
-                        var recipient = new Recipient
-                        {
-                            Email = recipientModel.Email,
-                            NotificationRuleId = rule.Id,
-                            CreatedByUserId = UserId,
-                            UpdatedByUserId = UserId
-                        };
+                        Id = rule.Id,
+                        EFormName = eFormName,
+                        Trigger = RulesBlockHelper.GetRuleTriggerString(rule),
+                        Event = "Email"
+                    };
 
-                        await recipient.Save(_dbContext);
-                    }
+                    result.Rules.Add(ruleModel);
+                }
 
-                    transaction.Commit();
-                    return new OperationResult(
-                        true, 
-                        _localizationService.GetString("NotificationRuleHasBeenUpdated"));
-                }
-                catch (Exception e)
-                {
-                    transaction.Rollback();
-                    _logger.LogError(e.Message);
-                    return new OperationResult(
-                        false,
-                        _localizationService.GetString("ErrorWhileUpdatingNotificationRule"));
-                }
+                result.Total = await _dbContext.Rules.CountAsync(x =>
+                    x.WorkflowState != Constants.WorkflowStates.Removed);
+
+                return new OperationDataResult<NotificationRulesListModel>(true, result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationDataResult<NotificationRulesListModel>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingNotificationRulesInfo"));
             }
         }
 
@@ -260,46 +215,112 @@
             }
         }
 
-
-        public async Task<OperationDataResult<NotificationRulesListModel>> GetRules(NotificationListRequestModel requestModel)
+        public async Task<OperationResult> UpdateRule(NotificationRuleModel ruleModel)
         {
-            try
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                var rules = await _dbContext.Rules
-                    .AsNoTracking()
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Skip(requestModel.Offset)
-                    .Take(requestModel.PageSize)
-                    .ToListAsync();
-
-                var result = new NotificationRulesListModel();
-                foreach (var rule in rules)
+                try
                 {
-                    var ruleModel = new NotificationRuleSimpleModel
+                    var rule = await _dbContext.Rules
+                        .Include(x=>x.Recipients)
+                        .FirstOrDefaultAsync(x => x.WorkflowState != Constants.WorkflowStates.Removed
+                                                  && x.Id == ruleModel.Id);
+
+                    if (rule == null)
                     {
-                        Id = rule.Id,
-                        Trigger = RulesBlockHelper.GetRuleTriggerString(rule),
-                        Event = "Email"
-                    };
+                        return new OperationResult(false,
+                            _localizationService.GetString("NotificationRuleNotFound"));
+                    }
 
-                    result.Rules.Add(ruleModel);
+                    rule.AttachReport = ruleModel.AttachReport;
+                    rule.Data = ruleModel.Data.ToString();
+                    rule.RuleType = ruleModel.RuleType;
+                    rule.Subject = ruleModel.Subject;
+                    rule.CheckListId = ruleModel.CheckListId;
+                    rule.Text = ruleModel.Text;
+                    rule.DataItemId = ruleModel.DataItemId;
+
+                    await rule.Update(_dbContext);
+
+                    var recipientsDelete = await _dbContext.Recipients
+                        .Where(r => r.NotificationRuleId == rule.Id && ruleModel.Recipients.All(rm => rm.Id != r.Id))
+                        .ToListAsync();
+
+                    foreach (var rd in recipientsDelete)
+                    {
+                        await rd.Delete(_dbContext);
+                    }
+                    
+                    foreach (var recipientModel in ruleModel.Recipients.Where(r => r.Id == null))
+                    {
+                        var recipient = new Recipient
+                        {
+                            Email = recipientModel.Email,
+                            NotificationRuleId = rule.Id,
+                            CreatedByUserId = UserId,
+                            UpdatedByUserId = UserId
+                        };
+
+                        await recipient.Save(_dbContext);
+                    }
+
+                    transaction.Commit();
+                    return new OperationResult(
+                        true, 
+                        _localizationService.GetString("NotificationRuleHasBeenUpdated"));
                 }
-
-                result.Total = await _dbContext.Rules.CountAsync(x =>
-                    x.WorkflowState != Constants.WorkflowStates.Removed);
-
-                return new OperationDataResult<NotificationRulesListModel>(true, result);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                return new OperationDataResult<NotificationRulesListModel>(
-                    false,
-                    _localizationService.GetString("ErrorWhileObtainingNotificationRulesInfo"));
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    _logger.LogError(e.Message);
+                    return new OperationResult(
+                        false,
+                        _localizationService.GetString("ErrorWhileUpdatingNotificationRule"));
+                }
             }
         }
 
-        public int UserId
+        public async Task<OperationResult> DeleteRule(int id)
+        {
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var notificationRule = await _dbContext.Rules
+                        .FirstOrDefaultAsync(x => x.Id == id);
+
+                    if (notificationRule == null)
+                    {
+                        return new OperationResult(
+                            false,
+                            _localizationService.GetString("NotificationRuleNotFound"));
+                    }
+
+                    var recipients = await _dbContext.Recipients
+                        .Where(x => x.NotificationRuleId == notificationRule.Id)
+                        .ToListAsync();
+
+                    foreach (var recipient in recipients)
+                    {
+                        await recipient.Delete(_dbContext);
+                    }
+
+                    await notificationRule.Delete(_dbContext);
+                    transaction.Commit();
+                    return new OperationResult(
+                        true, 
+                        _localizationService.GetString("NotificationRuleDeletedSuccessfully"));
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    _logger.LogError(e.Message);
+                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRemovingNotificationRule"));
+                }
+            }
+        }
+
+        private int UserId
         {
             get
             {

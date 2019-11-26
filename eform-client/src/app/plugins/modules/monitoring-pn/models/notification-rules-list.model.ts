@@ -7,4 +7,5 @@ export class NotificationRuleSimpleModel {
   id: number;
   trigger: string;
   event: string;
+  eFormName: string;
 }

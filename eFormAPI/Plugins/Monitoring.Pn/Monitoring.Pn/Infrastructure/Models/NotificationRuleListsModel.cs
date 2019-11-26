@@ -18,5 +18,6 @@
         public int Id { get; set; }
         public string Trigger { get; set; }
         public string Event { get; set; }
+        public string EFormName { get; set; }
     }
 }
