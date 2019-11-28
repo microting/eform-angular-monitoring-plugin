@@ -56,6 +56,7 @@ namespace Monitoring.Pn.Services
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize)
+                    .Include(x => x.Recipients)
                     .ToListAsync();
 
                 var result = new NotificationRulesListModel();
