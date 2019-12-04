@@ -21,37 +21,38 @@
 
         [HttpGet("api/monitoring-pn/rules")]
         [Authorize(Policy = MonitoringClaims.AccessMonitoringPlugin)]
-        public async Task<OperationResult> GetRules(NotificationListRequestModel requestModel)
+        public async Task<OperationResult> Index(NotificationListRequestModel requestModel)
         {
-            return await _rulesService.GetRules(requestModel);
+            return await _rulesService.Index(requestModel);
+        }
+        
+        [HttpPost("api/monitoring-pn/rules")]
+        [Authorize(Policy = MonitoringClaims.CreateNotificationRules)]
+        public async Task<OperationResult> Create([FromBody] NotificationRuleModel model)
+        {
+            return await _rulesService.Create(model);
         }
 
         [HttpGet("api/monitoring-pn/rules/{id}")]
         [Authorize(Policy = MonitoringClaims.AccessMonitoringPlugin)]
-        public async Task<OperationResult> GetRuleById(int id)
+        public async Task<OperationResult> Read(int id)
         {
-            return await _rulesService.GetRuleById(id);
+            return await _rulesService.Read(id);
         }
 
-        [HttpPost("api/monitoring-pn/rules")]
-        [Authorize(Policy = MonitoringClaims.CreateNotificationRules)]
-        public async Task<OperationResult> CreateNewRule([FromBody] NotificationRuleModel model)
-        {
-            return await _rulesService.CreateNewRule(model);
-        }
-
+        
         [HttpPut("api/monitoring-pn/rules")]
         [Authorize(Policy = MonitoringClaims.UpdateNotificationRules)]
-        public async Task<OperationResult> UpdateRule([FromBody] NotificationRuleModel model)
+        public async Task<OperationResult> Update([FromBody] NotificationRuleModel model)
         {
-            return await _rulesService.UpdateRule(model);
+            return await _rulesService.Update(model);
         }
 
         [HttpDelete("api/monitoring-pn/rules/{id}")]
         [Authorize(Policy = MonitoringClaims.DeleteNotificationRules)]
-        public async Task<OperationResult> DeleteRule(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return await _rulesService.DeleteRule(id);
+            return await _rulesService.Delete(id);
         }
     }
 }

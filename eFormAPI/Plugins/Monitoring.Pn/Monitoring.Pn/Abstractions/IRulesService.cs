@@ -8,10 +8,10 @@ namespace Monitoring.Pn.Abstractions
 
     public interface IRulesService
     {
-        Task<OperationResult> CreateNewRule(NotificationRuleModel ruleModel);
-        Task<OperationDataResult<NotificationRuleModel>> GetRuleById(int id);
-        Task<OperationResult> DeleteRule(int id);
-        Task<OperationResult> UpdateRule(NotificationRuleModel ruleModel);
-        Task<OperationDataResult<NotificationRulesListModel>> GetRules(NotificationListRequestModel requestModel);
+        Task<OperationDataResult<NotificationRulesListModel>> Index(NotificationListRequestModel requestModel);
+        Task<OperationResult> Create(NotificationRuleModel ruleModel);
+        Task<OperationDataResult<NotificationRuleModel>> Read(int id);
+        Task<OperationResult> Delete(int id);
+        Task<OperationResult> Update(NotificationRuleModel ruleModel);
     }
 }
