@@ -1,6 +1,7 @@
 import {RecipientModel} from './recipient.model';
 import {NotificationRuleType} from '../const';
 import {BaseDataItem} from './blocks';
+import {DeviceUserModel} from './device-user.model';
 
 export class NotificationRuleModel {
   id?: number;
@@ -12,4 +13,5 @@ export class NotificationRuleModel {
   dataItemId: number;
   data?: BaseDataItem;
   recipients: RecipientModel[];
+  deviceUsers: DeviceUserModel[];
 }

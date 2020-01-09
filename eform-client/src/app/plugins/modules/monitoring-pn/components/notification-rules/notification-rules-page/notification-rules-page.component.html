@@ -107,7 +107,7 @@
 
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
-<app-monitoring-pn-notification-rules-edit #editRuleModal
+<app-monitoring-pn-notification-rules-edit #editRuleModal [deviceUsers]="sitesDto"
   (ruleSaved)="getRulesList()"
 ></app-monitoring-pn-notification-rules-edit>
 <app-monitoring-pn-notification-rules-delete #deleteRuleModal

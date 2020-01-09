@@ -1,15 +1,16 @@
-import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {EFormService} from '../../../../../../common/services/eform';
 import {MonitoringPnNotificationRulesService} from '../../../services';
 import {NotificationRuleModel} from '../../../models';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {FieldDto} from '../../../../../../common/models/dto/field.dto';
 import {TemplateListModel, TemplateRequestModel} from '../../../../../../common/models/eforms';
-import {KeyValuePairDto, TemplateDto} from '../../../../../../common/models/dto';
+import {KeyValuePairDto, SiteDto, TemplateDto} from '../../../../../../common/models/dto';
 import {NotificationRuleType, SupportedFieldTypes} from '../../../const';
 import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../models/blocks';
 import {EntitySearchService, EntitySelectService} from '../../../../../../common/services/advanced';
 import {CommonDictionaryTextModel} from '../../../../../../common/models/common';
+import {DeviceUserModel} from '../../../models/device-user.model';
 
 
 @Component({
@@ -18,8 +19,10 @@ import {CommonDictionaryTextModel} from '../../../../../../common/models/common'
   styleUrls: ['./notification-rules-edit.component.scss']
 })
 export class NotificationRulesEditComponent implements OnInit {
+  @Input() deviceUsers: SiteDto[];
   @ViewChild('frame') frame;
   @Output() ruleSaved: EventEmitter<void> = new EventEmitter<void>();
+  selectedDeviceUserId: number;
   items: Array<TemplateDto> = [];
 
   templateTypeahead = new EventEmitter<string>();
@@ -150,6 +153,7 @@ export class NotificationRulesEditComponent implements OnInit {
         data: null,
         dataItemId: null,
         recipients: [],
+        deviceUsers: [],
         ruleType: null,
         subject: '',
         checkListId: null,
@@ -218,6 +222,20 @@ export class NotificationRulesEditComponent implements OnInit {
   addNewRecipient() {
     this.ruleModel.recipients.push({email: this.recipientEmail});
     this.recipientEmail = '';
+  }
+
+  addDeviceUser() {
+    if (this.selectedDeviceUserId) {
+      const foundDeviceUser = this.deviceUsers.find(x => x.siteId === this.selectedDeviceUserId);
+      this.ruleModel.deviceUsers
+          .push(new DeviceUserModel(
+              {id: foundDeviceUser.siteId, firstName: foundDeviceUser.firstName, lastName: foundDeviceUser.lastName}));
+    }
+
+  }
+
+  removeDeviceUser(i: number) {
+    this.ruleModel.deviceUsers.splice(i, 1);
   }
 
   removeRecipient(i: number) {

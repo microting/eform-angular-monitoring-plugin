@@ -11,6 +11,8 @@ import {
 import {NotificationRulesDeleteComponent, NotificationRulesEditComponent} from '..';
 import {PluginClaimsHelper} from '../../../../../../common/helpers';
 import {MonitoringPnClaims} from '../../../const/monitoring-pn-claims.const';
+import {DeviceUserService} from '../../../../../../common/services/device-users';
+import {SiteDto} from '../../../../../../common/models/dto';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-page',
@@ -23,11 +25,13 @@ export class NotificationRulesPageComponent implements OnInit {
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   rulesModel: NotificationRulesListModel = new NotificationRulesListModel();
   rulesRequestModel: NotificationsRequestModel = new NotificationsRequestModel();
+  sitesDto: SiteDto[];
   spinnerStatus = false;
 
   constructor(
     private sharedPnService: SharedPnService,
-    private monitoringPnRulesService: MonitoringPnNotificationRulesService
+    private monitoringPnRulesService: MonitoringPnNotificationRulesService,
+    private deviceUsersService: DeviceUserService
   ) { }
 
   get pluginClaimsHelper() {
@@ -40,6 +44,7 @@ export class NotificationRulesPageComponent implements OnInit {
 
   ngOnInit() {
     this.getLocalPageSettings();
+    this.loadAllSimpleSites();
   }
 
   getLocalPageSettings() {
@@ -101,5 +106,15 @@ export class NotificationRulesPageComponent implements OnInit {
       }
       this.getRulesList();
     }
+  }
+
+  loadAllSimpleSites() {
+    this.spinnerStatus = true;
+    this.deviceUsersService.getAllDeviceUsers().subscribe(operation => {
+      if (operation && operation.success) {
+        this.sitesDto = operation.model.map(x => ({...x, fullName: `${x.firstName} ${x.lastName}`}));
+      }
+      this.spinnerStatus = false;
+    });
   }
 }
