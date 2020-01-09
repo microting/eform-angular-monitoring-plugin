@@ -319,7 +319,10 @@ namespace Monitoring.Pn.Services
 
                     foreach (var deviceUserModel in ruleModel.DeviceUsers)
                     {
-                        if (!await _dbContext.DeviceUsers.AnyAsync(x=>x.DeviceUserId == deviceUserModel.Id && x.NotificationRuleId == rule.Id))
+                        if (!await _dbContext.DeviceUsers.AnyAsync(
+                            x => x.DeviceUserId == deviceUserModel.Id &&
+                                 x.NotificationRuleId == rule.Id && 
+                                 x.WorkflowState != Constants.WorkflowStates.Removed))
                         {
                             if (deviceUserModel.Id != null)
                             {
