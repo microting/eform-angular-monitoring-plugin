@@ -57,6 +57,7 @@ namespace Monitoring.Pn.Services
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize)
                     .Include(x => x.Recipients)
+                    .Include(x => x.DeviceUsers)
                     .ToListAsync();
 
                 var result = new NotificationRulesListModel();
@@ -131,6 +132,23 @@ namespace Monitoring.Pn.Services
                         await recipient.Save(_dbContext);
                     }
 
+                    var deviceUsersGroupedIds = ruleModel.DeviceUsers
+                        .GroupBy(x => x.Id)
+                        .Select(x => x.Key)
+                        .ToList();
+
+                    foreach (var deviceUserId in deviceUsersGroupedIds)
+                    {
+                        var deviceUser = new DeviceUser()
+                        {
+                            CreatedByUserId = UserId,
+                            UpdatedByUserId = UserId,
+                            NotificationRuleId = notificationRule.Id,
+                            DeviceUserId = deviceUserId,
+                        };
+                        await deviceUser.Save(_dbContext);
+                    }
+
                     transaction.Commit();
 
                     return new OperationResult(
@@ -172,6 +190,22 @@ namespace Monitoring.Pn.Services
                         Email = x.Email,
                     }).ToListAsync();
 
+                var deviceUsers = await _dbContext.DeviceUsers
+                    .Where(x => x.NotificationRuleId == rule.Id
+                                && x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new DeviceUserModel()
+                    {
+                        Id = x.Id,
+                    }).ToListAsync();
+
+                var core = await _coreHelper.GetCore();
+                foreach (var deviceUserModel in deviceUsers)
+                {
+                   var sdkDeviceUser = await core.SiteRead(deviceUserModel.Id);
+                   deviceUserModel.FirstName = sdkDeviceUser.FirstName;
+                   deviceUserModel.LastName = sdkDeviceUser.LastName;
+                }
+
                 var ruleModel = new NotificationRuleModel()
                 {
                     Id = rule.Id,
@@ -181,7 +215,8 @@ namespace Monitoring.Pn.Services
                     AttachReport = rule.AttachReport,
                     Subject = rule.Subject,
                     Text = rule.Text,
-                    Recipients = recipients
+                    Recipients = recipients,
+                    DeviceUsers = deviceUsers,
                 };
 
                 var jsonSettings = new JsonSerializerSettings
@@ -242,6 +277,7 @@ namespace Monitoring.Pn.Services
 
                     await rule.Update(_dbContext);
 
+                    // work with recipients
                     var recipientsDelete = await _dbContext.Recipients
                         .Where(r => r.NotificationRuleId == rule.Id && ruleModel.Recipients.All(rm => rm.Id != r.Id))
                         .ToListAsync();
@@ -262,6 +298,29 @@ namespace Monitoring.Pn.Services
                         };
 
                         await recipient.Save(_dbContext);
+                    }
+
+                    // work with device users
+                    var deviceUsersDelete = await _dbContext.DeviceUsers
+                        .Where(r => r.NotificationRuleId == rule.Id && ruleModel.DeviceUsers.All(rm => rm.Id != r.Id))
+                        .ToListAsync();
+
+                    foreach (var dud in deviceUsersDelete)
+                    {
+                        await dud.Delete(_dbContext);
+                    }
+
+                    foreach (var deviceUserModel in ruleModel.DeviceUsers.Where(r => r.Id == null))
+                    {
+                        var deviceUser = new DeviceUser()
+                        {
+                            NotificationRuleId = rule.Id,
+                            CreatedByUserId = UserId,
+                            UpdatedByUserId = UserId,
+                            DeviceUserId = deviceUserModel.Id,
+                        };
+
+                        await deviceUser.Save(_dbContext);
                     }
 
                     transaction.Commit();
@@ -296,6 +355,7 @@ namespace Monitoring.Pn.Services
                             _localizationService.GetString("NotificationRuleNotFound"));
                     }
 
+                    // recipients
                     var recipients = await _dbContext.Recipients
                         .Where(x => x.NotificationRuleId == notificationRule.Id)
                         .ToListAsync();
@@ -303,6 +363,16 @@ namespace Monitoring.Pn.Services
                     foreach (var recipient in recipients)
                     {
                         await recipient.Delete(_dbContext);
+                    }
+
+                    // device users
+                    var deviceUsers = await _dbContext.DeviceUsers
+                        .Where(x => x.NotificationRuleId == notificationRule.Id)
+                        .ToListAsync();
+
+                    foreach (var deviceUser in deviceUsers)
+                    {
+                        await deviceUser.Delete(_dbContext);
                     }
 
                     await notificationRule.Delete(_dbContext);
