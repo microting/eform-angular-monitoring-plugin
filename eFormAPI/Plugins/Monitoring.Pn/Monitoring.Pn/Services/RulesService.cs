@@ -62,7 +62,7 @@ namespace Monitoring.Pn.Services
                 var result = new NotificationRulesListModel();
                 foreach (var rule in rules)
                 {
-                    string eFormName = "";
+                    string eFormName;
                     if (eForms.Any(x => x.Id == rule.CheckListId))
                     {
                         eFormName = eForms.First(x => x.Id == rule.CheckListId).Label;

@@ -6,8 +6,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.EformMonitoringBase.Infrastructure.Const;
     using Microting.EformMonitoringBase.Infrastructure.Models;
-    using Microting.EformMonitoringBase.Infrastructure.Data.Const;
 
     [Authorize]
     public class RulesController : Controller
