@@ -29,7 +29,6 @@ script:
   - cp -av microting/eform-angular-monitoring-plugin/eform-client/src/app/plugins/modules/monitoring-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/monitoring-pn
   - cp -av microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-settings microting/eform-angular-frontend/eform-client/e2e/Tests/monitoring-settings
   - cp -av microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-general microting/eform-angular-frontend/eform-client/e2e/Tests/monitoring-general
-  - cp -av microting/eform-angular-monitoring-plugin/eform-client/e2e/Assets/ microting/eform-angular-frontend/eform-client/e2e/Assets
   - cp -av microting/eform-angular-monitoring-plugin/eform-client/e2e/Page\ objects/Monitoring microting/eform-angular-frontend/eform-client/e2e/Page\ objects/Monitoring
   - cp -av microting/eform-angular-monitoring-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
   - cd microting/eform-angular-frontend 

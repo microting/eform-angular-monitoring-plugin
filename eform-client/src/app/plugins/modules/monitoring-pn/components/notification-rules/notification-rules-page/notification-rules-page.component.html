@@ -56,12 +56,12 @@
         </thead>
         <tbody id="tableBody">
         <tr *ngFor="let rule of rulesModel.rules">
-          <td>{{rule.id}}</td>
-          <td>{{rule.eFormName}}</td>
-          <td>
+          <td id="ruleId">{{rule.id}}</td>
+          <td id="ruleeFormName">{{rule.eFormName}}</td>
+          <td id="ruleTrigger">
             <div class="mt-3" [innerHTML]="rule.trigger"></div>
           </td>
-          <td>{{rule.event}}</td>
+          <td id="ruleEvent">{{rule.event}}</td>
           <td *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)
               || pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)">
             <div class="d-flex flex-row justify-content-center">
@@ -107,7 +107,7 @@
 
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
-<app-monitoring-pn-notification-rules-edit #editRuleModal
+<app-monitoring-pn-notification-rules-edit #editRuleModal [deviceUsers]="sitesDto"
   (ruleSaved)="getRulesList()"
 ></app-monitoring-pn-notification-rules-edit>
 <app-monitoring-pn-notification-rules-delete #deleteRuleModal

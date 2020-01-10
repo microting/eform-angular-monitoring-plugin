@@ -3,7 +3,8 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import pluginPage from '../../Page objects/Plugin.page';
 
 import {expect} from 'chai';
-import pluginsPage from './application-settings.plugins.page';
+import pluginsPage from './monitoring-settings.plugins.page';
+
 
 describe('Application settings page - site header section', function () {
     before(function () {
@@ -19,16 +20,14 @@ describe('Application settings page - site header section', function () {
       expect(plugin.id).equal(1);
       expect(plugin.name).equal('Microting Monitoring Plugin');
       expect(plugin.version).equal('1.0.0.0');
-      expect(plugin.status).equal('Deaktiveret');
        // expect()
 
     });
 
     it('should activate the plugin', function () {
         pluginPage.pluginSettingsBtn.click();
-        browser.waitForVisible('#PluginDropDown', 40000);
-        pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
-        pluginPage.saveBtn.click();
+        browser.waitForVisible('#pluginOKBtn', 40000);
+        pluginPage.pluginOKBtn.click();
         browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
         browser.refresh();
 
@@ -42,7 +41,7 @@ describe('Application settings page - site header section', function () {
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Monitoring Plugin');
         expect(plugin.version).equal('1.0.0.0');
-        expect(plugin.status).equal('Aktiveret');
+        expect(plugin.settingsBtn.isVisible());
         // click on plugin settings
         // enter connectionstring for customers plugin
         // select activate
