@@ -1,5 +1,5 @@
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.EformMonitoringBase.Infrastructure.Data.Const;
+using Microting.EformMonitoringBase.Infrastructure.Const;
 
 namespace Monitoring.Pn.Infrastructure.Data.Seed.Data
 {
