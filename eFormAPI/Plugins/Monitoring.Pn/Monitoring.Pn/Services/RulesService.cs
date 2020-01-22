@@ -45,7 +45,7 @@ namespace Monitoring.Pn.Services
             _logger = logger;
         }
         
-        public async Task<OperationDataResult<NotificationRulesListModel>> GetRules(NotificationListRequestModel requestModel)
+        public async Task<OperationDataResult<NotificationRulesListModel>> Index(NotificationListRequestModel requestModel)
         {
             var core = await _coreHelper.GetCore();
             List<Template_Dto> eForms = new List<Template_Dto>();
@@ -99,7 +99,7 @@ namespace Monitoring.Pn.Services
             }
         }
 
-        public async Task<OperationResult> CreateNewRule(NotificationRuleModel ruleModel)
+        public async Task<OperationResult> Create(NotificationRuleModel ruleModel)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
@@ -170,7 +170,7 @@ namespace Monitoring.Pn.Services
             }
         }
 
-        public async Task<OperationDataResult<NotificationRuleModel>> GetRuleById(int id)
+        public async Task<OperationDataResult<NotificationRuleModel>> Read(int id)
         {
             try
             {
@@ -257,7 +257,7 @@ namespace Monitoring.Pn.Services
             }
         }
 
-        public async Task<OperationResult> UpdateRule(NotificationRuleModel ruleModel)
+        public async Task<OperationResult> Update(NotificationRuleModel ruleModel)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
@@ -355,7 +355,7 @@ namespace Monitoring.Pn.Services
             }
         }
 
-        public async Task<OperationResult> DeleteRule(int id)
+        public async Task<OperationResult> Delete(int id)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
