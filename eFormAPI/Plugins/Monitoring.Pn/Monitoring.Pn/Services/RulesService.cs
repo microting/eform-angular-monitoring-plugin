@@ -78,9 +78,13 @@ namespace Monitoring.Pn.Services
                     {
                         Id = rule.Id,
                         EFormName = eFormName,
-                        Trigger = RulesBlockHelper.GetRuleTriggerString(rule),
                         Event = "Email"
                     };
+
+                    if (rule.Data != null && !string.IsNullOrEmpty(rule.Data))
+                    {
+                        ruleModel.Trigger = RulesBlockHelper.GetRuleTriggerString(rule);
+                    }
 
                     result.Rules.Add(ruleModel);
                 }
@@ -111,12 +115,16 @@ namespace Monitoring.Pn.Services
                         Text = ruleModel.Text,
                         AttachReport = ruleModel.AttachReport,
                         DataItemId = ruleModel.DataItemId,
-                        Data = ruleModel.Data.ToString(),
                         CheckListId = ruleModel.CheckListId,
                         RuleType = ruleModel.RuleType,
                         CreatedByUserId = UserId,
                         UpdatedByUserId = UserId,
                     };
+
+                    if (ruleModel.Data != null)
+                    {
+                        notificationRule.Data = ruleModel.Data?.ToString();
+                    }
 
                     await notificationRule.Save(_dbContext);
 
@@ -226,26 +234,28 @@ namespace Monitoring.Pn.Services
                     DeviceUsers = deviceUsers,
                 };
 
-                var jsonSettings = new JsonSerializerSettings
+                if (!string.IsNullOrEmpty(rule.Data) && rule.RuleType != null)
                 {
-                    NullValueHandling = NullValueHandling.Include
-                };
+                    var jsonSettings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Include
+                    };
 
-                switch (rule.RuleType)
-                {
-                    case RuleType.Select:
-                        ruleModel.Data = JsonConvert.DeserializeObject<SelectBlock>(rule.Data, jsonSettings);
-                        break;
-                    case RuleType.CheckBox:
-                        ruleModel.Data = JsonConvert.DeserializeObject<CheckBoxBlock>(rule.Data, jsonSettings);
-                        break;
-                    case RuleType.Number:
-                        ruleModel.Data = JsonConvert.DeserializeObject<NumberBlock>(rule.Data, jsonSettings);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    switch (rule.RuleType)
+                    {
+                        case RuleType.Select:
+                            ruleModel.Data = JsonConvert.DeserializeObject<SelectBlock>(rule.Data, jsonSettings);
+                            break;
+                        case RuleType.CheckBox:
+                            ruleModel.Data = JsonConvert.DeserializeObject<CheckBoxBlock>(rule.Data, jsonSettings);
+                            break;
+                        case RuleType.Number:
+                            ruleModel.Data = JsonConvert.DeserializeObject<NumberBlock>(rule.Data, jsonSettings);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
-
                 return new OperationDataResult<NotificationRuleModel>(true, ruleModel);
             }
             catch (Exception e)
@@ -275,12 +285,16 @@ namespace Monitoring.Pn.Services
                     }
 
                     rule.AttachReport = ruleModel.AttachReport;
-                    rule.Data = ruleModel.Data.ToString();
                     rule.RuleType = ruleModel.RuleType;
                     rule.Subject = ruleModel.Subject;
                     rule.CheckListId = ruleModel.CheckListId;
                     rule.Text = ruleModel.Text;
                     rule.DataItemId = ruleModel.DataItemId;
+
+                    if (ruleModel.Data != null)
+                    {
+                        rule.Data = ruleModel.Data.ToString();
+                    }
 
                     await rule.Update(_dbContext);
 
