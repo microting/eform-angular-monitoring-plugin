@@ -44,6 +44,45 @@
                   </div>
                 </div>
               </div>
+              <p>OR</p>
+              <p>{{ 'Device Users' | translate }}</p>
+              <div class="row">
+                <div class="col">
+                  <div class="md-form">
+                    <ng-select
+                      bindValue="siteId"
+                      bindLabel="fullName"
+                      [(ngModel)]="selectedDeviceUserId"
+                      [placeholder]="('Selected device user' | translate)"
+                      [items]="deviceUsers"></ng-select>
+                  </div>
+                </div>
+                <div class="col-auto py-3">
+                  <button class="btn btn-success" id="addDeviceUserButton" type="button" (click)="addDeviceUser()">
+                    <fa-icon icon="plus"></fa-icon>
+                    {{ 'Add' | translate }}
+                  </button>
+                </div>
+              </div>
+              <div class="row p-1 mt-2 table-responsive no-gutters">
+                <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
+                  <tbody id="deviceUserTableBody">
+                  <tr *ngFor="let deviceUser of ruleModel.deviceUsers; let i = index">
+                    <td>{{deviceUser.id}}</td>
+                    <td>{{deviceUser.firstName}} {{deviceUser.lastName}}</td>
+                    <td>
+                      <div class="d-flex flex-row justify-content-end">
+                        <button id="deleteDeviceUserBtn" (click)="removeDeviceUser(i)"
+                                class="btn btn-danger btn-icon mb-2" type="button"
+                                mdbTooltip="{{ 'Remove device user' | translate }}">
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
               <ng-container *ngIf="ruleModel.data">
                 <div class="row">
                   <div class="col">
@@ -108,45 +147,6 @@
                           </div>
                         </ng-container>
                       </ng-container>
-                    </div>
-                    <p>AND</p>
-                    <p>{{ 'Device Users' | translate }}</p>
-                    <div class="row">
-                      <div class="col">
-                        <div class="md-form">
-                          <ng-select
-                            bindValue="siteId"
-                            bindLabel="fullName"
-                            [(ngModel)]="selectedDeviceUserId"
-                            [placeholder]="('Selected device user' | translate)"
-                            [items]="deviceUsers"></ng-select>
-                        </div>
-                      </div>
-                      <div class="col-auto py-3">
-                        <button class="btn btn-success" id="addDeviceUserButton" type="button" (click)="addDeviceUser()">
-                          <fa-icon icon="plus"></fa-icon>
-                          {{ 'Add' | translate }}
-                        </button>
-                      </div>
-                    </div>
-                    <div class="row p-1 mt-2 table-responsive no-gutters">
-                      <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
-                        <tbody id="deviceUserTableBody">
-                        <tr *ngFor="let deviceUser of ruleModel.deviceUsers; let i = index">
-                          <td>{{deviceUser.id}}</td>
-                          <td>{{deviceUser.firstName}} {{deviceUser.lastName}}</td>
-                          <td>
-                            <div class="d-flex flex-row justify-content-end">
-                              <button id="deleteDeviceUserBtn" (click)="removeDeviceUser(i)"
-                                      class="btn btn-danger btn-icon mb-2" type="button"
-                                      mdbTooltip="{{ 'Remove device user' | translate }}">
-                                <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
                     </div>
                     <p>THEN</p>
                   </div>
@@ -238,7 +238,7 @@
         </div>
         <div class="modal-footer">
           <button id="ruleEditSaveBtn" class="btn btn-success" (click)="saveRule()"
-                  [disabled]="!ruleModel.checkListId || !ruleModel.dataItemId">
+                  [disabled]="!ruleModel.checkListId">
             {{ 'Save' | translate }}
           </button>
           <button id="ruleEditCancelBtn" class="btn btn-accent text-black-50" type="button" (click)="onClose()">
