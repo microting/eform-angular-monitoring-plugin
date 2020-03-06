@@ -11,10 +11,10 @@ rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eFormAPI/Pl
 cp -av Documents/workspace/microting/eform-angular-frontend/eFormAPI/Plugins/Monitoring.Pn Documents/workspace/microting/eform-angular-monitoring-plugin/eFormAPI/Plugins/Monitoring.Pn
 
 # Test files rm
-cp -av Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-settings
-cp -av Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-general
-cp -av Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Page\ objects/Monitoring
-cp -av Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/wdio-headless-plugin-step2.conf.js
+rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-settings/
+rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-general/
+rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Page\ objects/Monitoring/
+rm -fR Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/wdio-headless-plugin-step2.conf.js
 
 # Test files cp
 cp -av Documents/workspace/microting/eform-angular-frontend/eform-client/e2e/Tests/monitoring-settings Documents/workspace/microting/eform-angular-monitoring-plugin/eform-client/e2e/Tests/monitoring-settings
