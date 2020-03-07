@@ -126,7 +126,7 @@ namespace Monitoring.Pn.Services
                         notificationRule.Data = ruleModel.Data?.ToString();
                     }
 
-                    await notificationRule.Save(_dbContext);
+                    await notificationRule.Create(_dbContext);
 
                     foreach (var recipientModel in ruleModel.Recipients)
                     {
@@ -137,7 +137,7 @@ namespace Monitoring.Pn.Services
                             Email = recipientModel.Email,
                             NotificationRuleId = notificationRule.Id,
                         };
-                        await recipient.Save(_dbContext);
+                        await recipient.Create(_dbContext);
                     }
 
                     var deviceUsersGroupedIds = ruleModel.DeviceUsers
@@ -157,7 +157,7 @@ namespace Monitoring.Pn.Services
                                 NotificationRuleId = notificationRule.Id,
                                 DeviceUserId = (int) deviceUserId,
                             };
-                            await deviceUser.Save(_dbContext);
+                            await deviceUser.Create(_dbContext);
                         }
                     }
 
@@ -318,7 +318,7 @@ namespace Monitoring.Pn.Services
                             UpdatedByUserId = UserId
                         };
 
-                        await recipient.Save(_dbContext);
+                        await recipient.Create(_dbContext);
                     }
 
                     // work with device users
@@ -348,7 +348,7 @@ namespace Monitoring.Pn.Services
                                     DeviceUserId = (int)deviceUserModel.Id,
                                 };
 
-                                await deviceUser.Save(_dbContext);
+                                await deviceUser.Create(_dbContext);
                             }
                         }
                     }
