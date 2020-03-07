@@ -9,6 +9,8 @@ export class NotificationRuleModel {
   subject: string;
   text: string;
   attachReport: boolean;
+  attachLink: boolean;
+  includeValue: boolean;
   ruleType: NotificationRuleType;
   dataItemId: number;
   data?: BaseDataItem;

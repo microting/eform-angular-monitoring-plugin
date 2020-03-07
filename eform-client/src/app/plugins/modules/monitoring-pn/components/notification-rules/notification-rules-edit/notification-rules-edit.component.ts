@@ -225,11 +225,19 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   addDeviceUser() {
+    const baseDataItem = {
+      label: '',
+      description: ''
+    } as BaseDataItem;
+
     if (this.selectedDeviceUserId) {
       const foundDeviceUser = this.deviceUsers.find(x => x.siteId === this.selectedDeviceUserId);
       this.ruleModel.deviceUsers
           .push(new DeviceUserModel(
               {id: foundDeviceUser.siteId, firstName: foundDeviceUser.firstName, lastName: foundDeviceUser.lastName}));
+      this.ruleModel.data = {
+        ...baseDataItem,
+      };
     }
 
   }

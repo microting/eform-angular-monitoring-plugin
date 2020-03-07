@@ -114,6 +114,8 @@ namespace Monitoring.Pn.Services
                         Subject = ruleModel.Subject,
                         Text = ruleModel.Text,
                         AttachReport = ruleModel.AttachReport,
+                        AttachLink = ruleModel.AttachLink,
+                        IncludeValue = ruleModel.IncludeValue,
                         DataItemId = ruleModel.DataItemId,
                         CheckListId = ruleModel.CheckListId,
                         RuleType = ruleModel.RuleType,
@@ -228,6 +230,8 @@ namespace Monitoring.Pn.Services
                     DataItemId = rule.DataItemId,
                     RuleType = rule.RuleType,
                     AttachReport = rule.AttachReport,
+                    AttachLink = rule.AttachLink,
+                    IncludeValue = rule.IncludeValue,
                     Subject = rule.Subject,
                     Text = rule.Text,
                     Recipients = recipients,
@@ -285,6 +289,8 @@ namespace Monitoring.Pn.Services
                     }
 
                     rule.AttachReport = ruleModel.AttachReport;
+                    rule.AttachLink = ruleModel.AttachLink;
+                    rule.IncludeValue = ruleModel.IncludeValue;
                     rule.RuleType = ruleModel.RuleType;
                     rule.Subject = ruleModel.Subject;
                     rule.CheckListId = ruleModel.CheckListId;

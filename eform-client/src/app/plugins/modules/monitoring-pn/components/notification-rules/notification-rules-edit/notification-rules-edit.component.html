@@ -84,7 +84,7 @@
                 </table>
               </div>
               <ng-container *ngIf="ruleModel.data">
-                <div class="row">
+                <div class="row" *ngIf="ruleModel.data.label != ''">
                   <div class="col">
                     <p>{{ruleModel.data.label}}</p>
                     <p>{{ruleModel.data.description}}</p>
@@ -175,9 +175,9 @@
                         <ng-container *ngIf="ruleModel.data.description">
                           <span>{{ruleModel.data.description}}</span><br>
                         </ng-container>
-                        <span>Value: {{ruleModel.data.label}} value</span><br>
+                        <span *ngIf="ruleModel.includeTriggerValues">Value: {{ruleModel.data.label}} value</span><br>
                       </div>
-                      <a href="javascript:" style="color: dodgerblue; text-decoration: underline">Open case link</a><br>
+                      <a href="javascript:" style="color: dodgerblue; text-decoration: underline" *ngIf="ruleModel.attachLink">Open case link</a><br>
                       <textarea mdbInputDirective
                                 [mdbValidate]="false"
                                 [(ngModel)]="ruleModel.text"
@@ -192,6 +192,22 @@
                     <div class="mat-checkbox">
                       <input id="attachReport" name="attachReport" [(ngModel)]="ruleModel.attachReport" type="checkbox">
                       <label for="attachReport">{{ 'Attach report' | translate }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col">
+                    <div class="mat-checkbox">
+                      <input id="attachLink" name="attachLink" [(ngModel)]="ruleModel.attachLink" type="checkbox">
+                      <label for="attachLink">{{ 'Attach link' | translate }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col">
+                    <div class="mat-checkbox">
+                      <input id="IncludeValue" name="IncludeValue" [(ngModel)]="ruleModel.includeValue" type="checkbox">
+                      <label for="IncludeValue">{{ 'Include trigger values' | translate }}</label>
                     </div>
                   </div>
                 </div>

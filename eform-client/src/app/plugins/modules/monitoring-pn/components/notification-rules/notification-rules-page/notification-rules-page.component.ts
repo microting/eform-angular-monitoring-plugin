@@ -112,7 +112,9 @@ export class NotificationRulesPageComponent implements OnInit {
     this.spinnerStatus = true;
     this.deviceUsersService.getAllDeviceUsers().subscribe(operation => {
       if (operation && operation.success) {
-        this.sitesDto = operation.model.map(x => ({...x, fullName: `${x.firstName} ${x.lastName}`}));
+        this.sitesDto = operation.model.map((i) => { i.fullName = i.siteName; return i; });
+
+        // this.sitesDto = operation.model.map(x => ({...x, fullName: `${x.firstName} ${x.lastName}`}));
       }
       this.spinnerStatus = false;
     });
