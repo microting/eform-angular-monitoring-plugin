@@ -140,9 +140,11 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   show(id?: number) {
+    // debugger;
     this.ruleModel = new NotificationRuleModel();
     this.selectedTemplate = new TemplateDto();
     this.selectedField = new FieldDto();
+    // this.ruleModel.checkListId = null;
 
     if (id) {
       this.getSelectedRule(id);
@@ -150,6 +152,8 @@ export class NotificationRulesEditComponent implements OnInit {
       this.ruleModel = {
         id: null,
         attachReport: false,
+        attachLink: false,
+        includeValue: false,
         data: null,
         dataItemId: null,
         recipients: [],
