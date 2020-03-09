@@ -25,6 +25,7 @@
                     [placeholder]="('Selected eForm' | translate)"
                     (change)="onTemplateChange($event)"
                     [items]="items"
+                    [(ngModel)]="ruleModel.checkListId"
                     id="templateSelector"></ng-select>
                 </div>
               </div>
@@ -52,7 +53,6 @@
                     <ng-select
                       bindValue="siteId"
                       bindLabel="fullName"
-                      [(ngModel)]="selectedDeviceUserId"
                       [placeholder]="('Selected device user' | translate)"
                       [items]="deviceUsers"></ng-select>
                   </div>
