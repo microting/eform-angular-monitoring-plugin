@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure;
 using Microting.eFormApi.BasePn.Abstractions;
 
 namespace Monitoring.Pn.Services
@@ -48,7 +50,8 @@ namespace Monitoring.Pn.Services
         public async Task<OperationDataResult<NotificationRulesListModel>> Index(NotificationListRequestModel requestModel)
         {
             var core = await _coreHelper.GetCore();
-            List<Template_Dto> eForms = new List<Template_Dto>();
+            MicrotingDbContext dbContext = core.dbContextHelper.GetDbContext();
+            List<KeyValuePair<int, string>> eForms = new List<KeyValuePair<int, string>>();
             try
             {
                 var rules = await _dbContext.Rules
@@ -64,14 +67,14 @@ namespace Monitoring.Pn.Services
                 foreach (var rule in rules)
                 {
                     string eFormName;
-                    if (eForms.Any(x => x.Id == rule.CheckListId))
+                    if (eForms.Any(x => x.Key == rule.CheckListId))
                     {
-                        eFormName = eForms.First(x => x.Id == rule.CheckListId).Label;
+                        eFormName = eForms.First(x => x.Key == rule.CheckListId).Value;
                     }
                     else
                     {
-                        eForms.Add(await core.TemplateItemRead(rule.CheckListId));
-                        eFormName = eForms.First(x => x.Id == rule.CheckListId).Label;
+                        eForms.Add( new KeyValuePair<int, string>(rule.CheckListId, dbContext.check_lists.Single( x => x.Id == rule.CheckListId).Label));
+                        eFormName = eForms.First(x => x.Key == rule.CheckListId).Value;
                     }
                     
                     var ruleModel = new NotificationRuleSimpleModel
@@ -83,7 +86,7 @@ namespace Monitoring.Pn.Services
 
                     if (rule.Data != null && !string.IsNullOrEmpty(rule.Data))
                     {
-                        ruleModel.Trigger = RulesBlockHelper.GetRuleTriggerString(rule);
+                        ruleModel.Trigger = RulesBlockHelper.GetRuleTriggerString(rule, dbContext);
                     }
 
                     result.Rules.Add(ruleModel);
@@ -238,7 +241,7 @@ namespace Monitoring.Pn.Services
                     DeviceUsers = deviceUsers,
                 };
 
-                if (!string.IsNullOrEmpty(rule.Data) && rule.RuleType != null)
+                if (!string.IsNullOrEmpty(rule.Data))
                 {
                     var jsonSettings = new JsonSerializerSettings
                     {
@@ -257,7 +260,8 @@ namespace Monitoring.Pn.Services
                             ruleModel.Data = JsonConvert.DeserializeObject<NumberBlock>(rule.Data, jsonSettings);
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            ruleModel.Data = JsonConvert.DeserializeObject<BaseDataItem>(rule.Data, jsonSettings);
+                            break;
                     }
                 }
                 return new OperationDataResult<NotificationRuleModel>(true, ruleModel);

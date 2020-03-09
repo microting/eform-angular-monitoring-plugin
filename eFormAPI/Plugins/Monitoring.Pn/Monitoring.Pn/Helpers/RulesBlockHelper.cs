@@ -1,4 +1,6 @@
-﻿namespace Monitoring.Pn.Helpers
+﻿using Microting.eForm.Infrastructure;
+
+namespace Monitoring.Pn.Helpers
 {
     using System;
     using System.Linq;
@@ -9,7 +11,7 @@
 
     public static class RulesBlockHelper
     {
-        public static string GetRuleTriggerString(NotificationRule notificationRule)
+        public static string GetRuleTriggerString(NotificationRule notificationRule, MicrotingDbContext dbContext)
         {
             var result = "";
             var jsonSettings = new JsonSerializerSettings
@@ -41,8 +43,15 @@
                     if (numberBlock.EqualValue != null)
                         result += $"<p>{numberBlock.Label} = {numberBlock.EqualValue}</p>";
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                case null:
+                    if (notificationRule.DeviceUsers.Any())
+                    {
+                        foreach (DeviceUser deviceUser in notificationRule.DeviceUsers)
+                        {
+                            result += dbContext.sites.Single(x => x.MicrotingUid == deviceUser.DeviceUserId).Name;
+                        }
+                    }
+                    break;
             }
 
             return result;
