@@ -140,7 +140,6 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   show(id?: number) {
-    // debugger;
     this.ruleModel = new NotificationRuleModel();
     this.selectedTemplate = new TemplateDto();
     this.selectedField = new FieldDto();

@@ -53,6 +53,7 @@
                     <ng-select
                       bindValue="siteId"
                       bindLabel="fullName"
+                      [(ngModel)]="selectedDeviceUserId"
                       [placeholder]="('Selected device user' | translate)"
                       [items]="deviceUsers"></ng-select>
                   </div>
