@@ -41,13 +41,6 @@ describe('Application settings page - site header section', function () {
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Monitoring Plugin');
         expect(plugin.version).equal('1.0.0.0');
-        expect(plugin.settingsBtn.isVisible());
-        // click on plugin settings
-        // enter connectionstring for customers plugin
-        // select activate
-        // save changes
-        // see that the plugin is marked active
-        // validate that the customers menu entry is now visible
-        // validate that the customers index page is shown with all fields active in the header
+        plugin.settingsBtn.waitForDisplayed(20000);
     });
 });
