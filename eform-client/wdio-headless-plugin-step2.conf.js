@@ -1,5 +1,6 @@
 exports.config = {
-
+    runner: 'local',
+    path: '/',
     //
     // ==================
     // Specify Test Files
@@ -11,7 +12,6 @@ exports.config = {
     //
     specs: [
        'e2e/Tests/monitoring-settings/monitoring-settings.plugins-page.spec.ts',
-
     ],
     suites: {
         settings: [
@@ -45,17 +45,23 @@ exports.config = {
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
     capabilities: [{
+
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 1,
+        maxInstances: 5,
         //
         browserName: 'chrome',
-        chromeOptions: {
-            args: ['--headless',
-                '--disable-gpu',
-                '--window-size=1920,1080']
-        }
+        'goog:chromeOptions': {
+            args: [
+                'headless',
+                'window-size=1920,1080',
+                'disable-gpu'],
+        },
+        // If outputDir is provided WebdriverIO can capture driver session logs
+        // it is possible to configure which logTypes to include/exclude.
+        // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+        // excludeDriverLogs: ['bugreport', 'server'],
     }],
     //
     // ===================
@@ -79,7 +85,7 @@ exports.config = {
     //
     // If you only want to run your Tests until a specific amount of Tests have failed use
     // bail (default is 0 - don't bail, run all Tests).
-    bail: 1,
+    bail: 0,
     //
     // Saves a screenshot to a given path if a command fails.
     screenshotPath: './errorShots/',
@@ -122,7 +128,9 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['selenium-standalone', 'chromedriver'],
+    services: ['chromedriver'],
+    //chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
+    //chromeDriverLogs: './',
     //
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
