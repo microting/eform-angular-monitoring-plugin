@@ -20,7 +20,7 @@ import {DeviceUserModel} from '../../../models/device-user.model';
 })
 export class NotificationRulesEditComponent implements OnInit {
   @Input() deviceUsers: SiteDto[];
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Output() ruleSaved: EventEmitter<void> = new EventEmitter<void>();
   selectedDeviceUserId: number;
   items: Array<TemplateDto> = [];

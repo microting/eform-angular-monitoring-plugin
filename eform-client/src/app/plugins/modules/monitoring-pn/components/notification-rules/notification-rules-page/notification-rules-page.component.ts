@@ -20,8 +20,8 @@ import {SiteDto} from '../../../../../../common/models/dto';
   styleUrls: ['./notification-rules-page.component.scss']
 })
 export class NotificationRulesPageComponent implements OnInit {
-  @ViewChild('editRuleModal') editRuleModal: NotificationRulesEditComponent;
-  @ViewChild('deleteRuleModal') deleteRuleModal: NotificationRulesDeleteComponent;
+  @ViewChild('editRuleModal', {static: false}) editRuleModal: NotificationRulesEditComponent;
+  @ViewChild('deleteRuleModal', {static: false}) deleteRuleModal: NotificationRulesDeleteComponent;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   rulesModel: NotificationRulesListModel = new NotificationRulesListModel();
   rulesRequestModel: NotificationsRequestModel = new NotificationsRequestModel();

@@ -8,7 +8,7 @@ import {NotificationRuleSimpleModel} from '../../../models';
   styleUrls: ['./notification-rules-delete.component.scss']
 })
 export class NotificationRulesDeleteComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Output() ruleDeleted: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;
   ruleModel: NotificationRuleSimpleModel = new NotificationRuleSimpleModel();
