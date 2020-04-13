@@ -59,7 +59,7 @@
                   </div>
                 </div>
                 <div class="col-auto py-3">
-                  <button class="btn btn-success" id="addDeviceUserButton" type="button" (click)="addDeviceUser()">
+                  <button mdbBtn class=" btn-success" id="addDeviceUserButton" type="button" (click)="addDeviceUser()">
                     <fa-icon icon="plus"></fa-icon>
                     {{ 'Add' | translate }}
                   </button>
@@ -94,8 +94,7 @@
                       <ng-container [ngSwitch]="ruleModel.ruleType">
                         <ng-container *ngSwitchCase="ruleType.CheckBox">
                           <div class="mat-checkbox">
-                            <input mdbInputDirective
-                                   [mdbValidate]="false"
+                            <input mdbInput
                                    id="selected" name="selected" type="checkbox"
                                    [(ngModel)]="asCheckboxBlock(ruleModel.data).selected">
                             <label for="selected"></label>
@@ -106,8 +105,7 @@
                             <div class="row">
                               <div class="col-auto py-3">{{ruleModel.data.label}} ></div>
                               <div class="col-auto">
-                                <input mdbInputDirective
-                                       [mdbValidate]="false"
+                                <input mdbInput
                                        [(ngModel)]="asNumberBlock(ruleModel.data).greaterThanValue"
                                        type="text" id="greaterThanValue"
                                        name="greaterThanValue" class="form-control">
@@ -117,8 +115,7 @@
                             <div class="row">
                               <div class="col-auto py-3">{{ruleModel.data.label}} <</div>
                               <div class="col-auto">
-                                <input mdbInputDirective
-                                       [mdbValidate]="false"
+                                <input mdbInput
                                        [(ngModel)]="asNumberBlock(ruleModel.data).lessThanValue"
                                        type="text" id="lessThanValue"
                                        name="lessThanValue" class="form-control">
@@ -128,8 +125,7 @@
                             <div class="row">
                               <div class="col-auto py-3">{{ruleModel.data.label}} =</div>
                               <div class="col-auto">
-                                <input mdbInputDirective
-                                       [mdbValidate]="false"
+                                <input mdbInput
                                        [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
                                        type="text" id="equalValue"
                                        name="equalValue" class="form-control">
@@ -156,8 +152,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="md-form">
-                      <input mdbInputDirective
-                             [mdbValidate]="false"
+                      <input mdbInput
                              [(ngModel)]="ruleModel.subject"
                              type="text" id="emailSubject"
                              name="emailSubject" class="form-control">
@@ -179,8 +174,7 @@
                         <span *ngIf="ruleModel.includeTriggerValues">Value: {{ruleModel.data.label}} value</span><br>
                       </div>
                       <a href="javascript:" style="color: dodgerblue; text-decoration: underline" *ngIf="ruleModel.attachLink">Open case link</a><br>
-                      <textarea mdbInputDirective
-                                [mdbValidate]="false"
+                      <textarea mdbInput
                                 [(ngModel)]="ruleModel.text"
                                 type="text" id="emailText"
                                 name="emailText" class="md-textarea form-control"></textarea>
@@ -216,8 +210,7 @@
                 <div class="row">
                   <div class="col">
                     <div class="md-form">
-                      <input mdbInputDirective
-                             [mdbValidate]="false"
+                      <input mdbInput
                              [(ngModel)]="recipientEmail"
                              type="email" id="recipientEmail"
                              name="recipientEmail" class="form-control">
@@ -225,7 +218,7 @@
                     </div>
                   </div>
                   <div class="col-auto py-3">
-                    <button class="btn btn-success" id="addRecipientBtn" type="button" (click)="addNewRecipient()">
+                    <button mdbBtn class=" btn-success" id="addRecipientBtn" type="button" (click)="addNewRecipient()">
                       <fa-icon icon="plus"></fa-icon>
                       {{ 'Add' | translate }}
                     </button>
