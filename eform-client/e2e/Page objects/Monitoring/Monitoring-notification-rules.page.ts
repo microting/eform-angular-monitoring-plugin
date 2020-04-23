@@ -8,30 +8,30 @@ export class MonitoringNotificationRulesPage extends Page {
         super();
     }
     public get newEformBtn() {
-        $('#newEFormBtn').waitForDisplayed(20000);
+        $('#newEFormBtn').waitForDisplayed({timeout: 20000});
         $('#newEFormBtn').waitForClickable({timeout: 20000});
         return $('#newEFormBtn');
     }
     public get createEformTagSelector() {
-        $('#createEFormMultiSelector').waitForDisplayed(20000);
+        $('#createEFormMultiSelector').waitForDisplayed({timeout: 20000});
         $('#createEFormMultiSelector').waitForClickable({timeout: 20000});
         return $('#createEFormMultiSelector');
     }
 
     public get createEformNewTagInput() {
-        $('#addTagInput').waitForDisplayed(20000);
+        $('#addTagInput').waitForDisplayed({timeout: 20000});
         $('#addTagInput').waitForClickable({timeout: 20000});
         return $('#addTagInput');
     }
 
     public get xmlTextArea() {
-        $('#eFormXml').waitForDisplayed(20000);
+        $('#eFormXml').waitForDisplayed({timeout: 20000});
         $('#eFormXml').waitForClickable({timeout: 20000});
         return $('#eFormXml');
     }
 
     public get createEformBtn() {
-        $('#createEformBtn').waitForDisplayed(20000);
+        $('#createEformBtn').waitForDisplayed({timeout: 20000});
         $('#createEformBtn').waitForClickable({timeout: 20000});
         return $('#createEformBtn');
     }
@@ -42,7 +42,7 @@ export class MonitoringNotificationRulesPage extends Page {
         return $(`//*[@id= 'monitoring-pn-calendar']`);
     }
     public get RuleCreateBtn() {
-        $('#ruleCreateBtn').waitForDisplayed(20000);
+        $('#ruleCreateBtn').waitForDisplayed({timeout: 20000});
         $('#ruleCreateBtn').waitForClickable({timeout: 20000});
         return $('#ruleCreateBtn');
     }
@@ -50,7 +50,7 @@ export class MonitoringNotificationRulesPage extends Page {
         return $(`//*[@id= 'templateSelector']`);
     }
     public get DataFieldSelector() {
-        $('#dataFieldSelector').waitForDisplayed(20000);
+        $('#dataFieldSelector').waitForDisplayed({timeout: 20000});
         $('#dataFieldSelector').waitForClickable({timeout: 20000});
         return $('#dataFieldSelector');
     }
@@ -58,59 +58,59 @@ export class MonitoringNotificationRulesPage extends Page {
         return $(`//*[@id= 'selected']`);
     }
     public get GreaterThanValue() {
-        $('#greaterThanValue').waitForDisplayed(20000);
+        $('#greaterThanValue').waitForDisplayed({timeout: 20000});
         $('#greaterThanValue').waitForClickable({timeout: 20000});
         return $('#greaterThanValue');
     }
     public get LessThanValue() {
-        $('#lessThanValue').waitForDisplayed(20000);
+        $('#lessThanValue').waitForDisplayed({timeout: 20000});
         $('#lessThanValue').waitForClickable({timeout: 20000});
         return $('#lessThanValue');
     }
     public get EqualValue() {
-        $('#equalValue').waitForDisplayed(20000);
+        $('#equalValue').waitForDisplayed({timeout: 20000});
         $('#equalValue').waitForClickable({timeout: 20000});
         return $('#equalValue');
     }
     public get EmailSubject() {
-        $('#emailSubject').waitForDisplayed(20000);
+        $('#emailSubject').waitForDisplayed({timeout: 20000});
         $('#emailSubject').waitForClickable({timeout: 20000});
         return $('#emailSubject');
     }
     public get EmailTextArea() {
-        $('#emailText').waitForDisplayed(20000);
+        $('#emailText').waitForDisplayed({timeout: 20000});
         $('#emailText').waitForClickable({timeout: 20000});
         return $('#emailText');
     }
     public get AttachReportBox() {
-        $('#attachReport').waitForDisplayed(20000);
+        $('#attachReport').waitForDisplayed({timeout: 20000});
         $('#attachReport').waitForClickable({timeout: 20000});
         return $('#attachReport');
     }
     public get RecipientEmail() {
-        $('#recipientEmail').waitForDisplayed(20000);
+        $('#recipientEmail').waitForDisplayed({timeout: 20000});
         $('#recipientEmail').waitForClickable({timeout: 20000});
         return $('#recipientEmail');
     }
     public get AddRecipientBtn() {
-        $('#addRecipientBtn').waitForDisplayed(20000);
+        $('#addRecipientBtn').waitForDisplayed({timeout: 20000});
         $('#addRecipientBtn').waitForClickable({timeout: 20000});
         return $('#addRecipientBtn');
     }
     public get RuleSaveBtn() {
-        $('#ruleEditSaveBtn').waitForDisplayed(20000);
+        $('#ruleEditSaveBtn').waitForDisplayed({timeout: 20000});
         $('#ruleEditSaveBtn').waitForClickable({timeout: 20000});
         return $('#ruleEditSaveBtn');
     }
     public get RuleCancelBtn() {
-        $('#ruleEditCancelBtn').waitForDisplayed(20000);
+        $('#ruleEditCancelBtn').waitForDisplayed({timeout: 20000});
         $('#ruleEditCancelBtn').waitForClickable({timeout: 20000});
         return $('#ruleEditCancelBtn');
     }
 
     createNewEform(eFormLabel, selectableReplace, searchableReplace) {
         this.newEformBtn.click();
-        $('#eFormXml').waitForDisplayed(20000);
+        $('#eFormXml').waitForDisplayed({timeout: 20000});
         // Create replaced xml and insert it in textarea
         let xml = XMLForeFormExtended.XML.replace('TEST_LABEL', eFormLabel);
         xml = xml.replace('REPLACE_SEARCHABLE_ID', searchableReplace);
@@ -122,11 +122,11 @@ export class MonitoringNotificationRulesPage extends Page {
         }, xml);
         this.xmlTextArea.addValue(' ');
         this.createEformTagSelector.click();
-        $('#createEformBtn').waitForDisplayed(10000);
+        $('#createEformBtn').waitForDisplayed({timeout: 10000});
         // browser.pause(5000);
         this.createEformBtn.click();
         // browser.pause(14000);
-        $('#delete-eform-btn').waitForDisplayed(20000);
+        $('#delete-eform-btn').waitForDisplayed({timeout: 20000});
     }
     public selectOption(option) {
         $(`//*[text()="${option}"]`).click();
@@ -137,31 +137,31 @@ export class MonitoringNotificationRulesPage extends Page {
     }
     public goToMonitoringRulesPage() {
         this.MonitoringDropdown.click();
-        $('#monitoring-pn-calendar').waitForDisplayed(20000);
+        $('#monitoring-pn-calendar').waitForDisplayed({timeout: 20000});
         this.MonitoringRulesBtn.click();
-        $('#ruleCreateBtn').waitForDisplayed(20000);
+        $('#ruleCreateBtn').waitForDisplayed({timeout: 20000});
     }
     public createNewMonitoringRuleWithCheckbox(template, dataField, emailSubject, emailText, recipient) {
         this.RuleCreateBtn.click();
-        $('#templateSelector').waitForDisplayed(20000);
+        $('#templateSelector').waitForDisplayed({timeout: 20000});
         this.templateSelector.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.selectOption(template);
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.DataFieldSelector.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.selectOption(dataField);
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.CheckboxOption.click();
         this.EmailSubject.addValue(emailSubject);
         this.EmailTextArea.addValue(emailText);
         this.AttachReportBox.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.RecipientEmail.addValue(recipient);
         this.AddRecipientBtn.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         this.RuleSaveBtn.click();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     }
 }
 

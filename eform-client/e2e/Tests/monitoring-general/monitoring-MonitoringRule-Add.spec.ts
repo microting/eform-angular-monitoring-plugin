@@ -21,13 +21,13 @@ describe('Monitoring - Monitoring Rules - Add', function () {
         const selectableList = selectableLists.getFirstRowObject();
         const selectableId = selectableList.id.getText();
         loginPage.open('/');
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         rulesPage.createNewEform('Number 1', selectableId, searchableId);
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     });
     it('should go to monitoring rules page', function () {
         rulesPage.goToMonitoringRulesPage();
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     });
     it('should create a new rule with checkbox', function () {
         const template = 'Test e-mail notifikation på alle felter';

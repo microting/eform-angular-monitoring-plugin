@@ -14,7 +14,7 @@ describe('Application settings page - site header section', function () {
         loginPage.login();
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
@@ -26,7 +26,7 @@ describe('Application settings page - site header section', function () {
 
     it('should activate the plugin', function () {
         pluginPage.pluginSettingsBtn.click();
-        $('#pluginOKBtn').waitForDisplayed(40000);
+        $('#pluginOKBtn').waitForDisplayed({timeout: 40000});
         pluginPage.pluginOKBtn.click();
         browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
         loginPage.open('/');
@@ -34,13 +34,13 @@ describe('Application settings page - site header section', function () {
         loginPage.login();
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-        $('#plugin-name').waitForDisplayed(50000);
-        $('#spinner-animation').waitForDisplayed(90000, true);
+        $('#plugin-name').waitForDisplayed({timeout: 50000});
+        $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Monitoring Plugin');
         expect(plugin.version).equal('1.0.0.0');
-        plugin.settingsBtn.waitForDisplayed(20000);
+        plugin.settingsBtn.waitForDisplayed({timeout: 20000});
     });
 });
