@@ -1,5 +1,5 @@
 <div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
         <div class="modal-header">
           <h3>{{ (ruleModel.id ? 'Edit Rule' : 'Create Rule') | translate }}</h3>
@@ -25,6 +25,7 @@
                     [placeholder]="('Selected eForm' | translate)"
                     (change)="onTemplateChange($event)"
                     [items]="items"
+                    [appendTo]="'body'"
                     [(ngModel)]="ruleModel.checkListId"
                     id="templateSelector"></ng-select>
                 </div>
@@ -258,5 +259,3 @@
     </div>
   </div>
 </div>
-
-<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>

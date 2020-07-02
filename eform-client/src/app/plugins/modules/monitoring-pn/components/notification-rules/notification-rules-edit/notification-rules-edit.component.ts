@@ -27,7 +27,6 @@ export class NotificationRulesEditComponent implements OnInit {
 
   templateTypeahead = new EventEmitter<string>();
   recipientEmail: string;
-  spinnerStatus = false;
 
   // Models
   ruleModel: NotificationRuleModel = new NotificationRuleModel();
@@ -64,7 +63,6 @@ export class NotificationRulesEditComponent implements OnInit {
 
   ngOnInit() {
     this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
-      this.spinnerStatus = false;
       if (operation && operation.success) {
         this.items = operation.model.templates;
       }
@@ -167,18 +165,15 @@ export class NotificationRulesEditComponent implements OnInit {
   }
 
   getSelectedRule(id: number) {
-    this.spinnerStatus = true;
     this.monitoringRulesService.getRule(id).subscribe((data) => {
       if (data && data.success) {
         this.ruleModel = data.model;
         this.updateSelectedEform();
       }
-      this.spinnerStatus = false;
     });
   }
 
   saveRule() {
-    this.spinnerStatus = true;
 
     if (this.ruleModel.id) {
       this.monitoringRulesService.updateRule(this.ruleModel).subscribe((data) => {
@@ -186,7 +181,6 @@ export class NotificationRulesEditComponent implements OnInit {
           this.ruleSaved.emit();
           this.frame.hide();
         }
-        this.spinnerStatus = false;
       });
     } else {
       this.monitoringRulesService.createRule(this.ruleModel).subscribe((data) => {
@@ -194,7 +188,6 @@ export class NotificationRulesEditComponent implements OnInit {
           this.ruleSaved.emit();
           this.frame.hide();
         }
-        this.spinnerStatus = false;
       });
     }
   }
@@ -203,8 +196,6 @@ export class NotificationRulesEditComponent implements OnInit {
     if (!this.ruleModel.checkListId) {
       return;
     }
-
-    this.spinnerStatus = true;
     this.eFormService.getSingle(this.ruleModel.checkListId).subscribe(formOp => {
       if (formOp && formOp.success) {
         this.selectedTemplate = formOp.model;
@@ -215,7 +206,6 @@ export class NotificationRulesEditComponent implements OnInit {
             this.selectedField = null;
             this.fields = fieldsOp.model.filter(f => Object.values(SupportedFieldTypes).includes(f.fieldType));
           }
-          this.spinnerStatus = false;
         });
       }
     });

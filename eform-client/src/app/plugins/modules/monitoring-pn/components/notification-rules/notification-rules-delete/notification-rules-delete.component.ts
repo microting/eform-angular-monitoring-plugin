@@ -10,7 +10,6 @@ import {NotificationRuleSimpleModel} from '../../../models';
 export class NotificationRulesDeleteComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
   @Output() ruleDeleted: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
   ruleModel: NotificationRuleSimpleModel = new NotificationRuleSimpleModel();
 
   constructor(private monitoringPnRulesService: MonitoringPnNotificationRulesService) { }
@@ -24,13 +23,11 @@ export class NotificationRulesDeleteComponent implements OnInit {
   }
 
   deleteRule() {
-    this.spinnerStatus = true;
     this.monitoringPnRulesService.deleteRule(this.ruleModel.id).subscribe((data) => {
       if (data && data.success) {
         this.ruleDeleted.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

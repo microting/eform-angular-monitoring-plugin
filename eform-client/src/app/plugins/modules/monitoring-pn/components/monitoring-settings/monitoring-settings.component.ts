@@ -8,7 +8,6 @@ import {MonitoringBaseSettingsModel} from '../../models';
   styleUrls: ['./monitoring-settings.component.scss']
 })
 export class MonitoringSettingsComponent implements OnInit {
-  spinnerStatus = false;
   settingsModel: MonitoringBaseSettingsModel = new MonitoringBaseSettingsModel();
 
   constructor(private monitoringPnSettingsService: MonitoringPnSettingsService) {
@@ -20,20 +19,16 @@ export class MonitoringSettingsComponent implements OnInit {
 
 
   getSettings() {
-    this.spinnerStatus = true;
     this.monitoringPnSettingsService.getAllSettings().subscribe((data) => {
       if (data && data.success) {
         this.settingsModel = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   updateSettings() {
-    this.spinnerStatus = true;
     this.monitoringPnSettingsService.updateSettings(this.settingsModel)
       .subscribe(() => {
-        this.spinnerStatus = false;
       });
   }
 }

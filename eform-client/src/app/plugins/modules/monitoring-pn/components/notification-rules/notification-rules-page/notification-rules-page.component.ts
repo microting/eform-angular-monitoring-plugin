@@ -26,7 +26,6 @@ export class NotificationRulesPageComponent implements OnInit {
   rulesModel: NotificationRulesListModel = new NotificationRulesListModel();
   rulesRequestModel: NotificationsRequestModel = new NotificationsRequestModel();
   sitesDto: SiteDto[];
-  spinnerStatus = false;
 
   constructor(
     private sharedPnService: SharedPnService,
@@ -64,7 +63,6 @@ export class NotificationRulesPageComponent implements OnInit {
   }
 
   getRulesList() {
-    this.spinnerStatus = true;
     this.rulesRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.rulesRequestModel.sort = this.localPageSettings.sort;
     this.rulesRequestModel.pageSize = this.localPageSettings.pageSize;
@@ -73,7 +71,6 @@ export class NotificationRulesPageComponent implements OnInit {
       if (data && data.success) {
         this.rulesModel = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
@@ -109,14 +106,12 @@ export class NotificationRulesPageComponent implements OnInit {
   }
 
   loadAllSimpleSites() {
-    this.spinnerStatus = true;
     this.deviceUsersService.getAllDeviceUsers().subscribe(operation => {
       if (operation && operation.success) {
         this.sitesDto = operation.model.map((i) => { i.fullName = i.siteName; return i; });
 
         // this.sitesDto = operation.model.map(x => ({...x, fullName: `${x.firstName} ${x.lastName}`}));
       }
-      this.spinnerStatus = false;
     });
   }
 }
