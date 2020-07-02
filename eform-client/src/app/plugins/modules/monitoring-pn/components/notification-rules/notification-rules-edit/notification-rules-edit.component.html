@@ -25,6 +25,7 @@
                     [placeholder]="('Selected eForm' | translate)"
                     (change)="onTemplateChange($event)"
                     [items]="items"
+                    [appendTo]="'body'"
                     [(ngModel)]="ruleModel.checkListId"
                     id="templateSelector"></ng-select>
                 </div>
