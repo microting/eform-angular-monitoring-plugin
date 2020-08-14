@@ -86,7 +86,14 @@ namespace Monitoring.Pn.Services
 
                     if (rule.Data != null && !string.IsNullOrEmpty(rule.Data))
                     {
-                        ruleModel.Trigger = RulesBlockHelper.GetRuleTriggerString(rule, dbContext);
+                        try
+                        {
+                            ruleModel.Trigger = RulesBlockHelper.GetRuleTriggerString(rule, dbContext);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     }
 
                     result.Rules.Add(ruleModel);
@@ -309,8 +316,9 @@ namespace Monitoring.Pn.Services
                     await rule.Update(_dbContext);
 
                     // work with recipients
+                    var currentRecipients = ruleModel.Recipients.Select(x => x.Id).ToList();
                     var recipientsDelete = await _dbContext.Recipients
-                        .Where(r => r.NotificationRuleId == rule.Id && ruleModel.Recipients.All(rm => rm.Id != r.Id))
+                        .Where(r => r.NotificationRuleId == rule.Id && !currentRecipients.Contains(r.Id))
                         .ToListAsync();
 
                     foreach (var rd in recipientsDelete)
@@ -332,8 +340,9 @@ namespace Monitoring.Pn.Services
                     }
 
                     // work with device users
+                    var currentDeviseUserId = ruleModel.DeviceUsers.Select(x => x.Id).ToList();
                     var deviceUsersDelete = await _dbContext.DeviceUsers
-                        .Where(r => r.NotificationRuleId == rule.Id && ruleModel.DeviceUsers.All(rm => rm.Id != r.DeviceUserId))
+                        .Where(r => r.NotificationRuleId == rule.Id && !currentDeviseUserId.Contains(r.DeviceUserId))
                         .ToListAsync();
 
                     foreach (var dud in deviceUsersDelete)
