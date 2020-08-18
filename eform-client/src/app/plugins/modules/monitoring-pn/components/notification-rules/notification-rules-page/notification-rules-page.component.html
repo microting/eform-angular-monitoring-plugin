@@ -2,9 +2,10 @@
   <div class="p-3">
     <button *ngIf="pluginClaimsHelper.check(monitoringPnClaims.createNotificationRules)"
       id="ruleCreateBtn"
-      class="btn btn-success"
+      class="btn btn-success btn-small-height"
       mdbTooltip="{{ 'Create Notification Rule' | translate }}"
-      (click)="showEditRuleModal()">{{ 'New Notification Rule' | translate }}
+      [routerLink]="['/plugins/monitoring-pn/notification-rules/create']">
+      {{ 'New Notification Rule' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -68,7 +69,7 @@
               <button id="updateRuleBtn" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)"
                       class="btn btn-accent text-black-50 btn-icon mb-2"
                       mdbTooltip="{{ 'Edit Notification Rule' | translate }}"
-                      (click)="showEditRuleModal(rule.id)">
+                      [routerLink]="['/plugins/monitoring-pn/notification-rules/edit/' + rule.id]">
                 <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button id="deleteRuleBtn" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)"
@@ -105,9 +106,6 @@
   </div>
 </div>
 
-<app-monitoring-pn-notification-rules-edit #editRuleModal [deviceUsers]="sitesDto"
-  (ruleSaved)="getRulesList()"
-></app-monitoring-pn-notification-rules-edit>
 <app-monitoring-pn-notification-rules-delete #deleteRuleModal
   (ruleDeleted)="getRulesList()"
 ></app-monitoring-pn-notification-rules-delete>

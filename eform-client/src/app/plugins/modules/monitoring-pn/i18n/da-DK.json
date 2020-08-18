@@ -2,6 +2,8 @@
   "Actions": "Actions",
   "Add": "Add",
   "Attach report": "Vedhæft rapporten",
+  "Attach link": "Indsæt link",
+  "Include trigger values": "inkluderer udløsningsværdier",
   "Create Notification Rule": "Opret meddelelsesregel",
   "Create Rule": "Opret regel",
   "Delete Notification Rule": "Slet meddelelsesregel",
@@ -27,6 +29,10 @@
   "Selected eForm": "Valgt eForm",
   "Sendgrid api key": "Sendgrid api key",
   "Target": "Mål",
-  "Trigger": "Udløser"
+  "Trigger": "Udløser",
+  "OR": "ELLER",
+  "Selected device user": "Valgt enhedsbruger",
+  "Add": "Tilføj",
+  "Fields": "Datafelter"
 }
 

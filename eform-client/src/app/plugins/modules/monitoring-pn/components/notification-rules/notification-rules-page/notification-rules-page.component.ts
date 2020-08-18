@@ -74,9 +74,9 @@ export class NotificationRulesPageComponent implements OnInit {
     });
   }
 
-  showEditRuleModal(id?: number) {
-    this.editRuleModal.show(id);
-  }
+  // showEditRuleModal(id?: number) {
+  //   this.editRuleModal.show(id);
+  // }
 
   showDeleteRuleModal(model: NotificationRuleSimpleModel) {
     this.deleteRuleModal.show(model);

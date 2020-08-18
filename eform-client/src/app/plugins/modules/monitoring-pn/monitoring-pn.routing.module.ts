@@ -1,9 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MonitoringPnLayoutComponent} from './layouts';
-import {AdminGuard, AuthGuard, PermissionGuard} from '../../../common/guards';
-import {MonitoringSettingsComponent, NotificationRulesPageComponent} from './components';
+import {AdminGuard, AuthGuard, ClaimsGuard, PermissionGuard} from '../../../common/guards';
+import {MonitoringSettingsComponent, NotificationRulesEditComponent, NotificationRulesPageComponent} from './components';
 import {MonitoringPnClaims} from './const/monitoring-pn-claims.const';
+import {EntitySearchCreateComponent, EntitySearchEditComponent} from 'src/app/modules/advanced/components';
+import {UserClaimsEnum} from 'src/app/common/const';
 
 export const routes: Routes = [
   {
@@ -21,6 +23,18 @@ export const routes: Routes = [
         path: 'notification-rules',
         component: NotificationRulesPageComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'notification-rules/edit/:id',
+        component: NotificationRulesEditComponent,
+        canActivate: [ClaimsGuard],
+        data: {requiredClaim: UserClaimsEnum.entitySearchRead}
+      },
+      {
+        path: 'notification-rules/create',
+        component: NotificationRulesEditComponent,
+        canActivate: [ClaimsGuard],
+        data: {requiredClaim: UserClaimsEnum.entitySearchRead}
       }
     ]
   }

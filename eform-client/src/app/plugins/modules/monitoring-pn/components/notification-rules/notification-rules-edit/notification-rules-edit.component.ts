@@ -11,6 +11,8 @@ import {BaseDataItem, CheckBoxBlock, NumberBlock, SelectBlock} from '../../../mo
 import {EntitySearchService, EntitySelectService} from '../../../../../../common/services/advanced';
 import {CommonDictionaryTextModel} from '../../../../../../common/models/common';
 import {DeviceUserModel} from '../../../models/device-user.model';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -24,6 +26,7 @@ export class NotificationRulesEditComponent implements OnInit {
   @Output() ruleSaved: EventEmitter<void> = new EventEmitter<void>();
   selectedDeviceUserId: number;
   items: Array<TemplateDto> = [];
+  selectedRuleId: number;
 
   templateTypeahead = new EventEmitter<string>();
   recipientEmail: string;
@@ -40,13 +43,17 @@ export class NotificationRulesEditComponent implements OnInit {
     return NotificationRuleType;
   }
 
-  constructor(
+  constructor(private activateRoute: ActivatedRoute,
     private monitoringRulesService: MonitoringPnNotificationRulesService,
     private entitySelectService: EntitySelectService,
     private entitySearchService: EntitySearchService,
     private eFormService: EFormService,
+    private location: Location,
     private cd: ChangeDetectorRef
   ) {
+    const activatedRouteSub = this.activateRoute.params.subscribe(params => {
+      this.selectedRuleId = +params['id'];
+    });
     this.templateTypeahead
       .pipe(
         debounceTime(200),
@@ -65,13 +72,23 @@ export class NotificationRulesEditComponent implements OnInit {
     this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
       if (operation && operation.success) {
         this.items = operation.model.templates;
+        if (this.selectedRuleId) {
+          this.getSelectedRule(this.selectedRuleId);
+        }
       }
     });
   }
 
-  onClose() {
-    this.ruleModel = new NotificationRuleModel();
-    this.frame.hide();
+  // onClose() {
+  //   this.ruleModel = new NotificationRuleModel();
+  //   this.frame.hide();
+  // }
+
+  goBack() {
+    // window.history.back();
+    this.location.back();
+
+    console.log( 'goBack()...' );
   }
 
   onTemplateChange(e: any) {
@@ -137,32 +154,32 @@ export class NotificationRulesEditComponent implements OnInit {
     }
   }
 
-  show(id?: number) {
-    this.ruleModel = new NotificationRuleModel();
-    this.selectedTemplate = new TemplateDto();
-    this.selectedField = new FieldDto();
-    // this.ruleModel.checkListId = null;
-
-    if (id) {
-      this.getSelectedRule(id);
-    } else {
-      this.ruleModel = {
-        id: null,
-        attachReport: false,
-        attachLink: false,
-        includeValue: false,
-        data: null,
-        dataItemId: null,
-        recipients: [],
-        deviceUsers: [],
-        ruleType: null,
-        subject: '',
-        checkListId: null,
-        text: ''
-      };
-    }
-    this.frame.show();
-  }
+  // show(id?: number) {
+  //   this.ruleModel = new NotificationRuleModel();
+  //   this.selectedTemplate = new TemplateDto();
+  //   this.selectedField = new FieldDto();
+  //   // this.ruleModel.checkListId = null;
+  //
+  //   if (id) {
+  //     this.getSelectedRule(id);
+  //   } else {
+  //     this.ruleModel = {
+  //       id: null,
+  //       attachReport: false,
+  //       attachLink: false,
+  //       includeValue: false,
+  //       data: null,
+  //       dataItemId: null,
+  //       recipients: [],
+  //       deviceUsers: [],
+  //       ruleType: null,
+  //       subject: '',
+  //       checkListId: null,
+  //       text: ''
+  //     };
+  //   }
+  //   this.frame.show();
+  // }
 
   getSelectedRule(id: number) {
     this.monitoringRulesService.getRule(id).subscribe((data) => {
@@ -179,14 +196,14 @@ export class NotificationRulesEditComponent implements OnInit {
       this.monitoringRulesService.updateRule(this.ruleModel).subscribe((data) => {
         if (data && data.success) {
           this.ruleSaved.emit();
-          this.frame.hide();
+          this.location.back();
         }
       });
     } else {
       this.monitoringRulesService.createRule(this.ruleModel).subscribe((data) => {
         if (data && data.success) {
           this.ruleSaved.emit();
-          this.frame.hide();
+          this.location.back();
         }
       });
     }
