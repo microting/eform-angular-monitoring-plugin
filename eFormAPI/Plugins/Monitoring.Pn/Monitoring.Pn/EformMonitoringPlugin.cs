@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2019 Microting A/S
@@ -45,6 +45,8 @@ namespace Monitoring.Pn
     using Microting.EformMonitoringBase.Infrastructure.Data.Factories;
     using Microting.EformMonitoringBase.Infrastructure.Models.Settings;
     using Services;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+    using Microting.eFormApi.BasePn.Infrastructure.Consts;
 
     public class EformMonitoringPlugin : IEformPlugin
     {
@@ -96,6 +98,104 @@ namespace Monitoring.Pn
 
             // Seed database
             SeedDatabase(connectionString);
+        }
+
+        public List<PluginMenuItemModel> GetNavigationMenu(IServiceProvider serviceProvider)
+        {
+            var pluginMenu = new List<PluginMenuItemModel>()
+                {
+                    new PluginMenuItemModel
+                    {
+                        Name = "Dropdown",
+                        E2EId = "monitoring-pn",
+                        Link = "",
+                        Type = MenuItemTypeEnum.Dropdown,
+                        Position = 0,
+                        Translations = new List<PluginMenuTranslationModel>()
+                        {
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.English,
+                                 Name = "Monitoring",
+                                 Language = LanguageNames.English,
+                            },
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.German,
+                                 Name = "Monitoring",
+                                 Language = LanguageNames.German,
+                            },
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.Danish,
+                                 Name = "Overvågning",
+                                 Language = LanguageNames.Danish,
+                            }
+                        },
+                        ChildItems = new List<PluginMenuItemModel>()
+                        {
+                            new PluginMenuItemModel
+                            {
+                                Name = "Notification rules",
+                                E2EId = "monitoring-pn-calendar",
+                                Link = "/plugins/monitoring-pn/notification-rules",
+                                Type = MenuItemTypeEnum.Link,
+                                Position = 0,
+                                MenuTemplate = new PluginMenuTemplateModel()
+                                {
+                                    Name = "Notification rules",
+                                    E2EId = "monitoring-pn-calendar",
+                                    DefaultLink = "/plugins/monitoring-pn/notification-rules",
+                                    Permissions = new List<PluginMenuTemplatePermissionModel>(),
+                                    Translations = new List<PluginMenuTranslationModel>
+                                    {
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.English,
+                                            Name = "Notification rules",
+                                            Language = LanguageNames.English,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.German,
+                                            Name = "Notification rules",
+                                            Language = LanguageNames.German,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.Danish,
+                                            Name = "Underretningsregler",
+                                            Language = LanguageNames.Danish,
+                                        },
+                                    }
+                                },
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Notification rules",
+                                    Language = LanguageNames.English,
+                                },
+                                    new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Notification rules",
+                                    Language = LanguageNames.German,
+                                },
+                                    new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Underretningsregler",
+                                    Language = LanguageNames.Danish,
+                                },
+                                }
+                            }
+                        }
+                    }
+                };
+
+            return pluginMenu;
         }
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
