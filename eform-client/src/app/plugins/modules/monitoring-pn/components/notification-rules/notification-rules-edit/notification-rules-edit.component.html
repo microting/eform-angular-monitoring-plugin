@@ -1,4 +1,4 @@
-<eform-page-subheader [title]="(ruleModel.id ? 'Edit Rule' : 'Create Rule') | translate">
+<subheader-pn [title]="(ruleModel.id ? 'Edit Rule' : 'Create Rule') | translate">
   <div class="p-3">
       <button mdbBtn id="ruleEditSaveBtn" class="btn btn-success btn-small-height" (click)="saveRule()"
               [disabled]="!ruleModel.checkListId">
@@ -6,7 +6,7 @@
       </button>
     <button mdbBtn id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50 btn-small-height" (click)="goBack()">{{'Cancel' | translate}}</button>
   </div>
-</eform-page-subheader>
+</subheader-pn>
 <br>
 
 <div class="container-fluid">
