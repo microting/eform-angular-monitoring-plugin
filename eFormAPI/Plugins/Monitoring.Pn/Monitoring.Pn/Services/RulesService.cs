@@ -1,4 +1,28 @@
-﻿using System.Collections.Generic;
+﻿/*
+The MIT License (MIT)
+
+Copyright (c) 2007 - 2021 Microting A/S
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+using System.Collections.Generic;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure;
@@ -46,7 +70,7 @@ namespace Monitoring.Pn.Services
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
         }
-        
+
         public async Task<OperationDataResult<NotificationRulesListModel>> Index(NotificationListRequestModel requestModel)
         {
             var core = await _coreHelper.GetCore();
@@ -76,7 +100,7 @@ namespace Monitoring.Pn.Services
                         eForms.Add( new KeyValuePair<int, string>(rule.CheckListId, dbContext.check_lists.Single( x => x.Id == rule.CheckListId).Label));
                         eFormName = eForms.First(x => x.Key == rule.CheckListId).Value;
                     }
-                    
+
                     var ruleModel = new NotificationRuleSimpleModel
                     {
                         Id = rule.Id,
@@ -325,7 +349,7 @@ namespace Monitoring.Pn.Services
                     {
                         await rd.Delete(_dbContext);
                     }
-                    
+
                     foreach (var recipientModel in ruleModel.Recipients.Where(r => r.Id == null))
                     {
                         var recipient = new Recipient
@@ -354,7 +378,7 @@ namespace Monitoring.Pn.Services
                     {
                         if (!await _dbContext.DeviceUsers.AnyAsync(
                             x => x.DeviceUserId == deviceUserModel.Id &&
-                                 x.NotificationRuleId == rule.Id && 
+                                 x.NotificationRuleId == rule.Id &&
                                  x.WorkflowState != Constants.WorkflowStates.Removed))
                         {
                             if (deviceUserModel.Id != null)
@@ -374,7 +398,7 @@ namespace Monitoring.Pn.Services
 
                     transaction.Commit();
                     return new OperationResult(
-                        true, 
+                        true,
                         _localizationService.GetString("NotificationRuleHasBeenUpdated"));
                 }
                 catch (Exception e)
@@ -427,7 +451,7 @@ namespace Monitoring.Pn.Services
                     await notificationRule.Delete(_dbContext);
                     transaction.Commit();
                     return new OperationResult(
-                        true, 
+                        true,
                         _localizationService.GetString("NotificationRuleDeletedSuccessfully"));
                 }
                 catch (Exception e)
