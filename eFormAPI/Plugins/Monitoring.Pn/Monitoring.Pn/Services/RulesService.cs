@@ -97,7 +97,7 @@ namespace Monitoring.Pn.Services
                     }
                     else
                     {
-                        eForms.Add( new KeyValuePair<int, string>(rule.CheckListId, dbContext.check_lists.Single( x => x.Id == rule.CheckListId).Label));
+                        eForms.Add( new KeyValuePair<int, string>(rule.CheckListId, dbContext.CheckLists.Single( x => x.Id == rule.CheckListId).Label));
                         eFormName = eForms.First(x => x.Key == rule.CheckListId).Value;
                     }
 

@@ -72,7 +72,7 @@ namespace Monitoring.Pn.Helpers
                     {
                         foreach (DeviceUser deviceUser in notificationRule.DeviceUsers)
                         {
-                            result += dbContext.sites.Single(x => x.MicrotingUid == deviceUser.DeviceUserId).Name;
+                            result += dbContext.Sites.Single(x => x.MicrotingUid == deviceUser.DeviceUserId).Name;
                         }
                     }
                     break;
