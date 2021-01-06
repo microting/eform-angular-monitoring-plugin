@@ -32,7 +32,6 @@ namespace Monitoring.Pn.Controllers
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.EformMonitoringBase.Infrastructure.Const;
     using Microting.EformMonitoringBase.Infrastructure.Models;
-    using Microting.EformMonitoringBase.Infrastructure.Const;
 
     [Authorize]
     public class RulesController : Controller
