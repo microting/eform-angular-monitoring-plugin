@@ -74,7 +74,7 @@ namespace Monitoring.Pn.Services
         public async Task<OperationDataResult<NotificationRulesListModel>> Index(NotificationListRequestModel requestModel)
         {
             var core = await _coreHelper.GetCore();
-            MicrotingDbContext dbContext = core.dbContextHelper.GetDbContext();
+            await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
             List<KeyValuePair<int, string>> eForms = new List<KeyValuePair<int, string>>();
             try
             {
