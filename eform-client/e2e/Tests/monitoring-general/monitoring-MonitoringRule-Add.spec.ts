@@ -17,9 +17,9 @@ describe('Monitoring - Monitoring Rules - Add', function () {
         const searchableList = searchableLists.getFirstRowObject();
         const searchableId = searchableList.id.getText();
         myEformsPage.Navbar.goToEntitySelect();
-        selectableLists.createSelectableList_NoItem('Selectable');
-        const selectableList = selectableLists.getFirstRowObject();
-        const selectableId = selectableList.id.getText();
+        selectableLists.createSelectableList({ name: 'Selectable'});
+        const selectableList = selectableLists.getFirstSelectableListObject();
+        const selectableId = selectableList.id;
         loginPage.open('/');
         $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
         rulesPage.createNewEform('Number 1', selectableId, searchableId);
