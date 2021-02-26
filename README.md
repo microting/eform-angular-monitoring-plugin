@@ -1,6 +1,7 @@
 # eform-angular-monitoring-plugin
-![.NET Core](https://github.com/microting/eform-angular-monitoring-plugin/workflows/.NET%20Core/badge.svg)
-
+[![.NET Core](https://github.com/microting/eform-angular-monitoring-plugin/actions/workflows/dotnet-core-master.yml/badge.svg)](https://github.com/microting/eform-angular-monitoring-plugin/actions/workflows/dotnet-core-master.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/15ce7c1d3675a89a3045/maintainability)](https://codeclimate.com/github/microting/eform-angular-monitoring-plugin/maintainability)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d68560c9c77e459cb447d7d01ede42aa)](https://www.codacy.com/gh/microting/eform-angular-monitoring-plugin/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=microting/eform-angular-monitoring-plugin&amp;utm_campaign=Badge_Grade)
 ## NOTICE! this is not a standalone project and needs to be used with eForm Angular Frontend.
 
 ## Translating eform-angular-monitoring-plugin
