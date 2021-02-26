@@ -86,7 +86,7 @@ namespace Monitoring.Pn
             }
             else
             {
-                services.AddDbContext<EformMonitoringPnDbContext>(o => o.UseSqlServer(connectionString,
+                services.AddDbContext<EformMonitoringPnDbContext>(o => o.UseMySql(connectionString,
                     b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
 
