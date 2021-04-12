@@ -7,6 +7,7 @@ import { expect } from 'chai';
 describe('Application settings page - site header section', function () {
   before(function () {
     loginPage.open('/auth');
+    loginPage.login();
   });
   it('should go to plugin settings page', function () {
     myEformsPage.Navbar.goToPluginsPage();
