@@ -1,13 +1,27 @@
-<subheader-pn [title]="(ruleModel.id ? 'Edit Rule' : 'Create Rule') | translate">
+<eform-subheader
+  [title]="(ruleModel.id ? 'Edit Rule' : 'Create Rule') | translate"
+>
   <div class="p-3">
-      <button mdbBtn id="ruleEditSaveBtn" class="btn btn-success btn-small-height" (click)="saveRule()"
-              [disabled]="!ruleModel.checkListId">
-        {{ 'Save' | translate }}
-      </button>
-    <button mdbBtn id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50 btn-small-height" (click)="goBack()">{{'Cancel' | translate}}</button>
+    <button
+      mdbBtn
+      id="ruleEditSaveBtn"
+      class="btn btn-success btn-small-height"
+      (click)="saveRule()"
+      [disabled]="!ruleModel.checkListId"
+    >
+      {{ 'Save' | translate }}
+    </button>
+    <button
+      mdbBtn
+      id="editEntitySelectCancelBtn"
+      class="btn btn-accent text-black-50 btn-small-height"
+      (click)="goBack()"
+    >
+      {{ 'Cancel' | translate }}
+    </button>
   </div>
-</subheader-pn>
-<br>
+</eform-subheader>
+<br />
 
 <div class="container-fluid">
   <h5>{{ 'Target' | translate }}</h5>
@@ -17,11 +31,12 @@
         <ng-select
           bindValue="id"
           bindLabel="label"
-          [placeholder]="('Selected eForm' | translate)"
+          [placeholder]="'Selected eForm' | translate"
           (change)="onTemplateChange($event)"
           [items]="items"
           [(ngModel)]="ruleModel.checkListId"
-          id="templateSelector"></ng-select>
+          id="templateSelector"
+        ></ng-select>
       </div>
     </div>
   </div>
@@ -30,18 +45,21 @@
     <div class="row">
       <div class="col">
         <div class="md-form">
-          <ng-select [items]="fields"
-                     bindLabel="label"
-                     [placeholder]="('Selected data field' | translate)"
-                     bindValue="id"
-                     [(ngModel)]="ruleModel.dataItemId"
-                     (change)="onFieldChange()"
-                     id="dataFieldSelector" required>
+          <ng-select
+            [items]="fields"
+            bindLabel="label"
+            [placeholder]="'Selected data field' | translate"
+            bindValue="id"
+            [(ngModel)]="ruleModel.dataItemId"
+            (change)="onFieldChange()"
+            id="dataFieldSelector"
+            required
+          >
           </ng-select>
         </div>
       </div>
     </div>
-    <p>{{'OR' | translate}}</p>
+    <p>{{ 'OR' | translate }}</p>
     <p>{{ 'Device Users' | translate }}</p>
     <div class="row">
       <div class="col">
@@ -50,12 +68,19 @@
             bindValue="siteId"
             bindLabel="fullName"
             [(ngModel)]="selectedDeviceUserId"
-            [placeholder]="('Selected device user' | translate)"
-            [items]="deviceUsers"></ng-select>
+            [placeholder]="'Selected device user' | translate"
+            [items]="deviceUsers"
+          ></ng-select>
         </div>
       </div>
       <div class="col-auto py-3">
-        <button mdbBtn class=" btn-success btn-small-height" id="addDeviceUserButton" type="button" (click)="addDeviceUser()">
+        <button
+          mdbBtn
+          class="btn-success btn-small-height"
+          id="addDeviceUserButton"
+          type="button"
+          (click)="addDeviceUser()"
+        >
           <fa-icon icon="plus"></fa-icon>
           {{ 'Add' | translate }}
         </button>
@@ -64,78 +89,121 @@
     <div class="row p-1 mt-2 table-responsive no-gutters">
       <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
         <tbody id="deviceUserTableBody">
-        <tr *ngFor="let deviceUser of ruleModel.deviceUsers; let i = index">
-          <td>{{deviceUser.id}}</td>
-          <td>{{deviceUser.firstName}} {{deviceUser.lastName}}</td>
-          <td>
-            <div class="d-flex flex-row justify-content-end">
-              <button id="deleteDeviceUserBtn" (click)="removeDeviceUser(i)"
-                      class="btn btn-danger btn-icon mb-2" type="button"
-                      mdbTooltip="{{ 'Remove device user' | translate }}">
-                <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
+          <tr *ngFor="let deviceUser of ruleModel.deviceUsers; let i = index">
+            <td>{{ deviceUser.id }}</td>
+            <td>{{ deviceUser.firstName }} {{ deviceUser.lastName }}</td>
+            <td>
+              <div class="d-flex flex-row justify-content-end">
+                <button
+                  id="deleteDeviceUserBtn"
+                  (click)="removeDeviceUser(i)"
+                  class="btn btn-danger btn-icon mb-2"
+                  type="button"
+                  mdbTooltip="{{ 'Remove device user' | translate }}"
+                >
+                  <fa-icon
+                    icon="trash-alt"
+                    size="lg"
+                    [fixedWidth]="true"
+                  ></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
     <ng-container *ngIf="ruleModel.data">
       <div class="row" *ngIf="ruleModel.data.label != ''">
         <div class="col">
-          <p>{{ruleModel.data.label}}</p>
-          <p>{{ruleModel.data.description}}</p>
+          <p>{{ ruleModel.data.label }}</p>
+          <p>{{ ruleModel.data.description }}</p>
           <p>IF</p>
           <div class="mb-4">
             <ng-container [ngSwitch]="ruleModel.ruleType">
               <ng-container *ngSwitchCase="ruleType.CheckBox">
                 <div class="mat-checkbox">
-                  <input mdbInput
-                         id="selected" name="selected" type="checkbox"
-                         [(ngModel)]="asCheckboxBlock(ruleModel.data).selected">
+                  <input
+                    mdbInput
+                    id="selected"
+                    name="selected"
+                    type="checkbox"
+                    [(ngModel)]="asCheckboxBlock(ruleModel.data).selected"
+                  />
                   <label for="selected"></label>
                 </div>
               </ng-container>
               <ng-container *ngSwitchCase="ruleType.Number">
                 <div class="md-form">
                   <div class="row">
-                    <div class="col-auto py-3">{{ruleModel.data.label}} ></div>
+                    <div class="col-auto py-3">
+                      {{ ruleModel.data.label }} >
+                    </div>
                     <div class="col-auto">
-                      <input mdbInput
-                             [(ngModel)]="asNumberBlock(ruleModel.data).greaterThanValue"
-                             type="text" id="greaterThanValue"
-                             name="greaterThanValue" class="form-control">
+                      <input
+                        mdbInput
+                        [(ngModel)]="
+                          asNumberBlock(ruleModel.data).greaterThanValue
+                        "
+                        type="text"
+                        id="greaterThanValue"
+                        name="greaterThanValue"
+                        class="form-control"
+                      />
                       <label for="greaterThanValue"></label>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-auto py-3">{{ruleModel.data.label}} <</div>
+                    <div class="col-auto py-3">
+                      {{ ruleModel.data.label }} <
+                    </div>
                     <div class="col-auto">
-                      <input mdbInput
-                             [(ngModel)]="asNumberBlock(ruleModel.data).lessThanValue"
-                             type="text" id="lessThanValue"
-                             name="lessThanValue" class="form-control">
+                      <input
+                        mdbInput
+                        [(ngModel)]="
+                          asNumberBlock(ruleModel.data).lessThanValue
+                        "
+                        type="text"
+                        id="lessThanValue"
+                        name="lessThanValue"
+                        class="form-control"
+                      />
                       <label for="lessThanValue"></label>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-auto py-3">{{ruleModel.data.label}} =</div>
+                    <div class="col-auto py-3">
+                      {{ ruleModel.data.label }} =
+                    </div>
                     <div class="col-auto">
-                      <input mdbInput
-                             [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
-                             type="text" id="equalValue"
-                             name="equalValue" class="form-control">
+                      <input
+                        mdbInput
+                        [(ngModel)]="asNumberBlock(ruleModel.data).equalValue"
+                        type="text"
+                        id="equalValue"
+                        name="equalValue"
+                        class="form-control"
+                      />
                       <label for="equalValue"></label>
                     </div>
                   </div>
                 </div>
               </ng-container>
               <ng-container *ngSwitchCase="ruleType.Select">
-                <div class="mb-2" *ngFor="let item of asSelectBlock(ruleModel.data).keyValuePairList">
+                <div
+                  class="mb-2"
+                  *ngFor="
+                    let item of asSelectBlock(ruleModel.data).keyValuePairList
+                  "
+                >
                   <div class="mat-checkbox">
-                    <input id="select_{{item.key}}" name="select_{{item.key}}" type="checkbox"
-                           [(ngModel)]="item.selected">
-                    <label for="select_{{item.key}}">{{item.value}}</label>
+                    <input
+                      id="select_{{ item.key }}"
+                      name="select_{{ item.key }}"
+                      type="checkbox"
+                      [(ngModel)]="item.selected"
+                    />
+                    <label for="select_{{ item.key }}">{{ item.value }}</label>
                   </div>
                 </div>
               </ng-container>
@@ -148,10 +216,14 @@
       <div class="row">
         <div class="col">
           <div class="md-form">
-            <input mdbInput
-                   [(ngModel)]="ruleModel.subject"
-                   type="text" id="emailSubject"
-                   name="emailSubject" class="form-control">
+            <input
+              mdbInput
+              [(ngModel)]="ruleModel.subject"
+              type="text"
+              id="emailSubject"
+              name="emailSubject"
+              class="form-control"
+            />
             <label for="emailSubject">{{ 'Email subject' | translate }}</label>
           </div>
         </div>
@@ -162,18 +234,31 @@
             <span class="text-muted">{{ 'Email text' | translate }}</span>
             <div class="py-2">
               <ng-container *ngIf="ruleModel.data.label">
-                <span>{{ruleModel.data.label}}</span><br>
+                <span>{{ ruleModel.data.label }}</span
+                ><br />
               </ng-container>
               <ng-container *ngIf="ruleModel.data.description">
-                <span>{{ruleModel.data.description}}</span><br>
+                <span>{{ ruleModel.data.description }}</span
+                ><br />
               </ng-container>
-              <span *ngIf="ruleModel.includeValue">Value: {{ruleModel.data.label}} value</span><br>
+              <span *ngIf="ruleModel.includeValue"
+                >Value: {{ ruleModel.data.label }} value</span
+              ><br />
             </div>
-            <a href="javascript:" style="color: dodgerblue; text-decoration: underline" *ngIf="ruleModel.attachLink">Open case link</a><br>
-            <textarea mdbInput
-                      [(ngModel)]="ruleModel.text"
-                      type="text" id="emailText"
-                      name="emailText" class="md-textarea form-control"></textarea>
+            <a
+              href="javascript:"
+              style="color: dodgerblue; text-decoration: underline"
+              *ngIf="ruleModel.attachLink"
+              >Open case link</a
+            ><br />
+            <textarea
+              mdbInput
+              [(ngModel)]="ruleModel.text"
+              type="text"
+              id="emailText"
+              name="emailText"
+              class="md-textarea form-control"
+            ></textarea>
             <label for="emailText"></label>
           </div>
         </div>
@@ -181,7 +266,12 @@
       <div class="row mb-5">
         <div class="col">
           <div class="mat-checkbox">
-            <input id="attachReport" name="attachReport" [(ngModel)]="ruleModel.attachReport" type="checkbox">
+            <input
+              id="attachReport"
+              name="attachReport"
+              [(ngModel)]="ruleModel.attachReport"
+              type="checkbox"
+            />
             <label for="attachReport">{{ 'Attach report' | translate }}</label>
           </div>
         </div>
@@ -189,7 +279,12 @@
       <div class="row mb-5">
         <div class="col">
           <div class="mat-checkbox">
-            <input id="attachLink" name="attachLink" [(ngModel)]="ruleModel.attachLink" type="checkbox">
+            <input
+              id="attachLink"
+              name="attachLink"
+              [(ngModel)]="ruleModel.attachLink"
+              type="checkbox"
+            />
             <label for="attachLink">{{ 'Attach link' | translate }}</label>
           </div>
         </div>
@@ -197,8 +292,15 @@
       <div class="row mb-5">
         <div class="col">
           <div class="mat-checkbox">
-            <input id="IncludeValue" name="IncludeValue" [(ngModel)]="ruleModel.includeValue" type="checkbox">
-            <label for="IncludeValue">{{ 'Include trigger values' | translate }}</label>
+            <input
+              id="IncludeValue"
+              name="IncludeValue"
+              [(ngModel)]="ruleModel.includeValue"
+              type="checkbox"
+            />
+            <label for="IncludeValue">{{
+              'Include trigger values' | translate
+            }}</label>
           </div>
         </div>
       </div>
@@ -206,15 +308,27 @@
       <div class="row">
         <div class="col">
           <div class="md-form">
-            <input mdbInput
-                   [(ngModel)]="recipientEmail"
-                   type="email" id="recipientEmail"
-                   name="recipientEmail" class="form-control">
-            <label for="recipientEmail">{{ 'Recipient email' | translate }}</label>
+            <input
+              mdbInput
+              [(ngModel)]="recipientEmail"
+              type="email"
+              id="recipientEmail"
+              name="recipientEmail"
+              class="form-control"
+            />
+            <label for="recipientEmail">{{
+              'Recipient email' | translate
+            }}</label>
           </div>
         </div>
         <div class="col-auto py-3">
-          <button mdbBtn class=" btn-success btn-small-height" id="addRecipientBtn" type="button" (click)="addNewRecipient()">
+          <button
+            mdbBtn
+            class="btn-success btn-small-height"
+            id="addRecipientBtn"
+            type="button"
+            (click)="addNewRecipient()"
+          >
             <fa-icon icon="plus"></fa-icon>
             {{ 'Add' | translate }}
           </button>
@@ -223,18 +337,26 @@
       <div class="row p-1 mt-2 table-responsive no-gutters">
         <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
           <tbody id="recipientsTableBody">
-          <tr *ngFor="let recipient of ruleModel.recipients; let i = index">
-            <td>{{recipient.email}}</td>
-            <td>
-              <div class="d-flex flex-row justify-content-end">
-                <button id="deleteItemBtn" (click)="removeRecipient(i)"
-                        class="btn btn-danger btn-icon mb-2" type="button"
-                        mdbTooltip="{{ 'Remove recipient' | translate }}">
-                  <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
-                </button>
-              </div>
-            </td>
-          </tr>
+            <tr *ngFor="let recipient of ruleModel.recipients; let i = index">
+              <td>{{ recipient.email }}</td>
+              <td>
+                <div class="d-flex flex-row justify-content-end">
+                  <button
+                    id="deleteItemBtn"
+                    (click)="removeRecipient(i)"
+                    class="btn btn-danger btn-icon mb-2"
+                    type="button"
+                    mdbTooltip="{{ 'Remove recipient' | translate }}"
+                  >
+                    <fa-icon
+                      icon="trash-alt"
+                      size="lg"
+                      [fixedWidth]="true"
+                    ></fa-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
