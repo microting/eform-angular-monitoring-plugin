@@ -1,5 +1,30 @@
 # Changelog
 
+## [v1.0.143](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.143) (2021-04-20)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.142...v1.0.143)
+
+**Implemented enhancements:**
+
+- Bump Microting.EformMonitoringBase from 2.0.91 to 2.0.92 [\#124](https://github.com/microting/eform-angular-monitoring-plugin/issues/124)
+- Bump Microting.eFormApi.BasePn from 2.0.128 to 2.0.129 [\#123](https://github.com/microting/eform-angular-monitoring-plugin/issues/123)
+- Bump Microting.eForm from 4.4.37 to 4.4.38 [\#122](https://github.com/microting/eform-angular-monitoring-plugin/issues/122)
+
+## [v1.0.142](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.142) (2021-04-19)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.141...v1.0.142)
+
+**Implemented enhancements:**
+
+- Bump Microting.EformMonitoringBase from 2.0.89 to 2.0.91 [\#121](https://github.com/microting/eform-angular-monitoring-plugin/issues/121)
+- Bump Microting.eFormApi.BasePn from 2.0.126 to 2.0.128 [\#120](https://github.com/microting/eform-angular-monitoring-plugin/issues/120)
+- Bump Microting.eForm from 4.4.35 to 4.4.37 [\#119](https://github.com/microting/eform-angular-monitoring-plugin/issues/119)
+
+**Merged pull requests:**
+
+- Add states, change table headers [\#100](https://github.com/microting/eform-angular-monitoring-plugin/pull/100) ([sanioooook](https://github.com/sanioooook))
+- Fix tests [\#96](https://github.com/microting/eform-angular-monitoring-plugin/pull/96) ([sanioooook](https://github.com/sanioooook))
+
 ## [v1.0.141](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.141) (2021-04-15)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.140...v1.0.141)
