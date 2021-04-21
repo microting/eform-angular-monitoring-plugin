@@ -11,6 +11,11 @@ jobs:
     - uses: actions/checkout@v2
       with:
         path: main
+    - name: Upgrade Chrome browser
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+        google-chrome --version
     - uses: getong/mariadb-action@v1.1
       with:
         host port: 3306 # Optional, default value is 3306. The port of host
@@ -26,11 +31,10 @@ jobs:
       run: sleep 15
     - uses: getong/rabbitmq-action@v1.2
       with:
-        rabbitmq version: '3.8.2-management-alpine'
+        rabbitmq version: '3.8.9-management'
         host port: 5672
         rabbitmq user: 'admin'
         rabbitmq password: 'password'
-        rabbitmq vhost: 'vhost_name'
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
