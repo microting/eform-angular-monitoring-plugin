@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.145](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.145) (2021-04-26)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.144...v1.0.145)
+
 ## [v1.0.144](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.144) (2021-04-21)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.143...v1.0.144)
