@@ -41,10 +41,10 @@
             <td id="ruleEvent">{{ rule.event }}</td>
             <td
               *ngIf="
-                pluginClaimsHelper.check(
+                authStateService.checkClaim(
                   monitoringPnClaims.updateNotificationRules
                 ) ||
-                pluginClaimsHelper.check(
+                authStateService.checkClaim(
                   monitoringPnClaims.deleteNotificationRules
                 )
               "
@@ -53,7 +53,7 @@
                 <button
                   id="updateRuleBtn"
                   *ngIf="
-                    pluginClaimsHelper.check(
+                    authStateService.checkClaim(
                       monitoringPnClaims.updateNotificationRules
                     )
                   "
@@ -68,7 +68,7 @@
                 <button
                   id="deleteRuleBtn"
                   *ngIf="
-                    pluginClaimsHelper.check(
+                    authStateService.checkClaim(
                       monitoringPnClaims.deleteNotificationRules
                     )
                   "

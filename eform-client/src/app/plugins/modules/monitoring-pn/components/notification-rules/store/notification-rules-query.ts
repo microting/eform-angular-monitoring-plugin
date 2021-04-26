@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
 import {
-  NotificationRulesStore,
   NotificationRulesState,
+  NotificationRulesStore,
 } from './notification-rules-store';
 
 @Injectable({ providedIn: 'root' })
@@ -15,9 +15,9 @@ export class NotificationRulesQuery extends Query<NotificationRulesState> {
     return this.getValue();
   }
 
-  selectPageSize$ = this.select('pageSize');
-  selectNameFilter$ = this.select('nameFilter');
-  selectIsSortDsc$ = this.select('isSortDsc');
-  selectSort$ = this.select('sort');
-  selectOffset$ = this.select('offset');
+  selectNameFilter$ = this.select((state) => state.pagination.nameFilter);
+  selectPageSize$ = this.select((state) => state.pagination.pageSize);
+  selectIsSortDsc$ = this.select((state) => state.pagination.isSortDsc);
+  selectSort$ = this.select((state) => state.pagination.sort);
+  selectOffset$ = this.select((state) => state.pagination.offset);
 }

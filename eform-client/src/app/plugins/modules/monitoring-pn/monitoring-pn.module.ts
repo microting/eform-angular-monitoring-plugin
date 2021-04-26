@@ -22,6 +22,7 @@ import {
   NotificationRulesPageComponent,
 } from './components/notification-rules';
 import { MonitoringSettingsComponent } from './components/monitoring-settings';
+import { notificationRulesPersistProvider } from './components/notification-rules/store/notification-rules-store';
 
 registerLocaleData(localeDa);
 
@@ -51,6 +52,7 @@ registerLocaleData(localeDa);
   providers: [
     MonitoringPnSettingsService,
     MonitoringPnNotificationRulesService,
+    notificationRulesPersistProvider,
   ],
 })
 export class MonitoringPnModule {}

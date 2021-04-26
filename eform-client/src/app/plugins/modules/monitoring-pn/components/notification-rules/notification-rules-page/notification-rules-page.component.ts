@@ -11,7 +11,8 @@ import { PluginClaimsHelper } from 'src/app/common/helpers';
 import { MonitoringPnClaims } from '../../../const/monitoring-pn-claims.const';
 import { DeviceUserService } from 'src/app/common/services';
 import { SiteDto, TableHeaderElementModel } from 'src/app/common/models';
-import { NotificationRulesStateService } from '../state/notification-rules-state-service';
+import { NotificationRulesStateService } from '../store/notification-rules-state-service';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-monitoring-pn-notification-rules-page',
@@ -36,10 +37,10 @@ export class NotificationRulesPageComponent implements OnInit {
     },
     { name: 'Trigger', elementId: 'triggerTableHeader', sortable: true },
     { name: 'Event', elementId: 'eventTableHeader', sortable: true },
-    this.pluginClaimsHelper.check(
+    this.authStateService.checkClaim(
       this.monitoringPnClaims.updateNotificationRules
     ) ||
-    this.pluginClaimsHelper.check(
+    this.authStateService.checkClaim(
       this.monitoringPnClaims.deleteNotificationRules
     )
       ? { name: 'Actions', elementId: '', sortable: false }
@@ -48,12 +49,9 @@ export class NotificationRulesPageComponent implements OnInit {
 
   constructor(
     private deviceUsersService: DeviceUserService,
-    public notificationRulesStateService: NotificationRulesStateService
+    public notificationRulesStateService: NotificationRulesStateService,
+    public authStateService: AuthStateService
   ) {}
-
-  get pluginClaimsHelper() {
-    return PluginClaimsHelper;
-  }
 
   get monitoringPnClaims() {
     return MonitoringPnClaims;
