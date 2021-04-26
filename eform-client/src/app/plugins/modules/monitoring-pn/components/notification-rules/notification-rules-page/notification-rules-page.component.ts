@@ -7,7 +7,6 @@ import {
   NotificationRulesDeleteComponent,
   NotificationRulesEditComponent,
 } from '..';
-import { PluginClaimsHelper } from 'src/app/common/helpers';
 import { MonitoringPnClaims } from '../../../const/monitoring-pn-claims.const';
 import { DeviceUserService } from 'src/app/common/services';
 import { SiteDto, TableHeaderElementModel } from 'src/app/common/models';
