@@ -2,7 +2,7 @@
   <div class="p-3">
     <button
       *ngIf="
-        pluginClaimsHelper.check(monitoringPnClaims.createNotificationRules)
+        authStateService.checkClaim(monitoringPnClaims.createNotificationRules)
       "
       id="ruleCreateBtn"
       class="btn btn-success btn-small-height"
@@ -41,10 +41,10 @@
             <td id="ruleEvent">{{ rule.event }}</td>
             <td
               *ngIf="
-                pluginClaimsHelper.check(
+                authStateService.checkClaim(
                   monitoringPnClaims.updateNotificationRules
                 ) ||
-                pluginClaimsHelper.check(
+                authStateService.checkClaim(
                   monitoringPnClaims.deleteNotificationRules
                 )
               "
@@ -53,7 +53,7 @@
                 <button
                   id="updateRuleBtn"
                   *ngIf="
-                    pluginClaimsHelper.check(
+                    authStateService.checkClaim(
                       monitoringPnClaims.updateNotificationRules
                     )
                   "
@@ -68,7 +68,7 @@
                 <button
                   id="deleteRuleBtn"
                   *ngIf="
-                    pluginClaimsHelper.check(
+                    authStateService.checkClaim(
                       monitoringPnClaims.deleteNotificationRules
                     )
                   "

@@ -1,47 +1,57 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-
-import { Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {OperationDataResult, OperationResult} from 'src/app/common/models/operation.models';
-import {BaseService} from 'src/app/common/services/base.service';
-
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import {
+  OperationDataResult,
+  OperationResult,
+} from 'src/app/common/models/operation.models';
 import {
   NotificationRuleModel,
   NotificationRulesListModel,
-  NotificationsRequestModel
+  NotificationsRequestModel,
 } from '../models';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let MonitoringPnNotificationRulesMethods = {
   Base: 'api/monitoring-pn/rules',
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class MonitoringPnNotificationRulesService extends BaseService {
+export class MonitoringPnNotificationRulesService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
-  }
-
-  getRulesList(model: NotificationsRequestModel): Observable<OperationDataResult<NotificationRulesListModel>> {
-    return this.get(MonitoringPnNotificationRulesMethods.Base, model);
+  getRulesList(
+    model: NotificationsRequestModel
+  ): Observable<OperationDataResult<NotificationRulesListModel>> {
+    return this.apiBaseService.get(
+      MonitoringPnNotificationRulesMethods.Base,
+      model
+    );
   }
 
   getRule(id: number): Observable<OperationDataResult<NotificationRuleModel>> {
-    return this.get(MonitoringPnNotificationRulesMethods.Base + '/' + id);
+    return this.apiBaseService.get(
+      MonitoringPnNotificationRulesMethods.Base + '/' + id
+    );
   }
 
   updateRule(model: NotificationRuleModel): Observable<OperationResult> {
-    return this.put(MonitoringPnNotificationRulesMethods.Base, model);
+    return this.apiBaseService.put(
+      MonitoringPnNotificationRulesMethods.Base,
+      model
+    );
   }
 
   createRule(model: NotificationRuleModel): Observable<OperationResult> {
-    return this.post(MonitoringPnNotificationRulesMethods.Base, model);
+    return this.apiBaseService.post(
+      MonitoringPnNotificationRulesMethods.Base,
+      model
+    );
   }
 
   deleteRule(id: number): Observable<OperationResult> {
-    return this.delete(MonitoringPnNotificationRulesMethods.Base + '/' + id);
+    return this.apiBaseService.delete(
+      MonitoringPnNotificationRulesMethods.Base + '/' + id
+    );
   }
 }

@@ -4,7 +4,6 @@ import {MonitoringPnLayoutComponent} from './layouts';
 import {AdminGuard, AuthGuard, ClaimsGuard, PermissionGuard} from '../../../common/guards';
 import {MonitoringSettingsComponent, NotificationRulesEditComponent, NotificationRulesPageComponent} from './components';
 import {MonitoringPnClaims} from './const/monitoring-pn-claims.const';
-import {EntitySearchCreateComponent, EntitySearchEditComponent} from 'src/app/modules/advanced/components';
 import {UserClaimsEnum} from 'src/app/common/const';
 
 export const routes: Routes = [
