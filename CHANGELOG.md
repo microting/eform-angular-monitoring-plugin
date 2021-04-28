@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.146](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.146) (2021-04-28)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.145...v1.0.146)
+
+**Merged pull requests:**
+
+- Fix plugin after change main app [\#131](https://github.com/microting/eform-angular-monitoring-plugin/pull/131) ([sanioooook](https://github.com/sanioooook))
+
 ## [v1.0.145](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.145) (2021-04-26)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.144...v1.0.145)
@@ -556,7 +564,6 @@
 **Merged pull requests:**
 
 - Added missing front-end part [\#11](https://github.com/microting/eform-angular-monitoring-plugin/pull/11) ([Gid733](https://github.com/Gid733))
-- Added nullable fields, changed device users position [\#10](https://github.com/microting/eform-angular-monitoring-plugin/pull/10) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.34](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.34) (2020-03-03)
 
@@ -692,6 +699,7 @@
 
 **Merged pull requests:**
 
+- Added nullable fields, changed device users position [\#10](https://github.com/microting/eform-angular-monitoring-plugin/pull/10) ([Gid733](https://github.com/Gid733))
 - Added email body [\#6](https://github.com/microting/eform-angular-monitoring-plugin/pull/6) ([Gid733](https://github.com/Gid733))
 - Updates [\#5](https://github.com/microting/eform-angular-monitoring-plugin/pull/5) ([emleonid](https://github.com/emleonid))
 - Create devinstall.sh [\#4](https://github.com/microting/eform-angular-monitoring-plugin/pull/4) ([MathiasHusum](https://github.com/MathiasHusum))
