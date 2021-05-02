@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.148](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.148) (2021-05-02)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.147...v1.0.148)
+
 ## [v1.0.147](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.147) (2021-05-01)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.146...v1.0.147)
@@ -92,9 +96,9 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.EformMonitoringBase from 2.0.84 to 2.0.85 [\#99](https://github.com/microting/eform-angular-monitoring-plugin/issues/99)
 - Bump Microting.eFormApi.BasePn from 2.0.117 to 2.0.118 [\#98](https://github.com/microting/eform-angular-monitoring-plugin/issues/98)
 - Bump Microting.eForm from 4.4.26 to 4.4.27 [\#97](https://github.com/microting/eform-angular-monitoring-plugin/issues/97)
-- Bump Microting.eFormApi.BasePn from 2.0.106 to 2.0.117 [\#94](https://github.com/microting/eform-angular-monitoring-plugin/issues/94)
 
 ## [v1.0.137](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.137) (2021-04-12)
 
@@ -102,8 +106,8 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.EformMonitoringBase from 2.0.84 to 2.0.85 [\#99](https://github.com/microting/eform-angular-monitoring-plugin/issues/99)
 - Bump Microting.EformMonitoringBase from 2.0.75 to 2.0.84 [\#95](https://github.com/microting/eform-angular-monitoring-plugin/issues/95)
+- Bump Microting.eFormApi.BasePn from 2.0.106 to 2.0.117 [\#94](https://github.com/microting/eform-angular-monitoring-plugin/issues/94)
 - Bump Microting.eForm from 4.4.11 to 4.4.26 [\#93](https://github.com/microting/eform-angular-monitoring-plugin/issues/93)
 
 ## [v1.0.136](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.136) (2021-03-25)
@@ -131,7 +135,6 @@
 **Implemented enhancements:**
 
 - Bump Microting.eFormApi.BasePn from 2.0.99 to 2.0.103 [\#57](https://github.com/microting/eform-angular-monitoring-plugin/issues/57)
-- Bump Microting.eForm from 4.4.3 to 4.4.8 [\#56](https://github.com/microting/eform-angular-monitoring-plugin/issues/56)
 
 ## [v1.0.133](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.133) (2021-03-05)
 
@@ -152,6 +155,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.eForm from 4.4.3 to 4.4.8 [\#56](https://github.com/microting/eform-angular-monitoring-plugin/issues/56)
 - Bump Microting.EformMonitoringBase from 2.0.74 to 2.0.75 [\#42](https://github.com/microting/eform-angular-monitoring-plugin/issues/42)
 - Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#41](https://github.com/microting/eform-angular-monitoring-plugin/issues/41)
 - Bump Microting.eForm from 4.4.1 to 4.4.2 [\#40](https://github.com/microting/eform-angular-monitoring-plugin/issues/40)
@@ -573,6 +577,7 @@
 **Merged pull requests:**
 
 - Added missing front-end part [\#11](https://github.com/microting/eform-angular-monitoring-plugin/pull/11) ([Gid733](https://github.com/Gid733))
+- Added nullable fields, changed device users position [\#10](https://github.com/microting/eform-angular-monitoring-plugin/pull/10) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.34](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.34) (2020-03-03)
 
@@ -597,10 +602,6 @@
 ## [v1.0.29](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.29) (2020-02-11)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.28...v1.0.29)
-
-**Merged pull requests:**
-
-- Implement device user check [\#9](https://github.com/microting/eform-angular-monitoring-plugin/pull/9) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.28](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.28) (2020-01-21)
 
@@ -664,6 +665,7 @@
 
 **Merged pull requests:**
 
+- Implement device user check [\#9](https://github.com/microting/eform-angular-monitoring-plugin/pull/9) ([Gid733](https://github.com/Gid733))
 - Bugfixing [\#7](https://github.com/microting/eform-angular-monitoring-plugin/pull/7) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.13](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.13) (2019-11-25)
@@ -708,7 +710,6 @@
 
 **Merged pull requests:**
 
-- Added nullable fields, changed device users position [\#10](https://github.com/microting/eform-angular-monitoring-plugin/pull/10) ([Gid733](https://github.com/Gid733))
 - Added email body [\#6](https://github.com/microting/eform-angular-monitoring-plugin/pull/6) ([Gid733](https://github.com/Gid733))
 - Updates [\#5](https://github.com/microting/eform-angular-monitoring-plugin/pull/5) ([emleonid](https://github.com/emleonid))
 - Create devinstall.sh [\#4](https://github.com/microting/eform-angular-monitoring-plugin/pull/4) ([MathiasHusum](https://github.com/MathiasHusum))
