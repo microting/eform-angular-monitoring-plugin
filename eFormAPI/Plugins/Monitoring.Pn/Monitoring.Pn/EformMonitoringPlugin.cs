@@ -79,16 +79,13 @@ namespace Monitoring.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            if (connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                services.AddDbContext<EformMonitoringPnDbContext>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
-            else
-            {
-                services.AddDbContext<EformMonitoringPnDbContext>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
+            services.AddDbContext<EformMonitoringPnDbContext>(o =>
+                o.UseMySql(connectionString, new MariaDbServerVersion(
+                    new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+                {
+                    builder.EnableRetryOnFailure();
+                    builder.MigrationsAssembly(PluginAssembly().FullName);
+                }));
 
             var contextFactory = new EformMonitoringPnDbContextFactory();
             var context = contextFactory.CreateDbContext(new[] {connectionString});
