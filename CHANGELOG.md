@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.153](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.153) (2021-05-06)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.152...v1.0.153)
+
+**Implemented enhancements:**
+
+- Bump Microting.EformMonitoringBase from 3.0.5 to 3.0.6 [\#165](https://github.com/microting/eform-angular-monitoring-plugin/issues/165)
+- Bump Microting.eFormApi.BasePn from 3.0.6 to 3.0.7 [\#164](https://github.com/microting/eform-angular-monitoring-plugin/issues/164)
+- Bump Microting.eForm from 5.1.2 to 5.1.3 [\#163](https://github.com/microting/eform-angular-monitoring-plugin/issues/163)
+
 ## [v1.0.152](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.152) (2021-05-05)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.151...v1.0.152)
@@ -216,6 +226,7 @@
 - Bump Microting.EformMonitoringBase from 2.0.74 to 2.0.75 [\#42](https://github.com/microting/eform-angular-monitoring-plugin/issues/42)
 - Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#41](https://github.com/microting/eform-angular-monitoring-plugin/issues/41)
 - Bump Microting.eForm from 4.4.1 to 4.4.2 [\#40](https://github.com/microting/eform-angular-monitoring-plugin/issues/40)
+- Bump Microting.eFormApi.BasePn from 2.0.95 to 2.0.97 [\#37](https://github.com/microting/eform-angular-monitoring-plugin/issues/37)
 
 ## [v1.0.131](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.131) (2021-02-23)
 
@@ -224,7 +235,6 @@
 **Implemented enhancements:**
 
 - Bump Microting.EformMonitoringBase from 2.0.72 to 2.0.74 [\#38](https://github.com/microting/eform-angular-monitoring-plugin/issues/38)
-- Bump Microting.eFormApi.BasePn from 2.0.95 to 2.0.97 [\#37](https://github.com/microting/eform-angular-monitoring-plugin/issues/37)
 - Bump Microting.eForm from 4.3.17 to 4.4.1 [\#36](https://github.com/microting/eform-angular-monitoring-plugin/issues/36)
 
 ## [v1.0.130](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.130) (2021-02-18)
