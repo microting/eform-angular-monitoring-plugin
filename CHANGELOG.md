@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.155](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.155) (2021-05-11)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.154...v1.0.155)
+
+**Implemented enhancements:**
+
+- Bump Microting.EformMonitoringBase from 3.0.7 to 3.0.8 [\#173](https://github.com/microting/eform-angular-monitoring-plugin/issues/173)
+- Bump Microting.eFormApi.BasePn from 3.0.8 to 3.0.9 [\#172](https://github.com/microting/eform-angular-monitoring-plugin/issues/172)
+- Bump Microting.eForm from 5.1.4 to 5.1.5 [\#171](https://github.com/microting/eform-angular-monitoring-plugin/issues/171)
+
 ## [v1.0.154](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.154) (2021-05-07)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.153...v1.0.154)
@@ -747,6 +757,7 @@
 **Merged pull requests:**
 
 - Bugfixing [\#7](https://github.com/microting/eform-angular-monitoring-plugin/pull/7) ([Gid733](https://github.com/Gid733))
+- Create devgetchanges.sh [\#3](https://github.com/microting/eform-angular-monitoring-plugin/pull/3) ([MathiasHusum](https://github.com/MathiasHusum))
 
 ## [v1.0.13](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.13) (2019-11-25)
 
@@ -793,7 +804,6 @@
 - Added email body [\#6](https://github.com/microting/eform-angular-monitoring-plugin/pull/6) ([Gid733](https://github.com/Gid733))
 - Updates [\#5](https://github.com/microting/eform-angular-monitoring-plugin/pull/5) ([emleonid](https://github.com/emleonid))
 - Create devinstall.sh [\#4](https://github.com/microting/eform-angular-monitoring-plugin/pull/4) ([MathiasHusum](https://github.com/MathiasHusum))
-- Create devgetchanges.sh [\#3](https://github.com/microting/eform-angular-monitoring-plugin/pull/3) ([MathiasHusum](https://github.com/MathiasHusum))
 - Permission updates [\#2](https://github.com/microting/eform-angular-monitoring-plugin/pull/2) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.3](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.3) (2019-11-04)
