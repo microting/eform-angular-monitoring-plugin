@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.0.184](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.184) (2021-09-16)
+
+[Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.183...v1.0.184)
+
+**Implemented enhancements:**
+
+- Bump Microting.EformMonitoringBase from 3.0.38 to 3.0.39 [\#281](https://github.com/microting/eform-angular-monitoring-plugin/issues/281)
+- Bump Microting.eFormApi.BasePn from 3.0.47 to 3.0.49 [\#280](https://github.com/microting/eform-angular-monitoring-plugin/issues/280)
+- Bump Microting.eForm from 5.2.37 to 5.2.39 [\#279](https://github.com/microting/eform-angular-monitoring-plugin/issues/279)
+
+**Merged pull requests:**
+
+- Bump Microsoft.NET.Test.Sdk from 16.10.0 to 16.11.0 in /eFormAPI/Plugins/Monitoring.Pn [\#258](https://github.com/microting/eform-angular-monitoring-plugin/pull/258) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v1.0.183](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.183) (2021-09-14)
 
 [Full Changelog](https://github.com/microting/eform-angular-monitoring-plugin/compare/v1.0.182...v1.0.183)
@@ -213,7 +227,6 @@
 
 - Bump Microting.EformMonitoringBase from 3.0.16 to 3.0.17 [\#204](https://github.com/microting/eform-angular-monitoring-plugin/issues/204)
 - Bump Microting.eFormApi.BasePn from 3.0.18 to 3.0.19 [\#203](https://github.com/microting/eform-angular-monitoring-plugin/issues/203)
-- Bump Microting.EformMonitoringBase from 3.0.15 to 3.0.16 [\#200](https://github.com/microting/eform-angular-monitoring-plugin/issues/200)
 
 ## [v1.0.162](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.162) (2021-06-05)
 
@@ -221,6 +234,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.EformMonitoringBase from 3.0.15 to 3.0.16 [\#200](https://github.com/microting/eform-angular-monitoring-plugin/issues/200)
 - Bump Microting.eFormApi.BasePn from 3.0.17 to 3.0.18 [\#199](https://github.com/microting/eform-angular-monitoring-plugin/issues/199)
 
 ## [v1.0.161](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.161) (2021-06-03)
@@ -269,6 +283,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.EformMonitoringBase from 3.0.10 to 3.0.11 [\#185](https://github.com/microting/eform-angular-monitoring-plugin/issues/185)
 - Bump Microting.eFormApi.BasePn from 3.0.12 to 3.0.13 [\#184](https://github.com/microting/eform-angular-monitoring-plugin/issues/184)
 - Bump Microting.eForm from 5.2.2 to 5.2.3 [\#183](https://github.com/microting/eform-angular-monitoring-plugin/issues/183)
 
@@ -288,7 +303,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.EformMonitoringBase from 3.0.10 to 3.0.11 [\#185](https://github.com/microting/eform-angular-monitoring-plugin/issues/185)
 - Bump Microting.EformMonitoringBase from 3.0.7 to 3.0.8 [\#173](https://github.com/microting/eform-angular-monitoring-plugin/issues/173)
 - Bump Microting.eFormApi.BasePn from 3.0.8 to 3.0.9 [\#172](https://github.com/microting/eform-angular-monitoring-plugin/issues/172)
 - Bump Microting.eForm from 5.1.4 to 5.1.5 [\#171](https://github.com/microting/eform-angular-monitoring-plugin/issues/171)
@@ -439,6 +453,7 @@
 - Bump Microting.EformMonitoringBase from 2.0.87 to 2.0.89 [\#115](https://github.com/microting/eform-angular-monitoring-plugin/issues/115)
 - Bump Microting.eFormApi.BasePn from 2.0.122 to 2.0.126 [\#114](https://github.com/microting/eform-angular-monitoring-plugin/issues/114)
 - Bump Microting.eForm from 4.4.31 to 4.4.35 [\#113](https://github.com/microting/eform-angular-monitoring-plugin/issues/113)
+- Bump Microting.EformMonitoringBase from 2.0.85 to 2.0.86 [\#103](https://github.com/microting/eform-angular-monitoring-plugin/issues/103)
 
 ## [v1.0.140](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.140) (2021-04-14)
 
@@ -448,7 +463,6 @@
 
 - Bump Microting.EformMonitoringBase from 2.0.86 to 2.0.87 [\#109](https://github.com/microting/eform-angular-monitoring-plugin/issues/109)
 - Bump Microting.eFormApi.BasePn from 2.0.120 to 2.0.122 [\#108](https://github.com/microting/eform-angular-monitoring-plugin/issues/108)
-- Bump Microting.eForm from 4.4.29 to 4.4.31 [\#107](https://github.com/microting/eform-angular-monitoring-plugin/issues/107)
 
 ## [v1.0.139](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.139) (2021-04-13)
 
@@ -456,7 +470,7 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.EformMonitoringBase from 2.0.85 to 2.0.86 [\#103](https://github.com/microting/eform-angular-monitoring-plugin/issues/103)
+- Bump Microting.eForm from 4.4.29 to 4.4.31 [\#107](https://github.com/microting/eform-angular-monitoring-plugin/issues/107)
 - Bump Microting.eFormApi.BasePn from 2.0.118 to 2.0.120 [\#102](https://github.com/microting/eform-angular-monitoring-plugin/issues/102)
 - Bump Microting.eForm from 4.4.27 to 4.4.29 [\#101](https://github.com/microting/eform-angular-monitoring-plugin/issues/101)
 
@@ -469,6 +483,7 @@
 - Bump Microting.EformMonitoringBase from 2.0.84 to 2.0.85 [\#99](https://github.com/microting/eform-angular-monitoring-plugin/issues/99)
 - Bump Microting.eFormApi.BasePn from 2.0.117 to 2.0.118 [\#98](https://github.com/microting/eform-angular-monitoring-plugin/issues/98)
 - Bump Microting.eForm from 4.4.26 to 4.4.27 [\#97](https://github.com/microting/eform-angular-monitoring-plugin/issues/97)
+- Bump Microting.eFormApi.BasePn from 2.0.103 to 2.0.104 [\#61](https://github.com/microting/eform-angular-monitoring-plugin/issues/61)
 
 ## [v1.0.137](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.137) (2021-04-12)
 
@@ -495,7 +510,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eFormApi.BasePn from 2.0.103 to 2.0.104 [\#61](https://github.com/microting/eform-angular-monitoring-plugin/issues/61)
 - Bump Microting.eForm from 4.4.8 to 4.4.9 [\#60](https://github.com/microting/eform-angular-monitoring-plugin/issues/60)
 
 ## [v1.0.134](https://github.com/microting/eform-angular-monitoring-plugin/tree/v1.0.134) (2021-03-16)
